@@ -1,0 +1,2 @@
+- pipeline.id: spring-logback
+  path.config: "/usr/share/logstash/pipeline/logback_logstash.conf"

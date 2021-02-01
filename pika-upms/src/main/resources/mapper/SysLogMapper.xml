@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenlincheng.pika.upms.mapper.SysLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wenlincheng.pika.upms.entity.po.SysLog">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="service_id" property="serviceId" />
+        <result column="user_id" property="userId" />
+        <result column="username" property="username" />
+        <result column="client_ip" property="clientIp" />
+        <result column="user_agent" property="userAgent" />
+        <result column="url" property="url" />
+        <result column="uri" property="uri" />
+        <result column="method" property="method" />
+        <result column="params" property="params" />
+        <result column="time" property="time" />
+        <result column="exception_message" property="exceptionMessage" />
+        <result column="type" property="type" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, service_id, user_id, username, client_ip, user_agent, url, uri, method, params, time, exception_message, type, is_deleted, create_time, update_time
+    </sql>
+
+</mapper>

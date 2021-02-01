@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wenlincheng.pika.common.leaf.service.impl.LeafSegmentServiceImpl,\
+  com.wenlincheng.pika.common.leaf.service.impl.LeafSnowflakeServiceImpl

@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.wenlincheng.pika.common.swagger.SwaggerConfig

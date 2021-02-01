@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenlincheng.pika.item.mapper.ProductMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wenlincheng.pika.item.entity.po.Product">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="source" property="source" />
+        <result column="product_type" property="productType" />
+        <result column="sku_type" property="skuType" />
+        <result column="category_code" property="categoryCode" />
+        <result column="cate_path" property="catePath" />
+        <result column="brand_code" property="brandCode" />
+        <result column="attr_vals" property="attrVals" />
+        <result column="main_pic_url" property="mainPicUrl" />
+        <result column="pics_url" property="picsUrl" />
+        <result column="invoice_tax_rate" property="invoiceTaxRate" />
+        <result column="currency_code" property="currencyCode" />
+        <result column="origin_unit_price" property="originUnitPrice" />
+        <result column="cost_unit_price" property="costUnitPrice" />
+        <result column="unit_convert" property="unitConvert" />
+        <result column="inventory_reduce_setting" property="inventoryReduceSetting" />
+        <result column="delivery_type" property="deliveryType" />
+        <result column="purpose" property="purpose" />
+        <result column="description" property="description" />
+        <result column="data_status" property="dataStatus" />
+        <result column="code" property="code" />
+        <result column="owner_id" property="ownerId" />
+        <result column="invoice_tax_code_id" property="invoiceTaxCodeId" />
+        <result column="base_unit_id" property="baseUnitId" />
+        <result column="inv_unit_id" property="invUnitId" />
+        <result column="shipping_fee_template_id" property="shippingFeeTemplateId" />
+        <result column="en_name" property="enName" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="update_user_id" property="updateUserId" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, source, product_type, sku_type, category_code, cate_path, brand_code, attr_vals, main_pic_url, pics_url, invoice_tax_rate, currency_code, origin_unit_price, cost_unit_price, unit_convert, inventory_reduce_setting, delivery_type, purpose, description, data_status, code, owner_id, invoice_tax_code_id, base_unit_id, inv_unit_id, shipping_fee_template_id, en_name, remark, create_time, update_time, create_user_id, update_user_id, is_deleted
+    </sql>
+
+</mapper>

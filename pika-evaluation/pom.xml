@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.wenlincheng.pika</groupId>
+        <artifactId>pika</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>pika-evaluation</artifactId>
+    <version>1.0.0</version>
+    <name>pika-evaluation</name>
+    <packaging>pom</packaging>
+    <description>评价问答中心</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+    <modules>
+        <module>pika-evaluation-api</module>
+        <module>pika-evaluation-core</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>pika-common-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+</project>

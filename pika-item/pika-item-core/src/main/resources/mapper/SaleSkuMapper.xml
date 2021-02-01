@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenlincheng.pika.item.mapper.SaleSkuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wenlincheng.pika.item.entity.po.SaleSku">
+    <result column="id" property="id" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_user_id" property="createUserId" />
+    <result column="update_user_id" property="updateUserId" />
+    <result column="is_deleted" property="isDeleted" />
+        <result column="seller_id" property="sellerId" />
+        <result column="item_id" property="itemId" />
+        <result column="inv_sku_code" property="invSkuCode" />
+        <result column="name" property="name" />
+        <result column="simple_name" property="simpleName" />
+        <result column="code" property="code" />
+        <result column="bar_code" property="barCode" />
+        <result column="short_code" property="shortCode" />
+        <result column="sku_pic_url" property="skuPicUrl" />
+        <result column="spec" property="spec" />
+        <result column="sale_attr_vals" property="saleAttrVals" />
+        <result column="attr_label" property="attrLabel" />
+        <result column="sale_unit_price" property="saleUnitPrice" />
+        <result column="market_unit_price" property="marketUnitPrice" />
+        <result column="cost_unit_price" property="costUnitPrice" />
+        <result column="currency_code" property="currencyCode" />
+        <result column="has_sold_num" property="hasSoldNum" />
+        <result column="has_blocked_num" property="hasBlockedNum" />
+        <result column="out_id" property="outId" />
+        <result column="weight" property="weight" />
+        <result column="sale_unit_id" property="saleUnitId" />
+        <result column="is_fixed_sku" property="isFixedSku" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_time,
+        update_time,
+        create_user_id,
+        update_user_id,
+        is_deleted,
+        seller_id, item_id, inv_sku_code, name, simple_name, code, bar_code, short_code, sku_pic_url, spec, sale_attr_vals, attr_label, sale_unit_price, market_unit_price, cost_unit_price, currency_code, has_sold_num, has_blocked_num, out_id, weight, sale_unit_id, is_fixed_sku
+    </sql>
+
+</mapper>

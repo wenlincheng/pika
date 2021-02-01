@@ -1,0 +1,14 @@
+version: '3'
+services:
+  # DB init
+  mysql-init:
+    image: mysql:5.7.24
+    command: ./init-db.sh
+    networks:
+      - pika-net
+    volumes:
+      - ../pika-upms/db:/sql/pika-upms
+      - ../pika-auth/db:/sql/pika-auth
+      - ./init-db.sh:/init-db.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456

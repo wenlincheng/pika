@@ -1,0 +1,108 @@
+version: "3"
+
+services:
+
+  apisix:
+    image: apache/apisix:latest
+    container_name: apisix
+    restart: always
+    volumes:
+      - ./conf/apisix/apisix_log:/usr/local/apisix/logs
+      - ./conf/apisix/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    ##network_mode: host
+    ports:
+      - "9080:9080/tcp"
+      - "9443:9443/tcp"
+    networks:
+      apisix:
+        ipv4_address: 172.20.5.11
+
+  etcd:
+    image: bitnami/etcd:3.4.9
+    container_name: etcd
+    user: root
+    restart: always
+    volumes:
+      - ./conf/apisix/etcd_data:/etcd_data
+    environment:
+      ETCD_DATA_DIR: /etcd_data
+      ETCD_ENABLE_V2: "true"
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    ports:
+      - "2379:2379/tcp"
+    networks:
+      apisix:
+        ipv4_address: 172.20.5.10
+
+  web1:
+    image: ruby:2-alpine
+    container_name: apisix-web1
+    command: sh -c "mkdir -p /tmp/www && echo 'web1' > /tmp/www/web1.txt && ruby -run -ehttpd /tmp/www -p8000"
+    restart: always
+    ports:
+      - "9081:8000/tcp"
+    networks:
+      apisix:
+        ipv4_address: 172.20.5.12
+
+  web2:
+    image: ruby:2-alpine
+    container_name: apisix-web2
+    command: sh -c "mkdir -p /tmp/www && echo 'web2' > /tmp/www/web2.txt && ruby -run -ehttpd /tmp/www -p8000"
+    restart: always
+    ports:
+      - "9082:8000/tcp"
+    networks:
+      apisix:
+        ipv4_address: 172.20.5.13
+
+  dashboard:
+    image: apisix-dashboard:2.0-rc3
+    container_name: apisix-dashboard
+    restart: always
+    ports:
+      - '80:8080/tcp'
+    volumes:
+      - ./conf/apisix/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    networks:
+      apisix:
+        ipv4_address: 172.20.5.14
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    hostname: prometheus
+    restart: always
+    volumes:
+      - ./conf/apisix/prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    networks:
+      apisix:
+        ipv4_address: 172.20.5.15
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./conf/apisix/grafana_conf/provisioning:/etc/grafana/provisioning
+      - ./conf/apisix/grafana_conf/dashboards:/var/lib/grafana/dashboards
+      - ./conf/apisix/grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini
+    networks:
+      apisix:
+        ipv4_address: 172.20.5.16
+
+networks:
+  apisix:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.20.0.0/16

@@ -1,0 +1,157 @@
+server:
+  port: 8100
+spring:
+  profiles:
+    active: dev
+  mvc:
+    servlet:
+      load-on-startup: 0
+  # 缓存
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: 6379
+    password: ${REDIS_PASSWORD:123456}
+    lettuce:
+      pool:
+        max-active: 300
+  cloud:
+    # 注册中心
+    nacos:
+      discovery:
+        server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
+        namespace: ${REGISTER_NAMESPACE:5a0187d7-9f8f-445a-a3bf-e17e11457e4d}
+        group: ${REGISTER_GROUP:PIKA}
+        namingLoadCacheAtStart: true
+        username: ${REGISTER_USERNAME:nacos}
+        password: ${REGISTER_PASSWORD:nacos}
+    # 熔断降级
+    sentinel:
+      transport:
+        # Sentinel控制台
+        dashboard: ${SENTINEL_DASHBOARD_HOST:127.0.0.1}:${SENTINEL_DASHBOARD_PORT:8858}
+        # 在应用对应的机器上启动一个 Http Server，该 Server 会与 Sentinel 控制台做交互
+        port: ${SENTINEL_PORT:8719}
+      datasource:
+        ds1:
+          # 将限流规则持久化进nacos配置中心
+          nacos:
+            server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
+            dataId: pika-gateway-admin-sentinel
+            groupId: PIKA
+            data-type: json
+            rule-type: flow
+            username: ${REGISTER_USERNAME:nacos}
+            password: ${REGISTER_PASSWORD:nacos}
+    # 分布式消息
+    stream:
+      rocketmq:
+        binder:
+          name-server: ${ROCKET_MQ_HOST:127.0.0.1}:${ROCKET_MQ_PORT:9876}
+    # 消息总线
+    bus:
+      id: ${spring.application.name}:${server.port}
+      trace:
+        enabled: true
+      destination: springCloudBus
+    # 网关
+    gateway:
+      enabled: true
+      # 跨域全局CORS配置
+      globalcors:
+        cors-configurations:
+          '[/**]': # 匹配所有请求
+            allowedOrigins: "*" # 跨域处理允许所有的域
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+      # 默认过滤器
+      default-filters:
+        # 重试请求
+        - name: Retry
+          args:
+            retries: 3
+            statuses: BAD_GATEWAY
+        # 添加响应头
+        - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+        # 限流器
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 500 # 允许每秒可以处理的请求数，流入速率
+            redis-rate-limiter.burstCapacity: 2000 # 允许在一秒内执行的最大请求数，令牌桶的容积
+            redis-rate-limiter.requestedTokens: 1 # 每个请求消耗的令牌数，默认为 1
+            rate-limiter: "#{@defaultRedisRateLimiter}"  # 使用SpEL引用bean，自定义实现RateLimiter接口的限流器
+            key-resolver: "#{@apiKeyResolver}" # 使用SpEL引用bean，自定义解析器
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+# Ribbon
+ribbon:
+  # Ribbon的默认加载策略是懒加载。当第一次访问的时候，不仅会发送访问请求，还有初始化相关的服务。 设置饥饿加载相关服务
+  eager-load:
+    enabled: true
+    clients:
+      - pika-auth
+      - pika-upms
+
+# Feign
+feign:
+  # sentinel对Feign的支持
+  sentinel:
+    enabled: true
+
+# 暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  hidePackages: com.wenlincheng.pika
+  local:
+    # 默认2小时本地缓存
+    default:
+      type: caffeine
+      keyConvertor: fastjson
+  remote:
+    # 默认2小时的远程缓存
+    default:
+      type: redis
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:123456}
+
+# 网关鉴权放行的路径
+gateway:
+  ignored:
+    uris:
+      - /login/v1
+      - /auth/token/**
+      - /v2/api-docs
+      - /app/**
+
+# log
+logging:
+  file:
+    max-size: 100MB
+    path: ./logs/gateway-admin
+  level:
+    root: INFO
+    com:
+      wenlincheng: INFO

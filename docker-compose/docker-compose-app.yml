@@ -1,0 +1,110 @@
+version: '3'
+services:
+  # 管理端网关服务
+  pika-gateway-admin:
+    image: pikaman/pika-gateway-admin:latest
+    container_name: pika-gateway-admin
+    restart: always
+    links:
+      - redis
+      - nacos
+      - rabbitmq
+    networks:
+      - pika-net
+    ports:
+      - 8101:8101
+    depends_on:
+      - redis
+      - nacos
+      - rabbitmq
+    env_file: env/.env
+    environment:
+      TZ: Asia/Shanghai
+
+  # APP端网关服务
+  pika-gateway-app:
+    image: pikaman/pika-gateway-app:latest
+    container_name: pika-gateway-app
+    restart: always
+    links:
+      - redis
+      - nacos
+      - rabbitmq
+    networks:
+      - pika-net
+    ports:
+      - 8101:8101
+    depends_on:
+      - redis
+      - nacos
+      - rabbitmq
+    env_file: env/.env
+    environment:
+      TZ: Asia/Shanghai
+
+  # 认证鉴权服务
+  pika-auth:
+    image: pikaman/pika-auth:latest
+    container_name: pika-auth
+    restart: always
+    links:
+      - redis
+      - nacos
+      - rabbitmq
+    networks:
+      - pika-net
+    ports:
+      - 8110:8110
+    depends_on:
+      - redis
+      - nacos
+      - rabbitmq
+    env_file: env/.env
+    environment:
+      TZ: Asia/Shanghai
+
+  # 通用用户权限管理服务
+  pika-upms:
+    image: pikaman/pika-upms:latest
+    container_name: pika-upms
+    restart: always
+    links:
+      - mysql
+      - redis
+      - nacos
+      - rabbitmq
+    networks:
+      - pika-net
+    ports:
+      - 8120:8120
+    depends_on:
+      - mysql
+      - redis
+      - nacos
+      - rabbitmq
+    env_file: env/.env
+    environment:
+      TZ: Asia/Shanghai
+
+  # 商品中心
+  pika-item:
+    image: pikaman/pika-item:latest
+    container_name: pika-item
+    restart: always
+    links:
+      - mysql
+      - redis
+      - nacos
+      - rabbitmq
+    networks:
+      - pika-net
+    ports:
+      - 8130:8130
+    depends_on:
+      - mysql
+      - redis
+      - nacos
+      - rabbitmq
+    env_file: env/.env
+    environment:
+      TZ: Asia/Shanghai

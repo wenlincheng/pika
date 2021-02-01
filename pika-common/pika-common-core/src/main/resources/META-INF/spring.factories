@@ -1,0 +1,9 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.wenlincheng.pika.common.core.log.feign.fallback.SysLogServiceFallbackFactory,\
+    com.wenlincheng.pika.common.core.util.SpringContextHolder,\
+    com.wenlincheng.pika.common.core.log.LogAutoConfiguration,\
+    com.wenlincheng.pika.common.core.redis.RedisUtils,\
+    com.wenlincheng.pika.common.core.json.JacksonSerializerConfig
+
+org.springframework.context.ApplicationContextInitializer=\
+    com.wenlincheng.pika.common.core.log.init.ApplicationLoggerInitializer

@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.wenlincheng.pika.common.data.config.MyBatisPlusConfig,\
+    com.wenlincheng.pika.common.data.config.PikaMetaObjectHandler,\
+    com.wenlincheng.pika.common.data.config.CustomIdGenerator,\
+    com.wenlincheng.pika.common.data.generator.GeneratorProperties,\
+    com.wenlincheng.pika.common.data.generator.CodeGenerator

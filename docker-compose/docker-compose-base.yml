@@ -1,0 +1,130 @@
+version: '3'
+services:
+  # MySQL
+  mysql:
+    image: mysql:5.7.24
+    container_name: mysql
+    restart: always
+    networks:
+      - pika-net
+    ports:
+      - 3306:3306
+    volumes:
+      - ../data/mysql:/var/lib/mysql
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: 123456
+  # Redis
+  redis: 
+    image: redis:5.0.4
+    container_name: redis
+    restart: always
+    volumes:
+      - ../data/redis:/data
+      - ./conf/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - pika-net
+    ports:
+      - 6379:6379
+    command: redis-server /usr/local/etc/redis/redis.conf
+  # Nacos
+  nacos:
+    image: nacos/nacos-server:1.4.1
+    container_name: nacos
+    restart: always
+    links:
+      - mysql
+    networks:
+      - pika-net
+    ports:
+      - 8848:8848
+    env_file: ./env/nacos-standlone-mysql.env
+    volumes:
+      - ../logs/nacos:/home/nacos/logs
+  # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3.8.3-management
+    container_name: rabbitmq
+    restart: always
+    networks:
+      - pika-net
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ../data/rabbitmq:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+  # Sentinel
+  sentinel:
+    image: bladex/sentinel-dashboard
+    container_name: sentinel-dashboard
+    restart: always
+    environment:
+      JAVA_OPTS: "-Dserver.port=8858 -Dcsp.sentinel.dashboard.server=localhost:8858 -Dproject.name=sentinel-dashboard"
+    ports:
+      - "8858:8858"
+    volumes:
+      - ../logs/sentinel/logs:/root/logs
+  # RocketMQ
+  rmqnamesrv:
+    image: rocketmqinc/rocketmq:4.5.0
+    container_name: rmqnamesrv
+    ports:
+      - 9876:9876
+    volumes:
+      - ../logs/rocketmq/logs:/home/rocketmq/logs
+    command: sh mqnamesrv
+    networks:
+      - pika-net
+  rmqbroker:
+    image: rocketmqinc/rocketmq:4.5.0
+    container_name: rmqbroker
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    volumes:
+      - ../logs/rocketmq/logs:/home/rocketmq/logs
+      - ../data/rocketmq/store:/home/rocketmq/store
+      - ./conf/rocketmq/broker.conf:/home/rocketmq/rocketmq-4.5.0/conf/broker.conf
+    command: sh mqbroker -n rmqnamesrv:9876 -c ../conf/broker.conf
+    environment:
+      - JAVA_HOME=/usr/lib/jvm/jre
+      - Dcom.rocketmq.sendMessageWithVIPChannel=true
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - pika-net
+  rmqadmin:
+    image: pangliang/rocketmq-console-ng
+    container_name: rmqadmin
+    ports:
+      # 9000供外部控制台访问界面使用
+      - 9000:8080
+    environment:
+      JAVA_OPTS: "-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=true"
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - pika-net
+  # zk
+  zookeeper:
+    image: zookeeper:3.6.0
+    restart: always
+    container_name: zookeeper
+    volumes:
+      - ./conf/zookeeper:/conf
+      - ../data/zookeeper:/data
+      - ../logs/zookeeper:/datalog
+    ports:
+      - "2181:2181"
+    environment:
+      ZOO_MY_ID: 1
+    networks:
+      - pika-net
+
+networks:
+  pika-net:
+    external: false

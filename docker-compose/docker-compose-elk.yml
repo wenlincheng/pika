@@ -1,0 +1,111 @@
+version: '3.0'
+services:
+  es-node01:
+    image: elasticsearch:7.7.0
+    container_name: es-node01
+    environment:
+      - node.name=es-node01
+      - cluster.name=pika-es-cluster
+      - discovery.seed_hosts=es-node02,es-node03
+      - cluster.initial_master_nodes=es-node01,es-node02,es-node03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - TZ=Asia/Shanghai
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ../data/elasticsearch/node1_data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+
+  es-node02:
+    image: elasticsearch:7.7.0
+    container_name: es-node02
+    environment:
+      - node.name=es-node02
+      - cluster.name=pika-es-cluster
+      - discovery.seed_hosts=es-node01,es-node03
+      - cluster.initial_master_nodes=es-node01,es-node02,es-node03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - TZ=Asia/Shanghai
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ../data/elasticsearch/node2_data:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9201
+    networks:
+      - elastic
+
+  es-node03:
+    image: elasticsearch:7.7.0
+    container_name: es-node03
+    environment:
+      - node.name=es-node03
+      - cluster.name=pika-es-cluster
+      - discovery.seed_hosts=es-node01,es-node02
+      - cluster.initial_master_nodes=es-node01,es-node02,es-node03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - TZ=Asia/Shanghai
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ../data/elasticsearch/node3_data:/usr/share/elasticsearch/data
+    ports:
+      - 9202:9202
+    networks:
+      - elastic
+
+  logstash:
+    image: logstash:7.7.0
+    container_name: logstash
+    restart: always
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    volumes:
+      - ./conf/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml # logstash配置文件
+      - ./conf/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml # 多管道配置文件
+      - ./conf/logstash/pipeline/logback_logstash.conf:/usr/share/logstash/pipeline/logback_logstash.conf # 管道1
+    depends_on:
+      - es-node01
+    ports:
+      - 9600:9600
+      - 5044:5044
+    networks:
+      - elastic
+
+  kibana:
+    image: kibana:7.7.0
+    container_name: kibana
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://es-node01:9200
+      ELASTICSEARCH_HOSTS: http://es-node01:9200
+      I18N_LOCALE: zh-CN
+    networks:
+      - elastic
+
+  cerebro:
+    image: lmenezes/cerebro:0.9.2
+    container_name: cerebro
+    ports:
+      - 9000:9000
+    command:
+      - -Dhosts.0.host=http://es-node01:9200
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge

@@ -1,0 +1,15 @@
+conf:
+  listen:
+    host: 0.0.0.0
+    port: 8080
+  etcd:
+    endpoints:
+      - 172.20.5.10:2379
+authentication:
+  secret: secret
+  expire_time: 3600
+  users:
+    - username: admin
+      password: admin
+    - username: user
+      password: user
