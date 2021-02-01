@@ -69,7 +69,7 @@ services:
       - ../logs/sentinel/logs:/root/logs
   # RocketMQ
   rmqnamesrv:
-    image: rocketmqinc/rocketmq:4.5.0
+    image: apacherocketmq/rocketmq:4.5.0
     container_name: rmqnamesrv
     ports:
       - 9876:9876
@@ -78,8 +78,9 @@ services:
     command: sh mqnamesrv
     networks:
       - pika-net
+
   rmqbroker:
-    image: rocketmqinc/rocketmq:4.5.0
+    image: apacherocketmq/rocketmq:4.5.0
     container_name: rmqbroker
     ports:
       - 10909:10909

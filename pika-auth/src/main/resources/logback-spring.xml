@@ -8,6 +8,8 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     <!--定义属性-->
     <springProperty scope="context" name="log.path" source="logging.file.path"/>
     <springProperty scope="context" name="application.name" source="spring.application.name"/>
+    <springProperty scope="context" name="logstash.host" source="logstash.host"/>
+    <springProperty scope="context" name="logstash.port" source="logstash.port"/>
 
     <!-- 彩色日志依赖的渲染类 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
@@ -87,7 +89,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     <!--输出到logstash的appender-->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!--可以访问的logstash日志收集端口-->
-        <destination>127.0.0.1:5044</destination>
+        <destination>${logstash.host}:${logstash.port}</destination>
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
 

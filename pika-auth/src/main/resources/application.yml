@@ -109,3 +109,7 @@ security:
   loginTimeLimit: 5
   # 多少分钟后可重试
   loginAfterTime: 2
+
+logstash:
+  host: ${LOGSTASH_HOST:127.0.0.1}
+  port: ${LOGSTASH_PORT:5044}

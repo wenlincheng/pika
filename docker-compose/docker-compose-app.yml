@@ -8,15 +8,17 @@ services:
     links:
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     networks:
       - pika-net
     ports:
-      - 8101:8101
+      - 8100:8100
     depends_on:
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
@@ -29,7 +31,8 @@ services:
     links:
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     networks:
       - pika-net
     ports:
@@ -37,7 +40,8 @@ services:
     depends_on:
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
@@ -50,7 +54,8 @@ services:
     links:
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     networks:
       - pika-net
     ports:
@@ -58,7 +63,8 @@ services:
     depends_on:
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
@@ -72,7 +78,8 @@ services:
       - mysql
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     networks:
       - pika-net
     ports:
@@ -81,7 +88,8 @@ services:
       - mysql
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
@@ -95,7 +103,8 @@ services:
       - mysql
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     networks:
       - pika-net
     ports:
@@ -104,7 +113,8 @@ services:
       - mysql
       - redis
       - nacos
-      - rabbitmq
+      - rmqnamesrv
+      - logstash
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
