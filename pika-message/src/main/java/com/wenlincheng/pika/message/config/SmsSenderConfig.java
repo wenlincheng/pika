@@ -16,17 +16,29 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "sms")
 public class SmsSenderConfig {
 
+    /**
+     * 区域id
+     */
     private String regionId;
 
-    private String accessKeyId;
+    /**
+     * AccessKey
+     */
+    private String accessKey;
 
-    private String secret;
+    /**
+     * AccessSecret
+     */
+    private String accessSecret;
 
+    /**
+     * 版本
+     */
     private String version;
 
-    private String action;
-
+    /**
+     * 短信服务器域名
+     */
     private String domain;
 
-    private String method;
 }

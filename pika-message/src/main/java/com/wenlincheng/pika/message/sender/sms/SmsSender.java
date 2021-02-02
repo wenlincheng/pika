@@ -12,12 +12,14 @@ public interface SmsSender {
     /**
      * 单条发送
      *
+     * @param sendParam 发送参数
      */
-    void sendSms();
+    void sendSms(SmsSendParam sendParam);
 
     /**
      * 批量发送
      *
+     * @param batchSendParam 批量发送参数
      */
-    void sendBatchSms();
+    void sendBatchSms(SmsBatchSendParam batchSendParam);
 }

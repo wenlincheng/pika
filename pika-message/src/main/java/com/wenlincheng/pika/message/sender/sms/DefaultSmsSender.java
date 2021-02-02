@@ -8,8 +8,13 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.wenlincheng.pika.message.config.SmsSenderConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.Objects;
 
 /**
  * 默认短信内发送者
@@ -22,18 +27,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultSmsSender implements SmsSender {
 
+    @Autowired
+    private SmsSenderConfig smsSenderConfig;
+
+    private static IAcsClient client;
+
+    @PostConstruct
+    public void initClient() {
+        DefaultProfile profile = DefaultProfile.getProfile(smsSenderConfig.getRegionId(), smsSenderConfig.getAccessKey(), smsSenderConfig.getAccessSecret());
+        client = new DefaultAcsClient(profile);
+    }
+
     @Override
-    public void sendSms() {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "<accessKeyId>", "<accessSecret>");
-        IAcsClient client = new DefaultAcsClient(profile);
+    public void sendSms(SmsSendParam sendParam) {
 
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
-        request.setSysDomain("dysmsapi.aliyuncs.com");
-        request.setSysVersion("2017-05-25");
+        request.setSysDomain(smsSenderConfig.getDomain());
+        request.setSysVersion(smsSenderConfig.getVersion());
         request.setSysAction("SendSms");
-
         request.putQueryParameter("RegionId", "cn-hangzhou");
+        request.putQueryParameter("PhoneNumbers", sendParam.getPhoneNumbers());
+        request.putQueryParameter("SignName", sendParam.getSignName());
+        request.putQueryParameter("TemplateCode", sendParam.getTemplateCode());
+        request.putQueryParameter("TemplateParam", sendParam.getTemplateParam());
+        request.putQueryParameter("SmsUpExtendCode", sendParam.getSmsUpExtendCode());
+        request.putQueryParameter("OutId", sendParam.getOutId());
+
+
         request.putQueryParameter("PhoneNumbers", "13036201053");
         request.putQueryParameter("SignName", "signfffff");
         request.putQueryParameter("TemplateCode", "ddd");
@@ -53,14 +74,11 @@ public class DefaultSmsSender implements SmsSender {
     }
 
     @Override
-    public void sendBatchSms() {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "<accessKeyId>", "<accessSecret>");
-        IAcsClient client = new DefaultAcsClient(profile);
-
+    public void sendBatchSms(SmsBatchSendParam batchSendParam) {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
-        request.setSysDomain("dysmsapi.aliyuncs.com");
-        request.setSysVersion("2017-05-25");
+        request.setSysDomain(smsSenderConfig.getDomain());
+        request.setSysVersion(smsSenderConfig.getVersion());
         request.setSysAction("SendBatchSms");
         request.putQueryParameter("RegionId", "cn-hangzhou");
         request.putQueryParameter("PhoneNumberJson", "[\"13098930293\",\"13909203945\"]");
