@@ -12,18 +12,35 @@ import lombok.Data;
 @Data
 public class SmsBatchSendParam {
 
-    private String regionId;
+    /**
+     * 手机号码 JSON数组 必选
+     * ["1590***0000","13500***000"]
+     */
+    private String phoneNumberJson;
 
-    private String phoneNumbers;
+    /**
+     * 短信签名名称 必选
+     * ["阿里云","阿里巴巴"]
+     * 短信签名的个数必须与手机号码的个数相同、内容一一对应
+     */
+    private String signNameJson;
 
-    private String signName;
-
+    /**
+     * 短信模板ID 必选
+     */
     private String templateCode;
 
-    private String templateParam;
+    /**
+     * 短信模板变量对应的实际值，JSON数组
+     *
+     * 关于模板中无参数的情况下该字段传参格式示例：[{},{}]（{}个数和群发的号码个数对应）
+     * [{"name":"TemplateParamJson"},{"name":"TemplateParamJson"}]
+     */
+    private String templateParamJson;
 
+    /**
+     * 上行短信扩展码，JSON数组
+     */
     private String smsUpExtendCode;
-
-    private String outId;
 
 }

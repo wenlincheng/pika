@@ -1,5 +1,8 @@
 package com.wenlincheng.pika.message.sender.sms;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
@@ -8,6 +11,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.wenlincheng.pika.common.core.exception.BaseException;
 import com.wenlincheng.pika.message.config.SmsSenderConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Objects;
+
+import static com.wenlincheng.pika.message.enums.MessageErrorCodeEnum.SMS_SEND_ERROR;
 
 /**
  * 默认短信内发送者
@@ -46,7 +52,7 @@ public class DefaultSmsSender implements SmsSender {
         request.setSysDomain(smsSenderConfig.getDomain());
         request.setSysVersion(smsSenderConfig.getVersion());
         request.setSysAction("SendSms");
-        request.putQueryParameter("RegionId", "cn-hangzhou");
+        request.putQueryParameter("RegionId", smsSenderConfig.getRegionId());
         request.putQueryParameter("PhoneNumbers", sendParam.getPhoneNumbers());
         request.putQueryParameter("SignName", sendParam.getSignName());
         request.putQueryParameter("TemplateCode", sendParam.getTemplateCode());
@@ -54,23 +60,18 @@ public class DefaultSmsSender implements SmsSender {
         request.putQueryParameter("SmsUpExtendCode", sendParam.getSmsUpExtendCode());
         request.putQueryParameter("OutId", sendParam.getOutId());
 
-
-        request.putQueryParameter("PhoneNumbers", "13036201053");
-        request.putQueryParameter("SignName", "signfffff");
-        request.putQueryParameter("TemplateCode", "ddd");
-        request.putQueryParameter("TemplateParam", "{\"code\":\"22222\"}");
-        request.putQueryParameter("SmsUpExtendCode", "4321sss");
-        request.putQueryParameter("OutId", "123456");
         try {
             CommonResponse response = client.getCommonResponse(request);
-            System.out.println(response.getData());
-        } catch (ServerException e) {
-            e.printStackTrace();
+            String data = response.getData();
+            JSONObject jsonObject = JSON.parseObject(data);
+            String code = (String) jsonObject.get("Code");
+            if (!"OK".equals(code)) {
+                throw new BaseException(SMS_SEND_ERROR);
+            }
         } catch (ClientException e) {
             e.printStackTrace();
+            throw new BaseException(SMS_SEND_ERROR);
         }
-
-
     }
 
     @Override
@@ -80,19 +81,23 @@ public class DefaultSmsSender implements SmsSender {
         request.setSysDomain(smsSenderConfig.getDomain());
         request.setSysVersion(smsSenderConfig.getVersion());
         request.setSysAction("SendBatchSms");
-        request.putQueryParameter("RegionId", "cn-hangzhou");
-        request.putQueryParameter("PhoneNumberJson", "[\"13098930293\",\"13909203945\"]");
-        request.putQueryParameter("SignNameJson", "[\"ecefef\",\"ferferfefe\"]");
-        request.putQueryParameter("TemplateCode", "ffffffff");
-        request.putQueryParameter("TemplateParamJson", "[{\"code\":\"323323\"},{\"code\":\"343344\"}]");
+        request.putQueryParameter("RegionId", smsSenderConfig.getRegionId());
+        request.putQueryParameter("PhoneNumberJson", batchSendParam.getPhoneNumberJson());
+        request.putQueryParameter("SignNameJson", batchSendParam.getSignNameJson());
+        request.putQueryParameter("TemplateCode", batchSendParam.getTemplateCode());
+        request.putQueryParameter("TemplateParamJson", batchSendParam.getTemplateParamJson());
 
         try {
             CommonResponse response = client.getCommonResponse(request);
-            System.out.println(response.getData());
-        } catch (ServerException e) {
-            e.printStackTrace();
+            String data = response.getData();
+            JSONObject jsonObject = JSON.parseObject(data);
+            String code = (String) jsonObject.get("Code");
+            if (!"OK".equals(code)) {
+                throw new BaseException(SMS_SEND_ERROR);
+            }
         } catch (ClientException e) {
             e.printStackTrace();
+            throw new BaseException(SMS_SEND_ERROR);
         }
     }
 }

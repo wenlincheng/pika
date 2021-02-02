@@ -14,16 +14,35 @@ public class SmsSendParam {
 
     private String regionId;
 
+    /**
+     * 手机号码 必选
+     */
     private String phoneNumbers;
 
+    /**
+     * 短信签名名称 必选
+     */
     private String signName;
 
+    /**
+     * 短信模板id 必选
+     */
     private String templateCode;
 
+    /**
+     * 短信模板参数 JSON格式
+     * {"code":"1111"}
+     */
     private String templateParam;
 
+    /**
+     * 上行短信扩展码
+     */
     private String smsUpExtendCode;
 
+    /**
+     * 外部流水扩展字段
+     */
     private String outId;
 
 }
