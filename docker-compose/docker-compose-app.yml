@@ -15,10 +15,7 @@ services:
     ports:
       - 8100:8100
     depends_on:
-      - redis
-      - nacos
-      - rmqnamesrv
-      - logstash
+      - pika-auth
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
@@ -40,8 +37,7 @@ services:
     depends_on:
       - redis
       - nacos
-      - rmqnamesrv
-      - logstash
+      - pika-auth
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
@@ -63,8 +59,7 @@ services:
     depends_on:
       - redis
       - nacos
-      - rmqnamesrv
-      - logstash
+      - pika-upms
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
@@ -88,8 +83,6 @@ services:
       - mysql
       - redis
       - nacos
-      - rmqnamesrv
-      - logstash
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai
@@ -113,8 +106,6 @@ services:
       - mysql
       - redis
       - nacos
-      - rmqnamesrv
-      - logstash
     env_file: env/.env
     environment:
       TZ: Asia/Shanghai

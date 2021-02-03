@@ -169,7 +169,7 @@ docker-compose -f docker-compose-init.yml up -d
  启动网关服务
  ```
  cd ../docker-compose
- docker-compose -f docker-compose-base.yml -f docker-compose-app.yml up -d pika-gateway-admin
+ docker-compose -f docker-compose-base.yml -f docker-compose-elk.yml -f docker-compose-app.yml up -d pika-gateway-admin
  ```
  
 ### 日志收集分析（Elastic Stack）
