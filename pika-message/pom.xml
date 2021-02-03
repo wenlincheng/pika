@@ -10,13 +10,7 @@
     <artifactId>pika-message</artifactId>
     <version>1.0.0</version>
     <name>pika-message</name>
-    <packaging>pom</packaging>
     <description>消息管理服务</description>
-
-    <modules>
-        <module>pika-message-api</module>
-        <module>pika-message-core</module>
-    </modules>
 
     <dependencies>
         <dependency>
@@ -24,6 +18,50 @@
             <artifactId>pika-common-core</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.wenlincheng.pika</groupId>
+            <artifactId>pika-common-data</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 邮件 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
+        <!-- SSL加密 -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--把依赖的包都打包到生成的Jar包中, 生成可执行的Jar-->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
