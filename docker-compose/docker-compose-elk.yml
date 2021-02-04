@@ -20,7 +20,7 @@ services:
     ports:
       - 9200:9200
     networks:
-      - elastic
+      - pika-net
 
   es-node02:
     image: elasticsearch:7.7.0
@@ -42,7 +42,7 @@ services:
     ports:
       - 9201:9201
     networks:
-      - elastic
+      - pika-net
 
   es-node03:
     image: elasticsearch:7.7.0
@@ -64,7 +64,7 @@ services:
     ports:
       - 9202:9202
     networks:
-      - elastic
+      - pika-net
 
   logstash:
     image: logstash:7.7.0
@@ -82,7 +82,7 @@ services:
       - 9600:9600
       - 5044:5044
     networks:
-      - elastic
+      - pika-net
 
   kibana:
     image: kibana:7.7.0
@@ -94,7 +94,7 @@ services:
       ELASTICSEARCH_HOSTS: http://es-node01:9200
       I18N_LOCALE: zh-CN
     networks:
-      - elastic
+      - pika-net
 
   cerebro:
     image: lmenezes/cerebro:0.9.2
@@ -104,8 +104,4 @@ services:
     command:
       - -Dhosts.0.host=http://es-node01:9200
     networks:
-      - elastic
-
-networks:
-  elastic:
-    driver: bridge
+      - pika-net

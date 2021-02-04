@@ -67,7 +67,7 @@ echo '构建 pika-upms 镜像完成!'
 
 echo '开始启动 pika-upms 服务...'
 cd ../docker-compose
-docker-compose -f docker-compose-base.yml -f docker-compose-app.yml up -d pika-upms
+docker-compose -f docker-compose-base.yml -f docker-compose-elk.yml -f docker-compose-app.yml up -d pika-upms
 
 echo '启动 pika-upms 服务完成!'
 
@@ -82,7 +82,7 @@ echo '构建 pika-auth 镜像完成!'
 
 echo '开始启动 pika-auth 服务...'
 cd ../docker-compose
-docker-compose -f docker-compose-base.yml -f docker-compose-app.yml up -d pika-auth
+docker-compose -f docker-compose-base.yml -f docker-compose-elk.yml -f docker-compose-app.yml up -d pika-auth
 echo '启动 pika-auth 服务完成!'
 
 # 5、启动 pika-gateway-admin 服务
@@ -95,6 +95,6 @@ mvn package && mvn docker:build
 
 echo '开始启动 pika-gateway-admin 服务...'
 cd ../../docker-compose
-docker-compose -f docker-compose-base.yml -f docker-compose-app.yml up -d pika-gateway-admin
+docker-compose -f docker-compose-base.yml -f docker-compose-elk.yml -f docker-compose-app.yml up -d pika-gateway-admin
 
 echo '启动 pika-gateway-admin 服务完成!'

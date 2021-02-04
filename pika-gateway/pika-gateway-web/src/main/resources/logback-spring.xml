@@ -8,7 +8,8 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     <!--定义属性-->
     <springProperty scope="context" name="log.path" source="logging.file.path"/>
     <springProperty scope="context" name="application.name" source="spring.application.name"/>
-    <springProperty scope="context" name="log.pika.level" source="logging.level.com.wenlincheng.pika"/>
+    <springProperty scope="context" name="logstash.host" source="logstash.host"/>
+    <springProperty scope="context" name="logstash.port" source="logstash.port"/>
 
     <!-- 彩色日志依赖的渲染类 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
@@ -20,7 +21,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     <property name="log.pattern" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(--){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 
     <!-- 控制台输出 -->
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <!--引用log.pattern-->
             <pattern>${log.pattern}</pattern>
@@ -28,7 +29,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     </appender>
 
     <!-- 系统日志输出 -->
-    <appender name="system_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="SYSTEM_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/${application.name}-info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--
@@ -59,7 +60,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     </appender>
 
     <!--系统错误日志输出-->
-    <appender name="system_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="SYSTEM_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/${application.name}-error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log.path}/${application.name}-error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
@@ -85,26 +86,34 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         </filter>
     </appender>
 
+    <!--输出到logstash的appender-->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!--可以访问的logstash日志收集端口-->
+        <destination>${logstash.host}:${logstash.port}</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
     <!--
-    logger主要用于存放日志对象，也可以定义日志类型、级别
+    logger：主要用于存放日志对象，也可以定义日志类型、级别
     name：表示匹配的logger类型前缀，也就是包的前半部分
     level：要记录的日志级别，包括 TRACE < DEBUG < INFO < WARN < ERROR
     additivity：作用在于children-logger是否使用 rootLogger配置的appender进行输出，
-    false：表示只用当前logger的appender-ref，true：
-    表示当前logger的appender-ref和rootLogger的appender-ref都有效
+    false：表示只用当前logger的appender-ref，true：表示当前logger的appender-ref和rootLogger的appender-ref都有效
     -->
-    <logger name="java.sql" level="debug"/>
-    <logger name="org.springframework.jdbc" level="debug"/>
-    <logger name="com.wenlincheng" level="debug"/>
+    <!--  【logger级别也可在springboot配置文件文件中指定】  -->
+    <!--    <logger name="java.sql" level="debug"/>-->
+    <!--    <logger name="org.springframework.jdbc" level="debug"/>-->
+    <!--    <logger name="com.wenlincheng" level="debug"/>-->
 
     <!--
     root与logger是父子关系，没有特别定义则默认为root，任何一个类只会和一个logger对应，
     要么是定义的logger，要么是root，判断的关键在于找到这个logger，然后判断这个logger的appender和level。
     -->
-    <root level="info">
-        <appender-ref ref="console" />
-        <appender-ref ref="system_info"/>
-        <appender-ref ref="system_error"/>
+    <root level="${logging.level.root}">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="SYSTEM_INFO"/>
+        <appender-ref ref="SYSTEM_ERROR"/>
+        <appender-ref ref="LOGSTASH"/>
     </root>
 
 </configuration>

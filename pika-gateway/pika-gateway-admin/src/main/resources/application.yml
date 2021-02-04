@@ -155,7 +155,3 @@ logging:
     root: INFO
     com:
       wenlincheng: INFO
-
-logstash:
-  host: ${LOGSTASH_HOST:127.0.0.1}
-  port: ${LOGSTASH_PORT:5044}
