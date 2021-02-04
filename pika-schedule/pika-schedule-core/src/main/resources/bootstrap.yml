@@ -1,182 +1,18 @@
-server:
-  port: 8120
 spring:
   application:
     name: pika-schedule
-  mvc:
-    servlet:
-      load-on-startup: 0
-  rabbitmq:
-    host: ${RABBIT_MQ_HOST:127.0.0.1}
-    port: ${RABBIT_MQ_PORT:5672}
-    username: ${RABBIT_MQ_USERNAME:root}
-    password: ${RABBIT_MQ_PASSWORD:123456}
-  redis:
-    host: ${REDIS_HOST:127.0.0.1}
-    port: 6379
-    password: ${REDIS_PASSWORD:123456}
-    timeout: 5000ms
-    lettuce:
-      # 关闭超时时间
-      shutdown-timeout: 100
-      pool:
-        # 连接池最大连接数
-        max-active: 300
-        # 连接池最大阻塞等待时间
-        max-wait: 10000
-        # 连接池中的最大空闲连接
-        max-idle: 8
-        # 连接池中的最小空闲连接
-        min-idle: 0
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DATASOURCE_HOST:127.0.0.1}:3306/pika_schedule?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezoneGMT%2b8
-    username: ${DATASOURCE_USERNAME:root}
-    password: ${DATASOURCE_PASSWORD:123456}
-    druid:
-      filters: stat
-      filter:
-        stat:
-          log-slow-sql: true
-          slow-sql-millis: 2000
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: true
-      maxOpenPreparedStatements: 20
-      # Druid StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        reset-enable: true
-        login-username: admin
-        login-password: admin
-        allow:
-        deny:
-      # Druid WebStatFilter配置
-      web-stat-filter:
-        enabled: true
-        url-pattern: /*
-        exclusions: .js,*.gif,*.png,*.jpg,*.html,*.js,*.css,*.ico,/druid/*
-
   cloud:
     nacos:
-      discovery:
-        server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
-        namespace: ${REGISTER_NAMESPACE:5a0187d7-9f8f-445a-a3bf-e17e11457e4d}
-        group: ${REGISTER_GROUP:PIKA}
-        namingLoadCacheAtStart: true
-        username: ${REGISTER_USERNAME:nacos} # 支持账号密码认证
-        password: ${REGISTER_PASSWORD:nacos}
       config:
         server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
         prefix: ${spring.application.name}
         file-extension: yml
         namespace: ${REGISTER_NAMESPACE:5a0187d7-9f8f-445a-a3bf-e17e11457e4d}
         group: ${REGISTER_GROUP:PIKA}
-        username: ${REGISTER_USERNAME:nacos} # 支持账号密码认证
+        username: ${REGISTER_USERNAME:nacos}
         password: ${REGISTER_PASSWORD:nacos}
-    sentinel:
-      transport:
-        dashboard: localhost:8080 #配置Sentinel dashboard地址
-        port: 8719
-      datasource:
-        ds1:
-          # 将限流规则持久化进nacos配置中心
-          nacos:
-            server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
-            dataId: pika-schedule-sentinel
-            groupId: PIKA
-            data-type: json
-            rule-type: flow
-            username: ${REGISTER_USERNAME:nacos} # 支持账号密码认证
-            password: ${REGISTER_PASSWORD:nacos}
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
 
-# Ribbon负载均衡
-ribbon:
-  # Ribbon的默认加载策略是懒加载。当第一次访问的时候，不仅会发送访问请求，还有初始化相关的服务。 设置饥饿加载相关服务
-  eager-load:
-    enabled: true
-    clients:
-      - pika-item
-      - pika-trade
-
-# Feign
-feign:
-  # sentinel对Feign的支持
-  sentinel:
-    enabled: true
-
-elasticjob:
-  # 事件追踪配置
-  tracing:
-    type: RDB
-  # 注册中心
-  regCenter:
-    serverLists: localhost:2181
-    namespace: pika-elasticjob
-  # 作业配置
-  jobs:
-    itemAutoOnSaleJob:
-#      jobBootstrapBeanName: itemAutoOnSaleJob
-      elasticJobClass: com.wenlincheng.pika.schedule.job.item.ItemAutoOnSaleJob
-      cron: 0/5 * * * * ?
-      shardingTotalCount: 3
-      shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou
-#    simpleJob:
-#      elasticJobClass: org.apache.shardingsphere.elasticjob.lite.example.job.SpringBootSimpleJob
-#      cron: 0/5 * * * * ?
-#      shardingTotalCount: 3
-#      shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou
-#    dataflowJob:
-#      elasticJobClass: org.apache.shardingsphere.elasticjob.lite.example.job.SpringBootDataflowJob
-#      cron: 0/5 * * * * ?
-#      shardingTotalCount: 3
-#      shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou
-    # 邮件通知
-    # see  https://shardingsphere.apache.org/elasticjob/current/cn/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/
-    occurErrorNoticeEmailJob:
-      elasticJobClass: com.wenlincheng.pika.schedule.job.error.OccurErrorNoticeEmailJob
-      overwrite: true
-      shardingTotalCount: 3
-      shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou
-      jobErrorHandlerType: EMAIL
-      jobBootstrapBeanName: occurErrorNoticeEmailBean
-      props:
-        email:
-          # 邮箱服务器
-          host: host
-          # 邮箱服务器端口
-          port: 465
-          # 用户名
-          username: username
-          # 密码
-          password: password
-          # 是否启用 SSL 加密传输
-          useSsl: true
-          # 邮件主题
-          subject: ElasticJob error message
-          # 发送方
-          from: from@xxx.xx
-          # 接收方
-          to: to1@xxx.xx,to2@xxx.xx
-          # 抄送
-          cc: cc@xxx.xx
-          # 密送
-          bcc: bcc@xxx.xx
-          # 是否开启调试模式
-          debug: false
-  # 作业信息导出配置
-  dump:
-    port: 9888
+# logstash
+logstash:
+  host: ${LOGSTASH_HOST:127.0.0.1}
+  port: ${LOGSTASH_PORT:5044}

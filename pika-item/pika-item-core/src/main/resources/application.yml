@@ -242,14 +242,14 @@ leaf:
   # segment
   segment:
     enable: true
-    url: jdbc:mysql://127.0.0.1:3306/pika_upms?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezoneGMT%2b8
-    username: root
-    password: 123456
+    url: jdbc:mysql://${DATASOURCE_HOST:127.0.0.1}:3306/pika_upms?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezoneGMT%2b8
+    username: ${DATASOURCE_USERNAME:root}
+    password: ${DATASOURCE_PASSWORD:123456}
   # snowflake
   snowflake:
     enable: true
-    address: 127.0.0.1
-    port: 2181
+    address: ${ZOOKEEPER_HOST:127.0.0.1}
+    port: ${ZOOKEEPER_PORT:2181}
 
 # 文档
 swagger:

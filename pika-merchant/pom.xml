@@ -22,6 +22,16 @@
 			<artifactId>pika-common-core</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.wenlincheng.pika</groupId>
+			<artifactId>pika-common-data</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.wenlincheng.pika</groupId>
+			<artifactId>pika-common-doc</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

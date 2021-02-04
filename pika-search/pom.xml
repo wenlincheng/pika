@@ -24,6 +24,12 @@
             <version>1.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.wenlincheng.pika</groupId>
+            <artifactId>pika-common-data</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- elasticsearch -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

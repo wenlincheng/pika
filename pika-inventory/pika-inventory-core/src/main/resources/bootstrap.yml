@@ -2,7 +2,6 @@ spring:
   application:
     name: pika-inventory
   cloud:
-    # 配置中心
     nacos:
       config:
         server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
@@ -12,3 +11,8 @@ spring:
         group: ${REGISTER_GROUP:PIKA}
         username: ${REGISTER_USERNAME:nacos}
         password: ${REGISTER_PASSWORD:nacos}
+
+# logstash
+logstash:
+  host: ${LOGSTASH_HOST:127.0.0.1}
+  port: ${LOGSTASH_PORT:5044}

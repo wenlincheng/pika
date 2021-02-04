@@ -1,6 +1,6 @@
 spring:
   application:
-    name: pika-pay
+    name: pika-search
   cloud:
     nacos:
       config:
