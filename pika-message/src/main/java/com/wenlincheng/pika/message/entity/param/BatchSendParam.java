@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.message.pojo.param;
+package com.wenlincheng.pika.message.entity.param;
 
 import lombok.Data;
 
@@ -21,6 +21,6 @@ public class BatchSendParam {
     /**
      * 内容列表
      */
-    private List<MessageParam> messageParams;
+    private List<MessageTemplateParam> messageTemplateParams;
 
 }

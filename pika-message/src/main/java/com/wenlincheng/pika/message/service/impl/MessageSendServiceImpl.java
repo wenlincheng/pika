@@ -1,9 +1,11 @@
 package com.wenlincheng.pika.message.service.impl;
 
 
-import com.wenlincheng.pika.message.pojo.param.BatchSendParam;
-import com.wenlincheng.pika.message.pojo.param.SendParam;
+import com.wenlincheng.pika.message.entity.param.BatchSendParam;
+import com.wenlincheng.pika.message.entity.param.SingleSendParam;
+import com.wenlincheng.pika.message.sender.email.DefaultEmailSender;
 import com.wenlincheng.pika.message.service.MessageSendService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,9 +18,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageSendServiceImpl implements MessageSendService {
 
-    @Override
-    public void send(SendParam sendParam) {
+    @Autowired
+    private DefaultEmailSender emailSender;
 
+    @Override
+    public void send(SingleSendParam singleSendParam) {
+
+    }
+
+
+    private Boolean sendEmail() {
+
+
+        return true;
     }
 
     @Override

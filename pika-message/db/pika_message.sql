@@ -84,25 +84,36 @@ CREATE TABLE `verification_code` (
 
 
 -- ----------------------------
--- Table structure for message_source
+-- Table structure for email_message_source
 -- ----------------------------
-DROP TABLE IF EXISTS `message_source`;
-CREATE TABLE `message_source` (
+DROP TABLE IF EXISTS `email_message_source`;
+CREATE TABLE `email_message_source` (
   `id` bigint(20) NOT NULL COMMENT 'ID',
-  `type` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '消息通知类型',
-  `attribute` text COLLATE utf8mb4_bin COMMENT '属性',
+  `name` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '名称',
+  `smtp_user` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用户',
+  `smtp_password` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '密码',
+  `smtp_security` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '连接加密方案',
+  `smtp_host` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'smtp host',
+  `smtp_port` int(11) DEFAULT NULL COMMENT 'smtp 端口号',
   `active` tinyint(1) DEFAULT NULL COMMENT '是否激活',
+  `type` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '消息通知类型',
+  `sequence` int(11) DEFAULT NULL COMMENT '若邮件没有指定服务器，使用最高优先级（数字越小，优先级越高）的服务器。',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `write_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `write_uid` bigint(20) DEFAULT NULL COMMENT '更新人',
   `is_deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除',
-  `sequence` int(11) DEFAULT NULL COMMENT '若邮件没有特地的邮件服务器被要求，最高优先级的服务器将被使用。默认优先级是10（数字越小，优先级越高）',
-  `smtp_user` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用户',
-  `smtp_password` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '密码',
-  `smtp_security` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '选择连接加密方案： None: SMTP 对话用明文完成。 TLS (STARTTLS): SMTP对话的开始时要求TLS 加密 (建议) SSL/TLS: SMTP对话通过专用端口用 SSL/TLS 加密 (默认是: 465)',
-  `smtp_host` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'smtp host',
-  `smtp_port` int(11) DEFAULT NULL COMMENT 'smtp 端口号',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_message_source_smtp_user` (`smtp_user`,`is_deleted`),
+  UNIQUE KEY `uk_message_source_smtp_host` (`smtp_host`,`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='邮件服务器';
+
+-- ----------------------------
+-- Table structure for sms_message_source
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_message_source`;
+CREATE TABLE `sms_message_source` (
+  `id` bigint(20) NOT NULL COMMENT 'ID',
   `name` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '名称',
   `channel` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '短信通道',
   `sign_name` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '短信签名名称',
@@ -115,12 +126,16 @@ CREATE TABLE `message_source` (
   `signature_method` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '签名方式',
   `signature_version` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '签名算法版本',
   `version` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'API的版本号',
+  `type` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '消息通知类型',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `write_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `write_uid` bigint(20) DEFAULT NULL COMMENT '更新人',
+  `is_deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_message_source_smtp_user` (`smtp_user`,`is_deleted`),
-  UNIQUE KEY `uk_message_source_smtp_host` (`smtp_host`,`is_deleted`),
   UNIQUE KEY `uk_message_source_channel` (`channel`,`is_deleted`),
   UNIQUE KEY `uk_message_source_sign_name` (`sign_name`,`is_deleted`),
   UNIQUE KEY `uk_message_source_access_key_id` (`access_key_id`,`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='MessageSource';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='短信供应商';
 
 SET FOREIGN_KEY_CHECKS = 1;

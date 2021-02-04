@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenlincheng.pika.message.mapper.EmailSourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wenlincheng.pika.message.entity.po.EmailSource">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="smtp_user" property="smtpUser" />
+        <result column="smtp_password" property="smtpPassword" />
+        <result column="smtp_security" property="smtpSecurity" />
+        <result column="smtp_host" property="smtpHost" />
+        <result column="smtp_port" property="smtpPort" />
+        <result column="active" property="active" />
+        <result column="type" property="type" />
+        <result column="sequence" property="sequence" />
+        <result column="create_date" property="createDate" />
+        <result column="write_date" property="writeDate" />
+        <result column="create_uid" property="createUid" />
+        <result column="write_uid" property="writeUid" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, smtp_user, smtp_password, smtp_security, smtp_host, smtp_port, active, type, sequence, create_date, write_date, create_uid, write_uid, is_deleted
+    </sql>
+
+</mapper>

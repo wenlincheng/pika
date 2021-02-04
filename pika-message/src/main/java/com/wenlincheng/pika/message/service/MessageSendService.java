@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.message.service;
 
-import com.wenlincheng.pika.message.pojo.param.BatchSendParam;
-import com.wenlincheng.pika.message.pojo.param.SendParam;
+import com.wenlincheng.pika.message.entity.param.BatchSendParam;
+import com.wenlincheng.pika.message.entity.param.SingleSendParam;
 
 /**
  * 消息发送服务
@@ -15,10 +15,10 @@ public interface MessageSendService {
     /**
      * 发相同消息给不同人
      *
-     * @param sendParam 发送参数
+     * @param singleSendParam 发送参数
      * @return void
      */
-    void send(SendParam sendParam);
+    void send(SingleSendParam singleSendParam);
 
     /**
      * 发不同消息给不同人

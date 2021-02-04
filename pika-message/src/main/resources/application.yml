@@ -197,6 +197,12 @@ sms:
   version: 2017-05-25
   domain: dysmsapi.aliyuncs.com
 # email
+email:
+  smtpUser:
+  smtpPassword:
+  securityType:
+  smtpHost:
+  smtpPort:
 
 
 
