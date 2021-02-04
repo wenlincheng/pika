@@ -41,6 +41,12 @@
             <artifactId>aliyun-java-sdk-core</artifactId>
         </dependency>
 
+        <!--logstash-->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>

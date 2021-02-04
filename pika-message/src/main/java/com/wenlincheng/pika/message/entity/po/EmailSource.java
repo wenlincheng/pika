@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.message.entity.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -29,7 +30,7 @@ public class EmailSource extends BaseModel<EmailSource> {
     /**
      * ID
      */
-    @TableId("id")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

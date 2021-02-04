@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-02-04
  */
 @Service
-public class EmailMessageSourceServiceImpl extends ServiceImpl<EmailSourceMapper, EmailSource> implements EmailMessageSourceService {
+public class EmailSourceServiceImpl extends ServiceImpl<EmailSourceMapper, EmailSource> implements EmailMessageSourceService {
 
 }

@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.message.util;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -44,6 +45,8 @@ public class CodeGenerator {
         gc.setAuthor(rb.getString("author"));
         //是否打开输出目录
         gc.setOpen(true);
+        // id类型
+        gc.setIdType(IdType.ASSIGN_ID);
         gc.setControllerName("%sController");
         //service命名方式
         gc.setServiceName("%sService");
