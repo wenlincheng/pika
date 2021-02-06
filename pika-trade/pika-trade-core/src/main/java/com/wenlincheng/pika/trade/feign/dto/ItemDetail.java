@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.item.client.dto;
+package com.wenlincheng.pika.trade.feign.dto;
 
 import lombok.Data;
 

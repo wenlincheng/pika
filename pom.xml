@@ -70,6 +70,7 @@
         <elasticjob.version>3.0.0-RC1</elasticjob.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <powermock.version>2.0.2</powermock.version>
+        <seata.version>1.4.0</seata.version>
     </properties>
 
     <dependencyManagement>
@@ -99,6 +100,12 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-all</artifactId>
+                <version>${seata.version}</version>
             </dependency>
 
             <!-- jetcache 缓存系统 -->

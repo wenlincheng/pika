@@ -1,8 +1,8 @@
-package com.wenlincheng.pika.item.client.fallback;
+package com.wenlincheng.pika.trade.feign.fallback;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
-import com.wenlincheng.pika.item.client.ItemService;
-import com.wenlincheng.pika.item.client.dto.ItemDetail;
+import com.wenlincheng.pika.trade.feign.ItemService;
+import com.wenlincheng.pika.trade.feign.dto.ItemDetail;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

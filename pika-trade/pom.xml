@@ -19,7 +19,10 @@
 
 	<modules>
 		<module>pika-trade-api</module>
+		<module>pika-trade-app</module>
+		<module>pika-trade-web</module>
 		<module>pika-trade-core</module>
+		<module>pika-trade-boot</module>
 	</modules>
 
 	<dependencies>

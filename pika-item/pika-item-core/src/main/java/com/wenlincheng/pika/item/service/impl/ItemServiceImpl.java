@@ -29,7 +29,6 @@ import java.math.BigDecimal;
  * @author Pikaman
  * @date 2021/1/1 10:10 上午
  */
-@GlobalTransactional(rollbackFor = Exception.class)
 @Service
 public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements ItemService {
 
@@ -67,6 +66,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         return itemDetail;
     }
 
+    @GlobalTransactional(name = "item-service-create-order", rollbackFor = Exception.class)
     @Override
     public Long createItemStepOne(ItemStepOneForm itemAddForm) {
         Item item = initItem();

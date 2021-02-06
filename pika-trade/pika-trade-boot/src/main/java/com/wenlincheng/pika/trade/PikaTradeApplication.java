@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.trade;
 
+import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
@@ -20,6 +21,7 @@ import org.springframework.util.StopWatch;
  * @date 2021/1/1 10:10 上午
  */
 @Slf4j
+@EnableAutoDataSourceProxy
 @EnableAsync
 @SpringBootApplication
 @EnableDiscoveryClient

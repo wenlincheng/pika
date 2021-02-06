@@ -1,8 +1,8 @@
-package com.wenlincheng.pika.trade.client;
+package com.wenlincheng.pika.trade.feign;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
-import com.wenlincheng.pika.trade.client.dto.ItemDetail;
-import com.wenlincheng.pika.trade.client.fallback.ItemServiceFallbackFactory;
+import com.wenlincheng.pika.trade.feign.dto.ItemDetail;
+import com.wenlincheng.pika.trade.feign.fallback.ItemServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
