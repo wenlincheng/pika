@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @version 1.0.0
  * @date 2021/1/1 10:10 上午
  */
-@FeignClient(contextId = "itemService", value = "pika-item", fallbackFactory = ItemServiceFallbackFactory.class)
+@FeignClient(contextId = "itemService", value = "pika-item"/*, fallbackFactory = ItemServiceFallbackFactory.class*/)
 public interface ItemService {
 
     /**

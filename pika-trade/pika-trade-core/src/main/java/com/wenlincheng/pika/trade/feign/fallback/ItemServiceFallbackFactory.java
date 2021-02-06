@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @date 2021/1/1 10:10 上午
  */
 @Slf4j
-@Component
+//@Component
 public class ItemServiceFallbackFactory implements FallbackFactory<ItemService> {
 
     @Override
