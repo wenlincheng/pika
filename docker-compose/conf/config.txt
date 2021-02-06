@@ -1,5 +1,5 @@
-service.vgroupMapping.trade-server-group=default
-service.vgroupMapping.item-server-group=default
+service.vgroupMapping.trade-service-group=default
+service.vgroupMapping.item-service-group=default
 store.mode=db
 store.db.datasource=druid
 store.db.dbType=mysql

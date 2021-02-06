@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenlincheng.pika.trade.mapper.TradeOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wenlincheng.pika.trade.entity.po.TradeOrder">
+    <result column="id" property="id" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_user_id" property="createUserId" />
+    <result column="update_user_id" property="updateUserId" />
+    <result column="is_deleted" property="isDeleted" />
+        <result column="seller_id" property="sellerId" />
+        <result column="seller_name" property="sellerName" />
+        <result column="buyer_id" property="buyerId" />
+        <result column="buyer_name" property="buyerName" />
+        <result column="shop_code" property="shopCode" />
+        <result column="shop_name" property="shopName" />
+        <result column="buyer_info" property="buyerInfo" />
+        <result column="consignee_name" property="consigneeName" />
+        <result column="consignee_phone" property="consigneePhone" />
+        <result column="consignee_region_code" property="consigneeRegionCode" />
+        <result column="consignee_full_address" property="consigneeFullAddress" />
+        <result column="order_time" property="orderTime" />
+        <result column="order_type" property="orderType" />
+        <result column="order_status" property="orderStatus" />
+        <result column="origin_amount" property="originAmount" />
+        <result column="actual_amount" property="actualAmount" />
+        <result column="actual_goods_amount" property="actualGoodsAmount" />
+        <result column="discount_amount" property="discountAmount" />
+        <result column="paid_amount" property="paidAmount" />
+        <result column="origin_shipping_fee" property="originShippingFee" />
+        <result column="actual_shipping_fee" property="actualShippingFee" />
+        <result column="tax_fee" property="taxFee" />
+        <result column="refund_amount" property="refundAmount" />
+        <result column="currency_code" property="currencyCode" />
+        <result column="promotion_infos" property="promotionInfos" />
+        <result column="pay_type" property="payType" />
+        <result column="pay_status" property="payStatus" />
+        <result column="paid_time" property="paidTime" />
+        <result column="paid_expire_time" property="paidExpireTime" />
+        <result column="delivery_order_status" property="deliveryOrderStatus" />
+        <result column="delivery_time" property="deliveryTime" />
+        <result column="finish_time" property="finishTime" />
+        <result column="close_reason" property="closeReason" />
+        <result column="buyer_remark" property="buyerRemark" />
+        <result column="seller_remark" property="sellerRemark" />
+        <result column="is_reverse_pending" property="isReversePending" />
+        <result column="is_evaluated" property="isEvaluated" />
+        <result column="is_overdue_reverse" property="isOverdueReverse" />
+        <result column="code" property="code" />
+        <result column="address_id" property="addressId" />
+        <result column="platform_remark_list" property="platformRemarkList" />
+        <result column="invoice_status" property="invoiceStatus" />
+        <result column="evaluation_status" property="evaluationStatus" />
+        <result column="trade_order_group_id" property="tradeOrderGroupId" />
+        <result column="order_promotion_info" property="orderPromotionInfo" />
+        <result column="is_buyer_deleted" property="isBuyerDeleted" />
+        <result column="option" property="option" />
+        <result column="actual_face_amount" property="actualFaceAmount" />
+        <result column="prepare_delivery_time" property="prepareDeliveryTime" />
+        <result column="expected_delivery_time" property="expectedDeliveryTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_time,
+        update_time,
+        create_user_id,
+        update_user_id,
+        is_deleted,
+        seller_id, seller_name, buyer_id, buyer_name, shop_code, shop_name, buyer_info, consignee_name, consignee_phone, consignee_region_code, consignee_full_address, order_time, order_type, order_status, origin_amount, actual_amount, actual_goods_amount, discount_amount, paid_amount, origin_shipping_fee, actual_shipping_fee, tax_fee, refund_amount, currency_code, promotion_infos, pay_type, pay_status, paid_time, paid_expire_time, delivery_order_status, delivery_time, finish_time, close_reason, buyer_remark, seller_remark, is_reverse_pending, is_evaluated, is_overdue_reverse, code, address_id, platform_remark_list, invoice_status, evaluation_status, trade_order_group_id, order_promotion_info, is_buyer_deleted, option, actual_face_amount, prepare_delivery_time, expected_delivery_time
+    </sql>
+
+</mapper>

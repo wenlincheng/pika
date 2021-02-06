@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.trade;
 
+import com.sankuai.inf.leaf.plugin.annotation.EnableLeafServer;
 import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
@@ -23,10 +24,11 @@ import org.springframework.util.StopWatch;
 @Slf4j
 @EnableAutoDataSourceProxy
 @EnableAsync
-@SpringBootApplication
+@EnableLeafServer
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = {"com.wenlincheng.pika.common.core.log.feign"})
 @MapperScan("com.wenlincheng.pika.trade.mapper")
+@SpringBootApplication
 public class PikaTradeApplication {
 
     public static void main(String[] args) {

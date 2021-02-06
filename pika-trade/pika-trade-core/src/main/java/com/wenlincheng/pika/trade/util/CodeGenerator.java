@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 public class CodeGenerator {
 
     public static void main(String[] args) {
-        //用来获取Mybatis-Plus.properties文件的配置信息
+        //用来获取generator.properties文件的配置信息
         final ResourceBundle rb = ResourceBundle.getBundle("generator");
         String serverName = rb.getString("serverName");
         String packageName = rb.getString("packageName");
@@ -80,7 +80,7 @@ public class CodeGenerator {
         //pc.setModuleName("order");
         // 父包名。
         // 自定义包路径  如果为空，将下面子包名必须写全部， 否则就只需写子包名
-        pc.setParent(rb.getString("package")+ "."+packageName);
+        pc.setParent(rb.getString("packagePath")+ "."+packageName);
         pc.setEntity("entity.po");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
@@ -118,7 +118,8 @@ public class CodeGenerator {
         //数据库表字段映射到实体的命名策略, 未指定按照 naming 执行
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         //自定义继承的Entity类全称，带包名
-        //strategy.setSuperEntityClass("com.wenlincheng.pika.common.entity.po.BasePo");
+        strategy.setSuperEntityClass("com.wenlincheng.pika.common.core.base.model.BaseModel");
+        strategy.setSuperEntityColumns("id", "create_time", "update_time", "create_user_id", "update_user_id", "is_deleted");
         //【实体】是否为lombok模型（默认 false）
         strategy.setEntityLombokModel(true);
         // 添加@TableName("order")注解
@@ -126,9 +127,11 @@ public class CodeGenerator {
         //生成 @RestController 控制器
         strategy.setRestControllerStyle(true);
         //自定义继承的Controller类全称，带包名
-        //strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
+        strategy.setSuperControllerClass("com.wenlincheng.pika.common.core.base.controller.BaseController");
         //需要包含的表名，允许正则表达式
-        strategy.setInclude(rb.getString("tableName"));
+
+        String[] tableNames = rb.getString("tableName").split(",");
+        strategy.setInclude(tableNames);
         //自定义基础的Entity类，公共字段
         //strategy.setSuperEntityColumns("id");
         // 驼峰转连字符

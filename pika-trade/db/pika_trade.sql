@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for cart
 -- ----------------------------
-DROP TABLE IF EXIS `cart`;
+DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `id` bigint NOT NULL COMMENT 'ID',
   `buyer_id` bigint DEFAULT NULL COMMENT '买家id',
@@ -22,7 +22,7 @@ CREATE TABLE `cart` (
 -- ----------------------------
 -- Table structure for cart_item_info
 -- ----------------------------
-DROP TABLE IF EXIS `cart_item_info`;
+DROP TABLE IF EXISTS `cart_item_info`;
 CREATE TABLE `cart_item_info` (
   `id` bigint NOT NULL COMMENT 'ID',
   `buyer_id` bigint DEFAULT NULL COMMENT '买家id',
@@ -46,7 +46,7 @@ CREATE TABLE `cart_item_info` (
 -- ----------------------------
 -- Table structure for delivery_order
 -- ----------------------------
-DROP TABLE IF EXIS `delivery_order`;
+DROP TABLE IF EXISTS `delivery_order`;
 CREATE TABLE `delivery_order` (
   `id` bigint NOT NULL COMMENT 'ID',
   `trade_order_codes` varchar(512) DEFAULT NULL COMMENT '交易订单号列表',
@@ -119,7 +119,7 @@ CREATE TABLE `delivery_order` (
 -- ----------------------------
 -- Table structure for delivery_order_detail
 -- ----------------------------
-DROP TABLE IF EXIS `delivery_order_detail`;
+DROP TABLE IF EXISTS `delivery_order_detail`;
 CREATE TABLE `delivery_order_detail` (
   `id` bigint NOT NULL COMMENT 'ID',
   `delivery_order_id` bigint DEFAULT NULL COMMENT '履约单id',
@@ -208,7 +208,7 @@ CREATE TABLE `delivery_order_detail` (
 -- ----------------------------
 -- Table structure for delivery_order_rel_trade_order
 -- ----------------------------
-DROP TABLE IF EXIS `delivery_order_rel_trade_order`;
+DROP TABLE IF EXISTS `delivery_order_rel_trade_order`;
 CREATE TABLE `delivery_order_rel_trade_order` (
   `id` bigint NOT NULL COMMENT 'ID',
   `delivery_order_id` bigint DEFAULT NULL COMMENT '履约单id',
@@ -228,7 +228,7 @@ CREATE TABLE `delivery_order_rel_trade_order` (
 -- ----------------------------
 -- Table structure for dispute_comm_record
 -- ----------------------------
-DROP TABLE IF EXIS `dispute_comm_record`;
+DROP TABLE IF EXISTS `dispute_comm_record`;
 CREATE TABLE `dispute_comm_record` (
   `id` bigint NOT NULL COMMENT 'ID',
   `reverse_order_id` bigint DEFAULT NULL COMMENT '售后单id',
@@ -254,7 +254,7 @@ CREATE TABLE `dispute_comm_record` (
 -- ----------------------------
 -- Table structure for negotiate_config
 -- ----------------------------
-DROP TABLE IF EXIS `negotiate_config`;
+DROP TABLE IF EXISTS `negotiate_config`;
 CREATE TABLE `negotiate_config` (
   `id` bigint NOT NULL COMMENT 'ID',
   `index_num` int DEFAULT NULL COMMENT '编号',
@@ -271,7 +271,7 @@ CREATE TABLE `negotiate_config` (
 -- ----------------------------
 -- Table structure for negotiate_record
 -- ----------------------------
-DROP TABLE IF EXIS `negotiate_record`;
+DROP TABLE IF EXISTS `negotiate_record`;
 CREATE TABLE `negotiate_record` (
   `id` bigint NOT NULL COMMENT 'ID',
   `reverse_order_id` bigint DEFAULT NULL COMMENT '售后单id',
@@ -302,7 +302,7 @@ CREATE TABLE `negotiate_record` (
 -- ----------------------------
 -- Table structure for refund_order
 -- ----------------------------
-DROP TABLE IF EXIS `refund_order`;
+DROP TABLE IF EXISTS `refund_order`;
 CREATE TABLE `refund_order` (
   `id` bigint NOT NULL COMMENT 'ID',
   `buyer_id` bigint DEFAULT NULL COMMENT '买家id',
@@ -338,7 +338,7 @@ CREATE TABLE `refund_order` (
 -- ----------------------------
 -- Table structure for return_order
 -- ----------------------------
-DROP TABLE IF EXIS `return_order`;
+DROP TABLE IF EXISTS `return_order`;
 CREATE TABLE `return_order` (
   `id` bigint NOT NULL COMMENT 'ID',
   `buyer_id` bigint DEFAULT NULL COMMENT '买家id',
@@ -372,7 +372,7 @@ CREATE TABLE `return_order` (
 -- ----------------------------
 -- Table structure for reverse_order
 -- ----------------------------
-DROP TABLE IF EXIS `reverse_order`;
+DROP TABLE IF EXISTS `reverse_order`;
 CREATE TABLE `reverse_order` (
   `id` bigint NOT NULL COMMENT 'ID',
   `buyer_id` bigint DEFAULT NULL COMMENT '买家id',
@@ -452,7 +452,7 @@ CREATE TABLE `reverse_order` (
 -- ----------------------------
 -- Table structure for reverse_order_detail
 -- ----------------------------
-DROP TABLE IF EXIS `reverse_order_detail`;
+DROP TABLE IF EXISTS `reverse_order_detail`;
 CREATE TABLE `reverse_order_detail` (
   `id` bigint NOT NULL COMMENT 'ID',
   `reverse_order_id` bigint DEFAULT NULL COMMENT '售后单id',
@@ -512,7 +512,7 @@ CREATE TABLE `reverse_order_detail` (
 -- ----------------------------
 -- Table structure for reverse_out_detail
 -- ----------------------------
-DROP TABLE IF EXIS `reverse_out_detail`;
+DROP TABLE IF EXISTS `reverse_out_detail`;
 CREATE TABLE `reverse_out_detail` (
   `id` bigint NOT NULL COMMENT 'ID',
   `reverse_order_id` bigint DEFAULT NULL COMMENT '售后单id',
@@ -554,7 +554,7 @@ CREATE TABLE `reverse_out_detail` (
 -- ----------------------------
 -- Table structure for reverse_reason
 -- ----------------------------
-DROP TABLE IF EXIS `reverse_reason`;
+DROP TABLE IF EXISTS `reverse_reason`;
 CREATE TABLE `reverse_reason` (
   `id` bigint NOT NULL COMMENT 'ID',
   `code` varchar(128) DEFAULT NULL COMMENT '编码',
@@ -575,7 +575,7 @@ CREATE TABLE `reverse_reason` (
 -- ----------------------------
 -- Table structure for reverse_remark
 -- ----------------------------
-DROP TABLE IF EXIS `reverse_remark`;
+DROP TABLE IF EXISTS `reverse_remark`;
 CREATE TABLE `reverse_remark` (
   `id` bigint NOT NULL COMMENT 'ID',
   `reverse_order_id` bigint DEFAULT NULL COMMENT '售后单id',
@@ -594,7 +594,7 @@ CREATE TABLE `reverse_remark` (
 -- ----------------------------
 -- Table structure for reverse_timeout_conf
 -- ----------------------------
-DROP TABLE IF EXIS `reverse_timeout_conf`;
+DROP TABLE IF EXISTS `reverse_timeout_conf`;
 CREATE TABLE `reverse_timeout_conf` (
   `id` bigint NOT NULL COMMENT 'ID',
   `process_status` varchar(32) DEFAULT NULL COMMENT '流程状态',
@@ -612,7 +612,7 @@ CREATE TABLE `reverse_timeout_conf` (
 -- ----------------------------
 -- Table structure for trade_order
 -- ----------------------------
-DROP TABLE IF EXIS `trade_order`;
+DROP TABLE IF EXISTS `trade_order`;
 CREATE TABLE `trade_order` (
   `id` bigint NOT NULL COMMENT 'ID',
   `seller_id` bigint DEFAULT NULL COMMENT '卖家id',
@@ -678,7 +678,7 @@ CREATE TABLE `trade_order` (
 -- ----------------------------
 -- Table structure for trade_order_detail
 -- ----------------------------
-DROP TABLE IF EXIS `trade_order_detail`;
+DROP TABLE IF EXISTS `trade_order_detail`;
 CREATE TABLE `trade_order_detail` (
   `id` bigint NOT NULL COMMENT 'ID',
   `trade_order_id` bigint DEFAULT NULL COMMENT '主订单id',
@@ -753,7 +753,7 @@ CREATE TABLE `trade_order_detail` (
 -- ----------------------------
 -- Table structure for trade_order_group
 -- ----------------------------
-DROP TABLE IF EXIS `trade_order_group`;
+DROP TABLE IF EXISTS `trade_order_group`;
 CREATE TABLE `trade_order_group` (
   `id` bigint NOT NULL COMMENT 'ID',
   `buyer_id` bigint DEFAULT NULL COMMENT '买家id',
@@ -777,7 +777,7 @@ CREATE TABLE `trade_order_group` (
 -- ----------------------------
 -- Table structure for trade_order_log
 -- ----------------------------
-DROP TABLE IF EXIS `trade_order_log`;
+DROP TABLE IF EXISTS `trade_order_log`;
 CREATE TABLE `trade_order_log` (
   `id` bigint NOT NULL COMMENT 'ID',
   `trade_order_id` bigint DEFAULT NULL COMMENT '订单id',
@@ -798,7 +798,7 @@ CREATE TABLE `trade_order_log` (
 -- ----------------------------
 -- Table structure for trade_pay
 -- ----------------------------
-DROP TABLE IF EXIS `trade_pay`;
+DROP TABLE IF EXISTS `trade_pay`;
 CREATE TABLE `trade_pay` (
   `id` bigint NOT NULL COMMENT 'ID',
   `batch_code` varchar(40) DEFAULT NULL COMMENT '支付批次号',
@@ -831,7 +831,7 @@ CREATE TABLE `trade_pay` (
 -- ----------------------------
 -- Table structure for trade_risk_info
 -- ----------------------------
-DROP TABLE IF EXIS `trade_risk_info`;
+DROP TABLE IF EXISTS `trade_risk_info`;
 CREATE TABLE `trade_risk_info` (
   `id` bigint NOT NULL COMMENT 'ID',
   `trade_order_code` varchar(128) DEFAULT NULL COMMENT '交易订单号',
