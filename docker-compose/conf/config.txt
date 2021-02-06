@@ -1,0 +1,16 @@
+service.vgroupMapping.trade-server-group=default
+service.vgroupMapping.item-server-group=default
+store.mode=db
+store.db.datasource=druid
+store.db.dbType=mysql
+store.db.driverClassName=com.mysql.cj.jdbc.Driver
+store.db.url=jdbc:mysql://mysql:3306/pika_seata?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
+store.db.user=root
+store.db.password=123456
+store.db.minConn=5
+store.db.maxConn=30
+store.db.globalTable=global_table
+store.db.branchTable=branch_table
+store.db.lockTable=lock_table
+store.db.queryLimit=100
+store.db.maxWait=5000

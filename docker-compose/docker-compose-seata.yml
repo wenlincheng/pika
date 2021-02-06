@@ -6,12 +6,17 @@ services:
     container_name: seata-server
     ports:
       - "8091:8091"
+    links:
+      - mysql
+      - nacos
+    depends_on:
+      - mysql
+      - nacos
     environment:
-      # 宿主机ip
-      - SEATA_IP=192.168.2.64
       - SEATA_PORT=8091
       - STORE_MODE=db
-      - SEATA_CONFIG_NAME=file:/root/seata-config/registry
     volumes:
-      - "./conf/registry.conf:/root/seata-config"
-      - "./logs:/root/logs/seata"
+      - "./conf/seata/registry.conf:/seata-server/resources/registry.conf"
+      - "../logs/seata:/root/logs/seata"
+    networks:
+      - pika-net
