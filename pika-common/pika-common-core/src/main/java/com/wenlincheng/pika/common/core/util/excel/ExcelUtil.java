@@ -1,7 +1,3 @@
-/**
- * yingyinglicai.com Inc.
- * Copyright (c) 2013-2015 All Rights Reserved.
- */
 package com.wenlincheng.pika.common.core.util.excel;
 
 import com.google.common.collect.Maps;

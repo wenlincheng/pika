@@ -3,11 +3,6 @@ package com.wenlincheng.pika.item.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wenlincheng.pika.common.core.enums.YnEnum;
-import com.wenlincheng.pika.common.leaf.model.SequenceConfig;
-import com.wenlincheng.pika.common.leaf.service.LeafSegmentService;
-import com.wenlincheng.pika.common.leaf.service.LeafSnowflakeService;
-import com.wenlincheng.pika.item.constant.ItemLeafKeyConstants;
 import com.wenlincheng.pika.item.entity.form.item.ItemPageQuery;
 import com.wenlincheng.pika.item.entity.form.item.ItemStepOneForm;
 import com.wenlincheng.pika.item.entity.form.item.ItemStepTwoForm;
@@ -15,18 +10,16 @@ import com.wenlincheng.pika.item.entity.po.Item;
 import com.wenlincheng.pika.item.entity.vo.item.ItemDetailStepOneVO;
 import com.wenlincheng.pika.item.entity.vo.item.ItemDetailStepTwoVO;
 import com.wenlincheng.pika.item.entity.vo.item.ItemListVO;
-import com.wenlincheng.pika.item.enums.AuditStatusEnum;
-import com.wenlincheng.pika.item.enums.ItemSaleStatusEnum;
 import com.wenlincheng.pika.item.mapper.ItemMapper;
 import com.wenlincheng.pika.item.message.produce.Foo;
 import com.wenlincheng.pika.item.message.produce.SenderService;
-import com.wenlincheng.pika.item.service.ItemService;
+import com.wenlincheng.pika.item.api.ItemService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * <p>
@@ -36,6 +29,7 @@ import java.util.Date;
  * @author Pikaman
  * @date 2021/1/1 10:10 上午
  */
+@GlobalTransactional(rollbackFor = Exception.class)
 @Service
 public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements ItemService {
 

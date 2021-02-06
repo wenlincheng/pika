@@ -2,7 +2,6 @@ package com.wenlincheng.pika.item.mapper;
 
 import com.wenlincheng.pika.item.entity.po.Category;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>

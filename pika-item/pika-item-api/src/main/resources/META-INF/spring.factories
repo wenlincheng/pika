@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.wenlincheng.pika.item.client.fallback.ItemServiceFallbackFactory

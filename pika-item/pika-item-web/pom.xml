@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.wenlincheng.pika</groupId>
-        <artifactId>pika-item-core</artifactId>
+        <artifactId>pika-item</artifactId>
         <version>1.0.0</version>
     </parent>
     <artifactId>pika-item-web</artifactId>

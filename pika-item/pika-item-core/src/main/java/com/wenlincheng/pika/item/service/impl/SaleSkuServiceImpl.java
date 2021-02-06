@@ -2,7 +2,7 @@ package com.wenlincheng.pika.item.service.impl;
 
 import com.wenlincheng.pika.item.entity.po.SaleSku;
 import com.wenlincheng.pika.item.mapper.SaleSkuMapper;
-import com.wenlincheng.pika.item.service.SaleSkuService;
+import com.wenlincheng.pika.item.api.SaleSkuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

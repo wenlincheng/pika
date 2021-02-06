@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.schedule.job.item;
 
-import com.wenlincheng.pika.item.client.ItemService;
+import com.wenlincheng.pika.schedule.client.ItemService;
 import org.apache.shardingsphere.elasticjob.api.ShardingContext;
 import org.apache.shardingsphere.elasticjob.simple.job.SimpleJob;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,14 +6,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author by YangLD
- * @date 2018/7/10
+ * Model注解
+ *
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = { ElementType.FIELD })
 public  @interface CsvField{
 
     /** JSON属性映射名称 **/
-    public String name() default "";
+    String name() default "";
 
 }

@@ -16,6 +16,8 @@
 	<modules>
 		<module>pika-item-api</module>
 		<module>pika-item-core</module>
+		<module>pika-item-web</module>
+		<module>pika-item-boot</module>
 	</modules>
 
 	<properties>

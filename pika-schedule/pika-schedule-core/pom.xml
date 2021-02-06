@@ -38,11 +38,6 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>pika-item-api</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>pika-trade-api</artifactId>
             <version>1.0.0</version>
         </dependency>

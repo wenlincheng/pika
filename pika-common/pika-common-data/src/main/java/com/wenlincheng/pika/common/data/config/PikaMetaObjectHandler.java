@@ -2,7 +2,7 @@ package com.wenlincheng.pika.common.data.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.wenlincheng.pika.common.core.context.UserContextHolder;
-import com.wenlincheng.pika.common.data.annotation.PikaModel;
+import com.wenlincheng.pika.common.core.annotation.PikaModel;
 import com.wenlincheng.pika.common.leaf.model.SequenceConfig;
 import com.wenlincheng.pika.common.leaf.service.LeafSegmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,6 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
