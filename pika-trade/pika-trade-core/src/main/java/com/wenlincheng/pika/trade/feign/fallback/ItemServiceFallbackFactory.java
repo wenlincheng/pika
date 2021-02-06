@@ -33,6 +33,12 @@ public class ItemServiceFallbackFactory implements FallbackFactory<ItemService> 
                 log.error("商品自动上架失败：id:{}, {}, {}", id, throwable.getMessage(), throwable.getStackTrace());
                 return Result.fail();
             }
+
+            @Override
+            public Result<Boolean> stock(Long id) {
+                log.error("商品扣减库存失败：id:{}, {}, {}", id, throwable.getMessage(), throwable.getStackTrace());
+                return Result.fail();
+            }
         };
     }
 }

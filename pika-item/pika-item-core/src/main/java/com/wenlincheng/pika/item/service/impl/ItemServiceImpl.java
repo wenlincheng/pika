@@ -130,6 +130,14 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         return true;
     }
 
+    @Override
+    public Boolean stock(Long id) {
+        Item item = initItem();
+        this.save(item);
+        int i = 10/0;
+        return true;
+    }
+
     /**
      * 初始化商品
      */

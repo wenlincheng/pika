@@ -103,4 +103,10 @@ public class ItemController extends BaseController {
     public Result<Boolean> onShelf(@PathVariable Long id) {
         return Result.success(itemService.onShelf(id));
     }
+
+    @GetMapping("/stock/{itemId}")
+    Result<Boolean> stock(@PathVariable("itemId") Long id) {
+        Boolean stock = itemService.stock(id);
+        return Result.success(stock);
+    }
 }

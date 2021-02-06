@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TradeOrderService extends IService<TradeOrder> {
 
+
+    Boolean placeOrder(Long itemId);
 }

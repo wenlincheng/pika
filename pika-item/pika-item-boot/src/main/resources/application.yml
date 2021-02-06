@@ -86,6 +86,9 @@ spring:
             rule-type: flow
             username: ${REGISTER_USERNAME:nacos}
             password: ${REGISTER_PASSWORD:nacos}
+      log:
+        dir: ./logs/csp
+        switch-pid: true
 
     # Stream
     stream:

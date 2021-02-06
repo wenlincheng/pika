@@ -1,9 +1,13 @@
 package com.wenlincheng.pika.trade.service.impl;
 
+import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.trade.api.TradeOrderService;
 import com.wenlincheng.pika.trade.entity.po.TradeOrder;
+import com.wenlincheng.pika.trade.feign.ItemService;
 import com.wenlincheng.pika.trade.mapper.TradeOrderMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.seata.spring.annotation.GlobalTransactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +21,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class TradeOrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOrder> implements TradeOrderService {
 
+    @Autowired
+    private ItemService itemService;
+
+    @Override
+    @GlobalTransactional(name = "placeOrder", rollbackFor = Exception.class)
+    public Boolean placeOrder(Long itemId) {
+        TradeOrder tradeOrder = new TradeOrder();
+
+        this.save(tradeOrder);
+
+        Result<Boolean> stock = itemService.stock(itemId);
+
+        return null;
+    }
 }

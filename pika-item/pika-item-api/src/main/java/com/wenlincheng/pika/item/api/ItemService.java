@@ -91,4 +91,6 @@ public interface ItemService extends IService<Item> {
      * @return java.lang.Boolean
      */
     Boolean onShelf(Long id);
+
+    Boolean stock(Long id);
 }

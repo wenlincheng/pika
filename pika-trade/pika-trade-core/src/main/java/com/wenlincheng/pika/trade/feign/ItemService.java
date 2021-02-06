@@ -35,4 +35,8 @@ public interface ItemService {
     @GetMapping("/item/onsale/{itemId}")
     Result<Boolean> autoOnSaleById(@PathVariable("itemId") Long id);
 
+    @GetMapping("/item/stock/{itemId}")
+    Result<Boolean> stock(@PathVariable("itemId") Long id);
+
+
 }
