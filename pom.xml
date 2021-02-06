@@ -102,12 +102,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>io.seata</groupId>
-                <artifactId>seata-all</artifactId>
-                <version>${seata.version}</version>
-            </dependency>
-
             <!-- jetcache 缓存系统 -->
             <dependency>
                 <groupId>com.alicp.jetcache</groupId>

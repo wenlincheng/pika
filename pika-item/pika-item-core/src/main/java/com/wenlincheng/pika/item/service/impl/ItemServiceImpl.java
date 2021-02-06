@@ -18,6 +18,7 @@ import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -130,6 +131,15 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         return true;
     }
 
+    /**
+     * 扣减库存
+     *
+     * 服务提供方本地事务注解
+     *
+     * @param id 商品id
+     * @return java.lang.Boolean
+     */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean stock(Long id) {
         Item item = initItem();

@@ -48,7 +48,7 @@ public class PikaMetaObjectHandler implements MetaObjectHandler {
 
         this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
         this.strictInsertFill(metaObject, "isDeleted", Integer.class, 0);
-        this.strictInsertFill(metaObject, "createUserId", Long.class, UserContextHolder.getInstance().getUserId());
+        // this.strictInsertFill(metaObject, "createUserId", Long.class, UserContextHolder.getInstance().getUserId());
 
     }
 

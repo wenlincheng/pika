@@ -1,6 +1,9 @@
 package com.wenlincheng.pika.trade.entity.po;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
@@ -26,6 +29,12 @@ import lombok.experimental.Accessors;
 public class TradeOrder extends BaseModel<TradeOrder> {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * ID
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
 
     /**
      * 卖家id
@@ -327,7 +336,7 @@ public class TradeOrder extends BaseModel<TradeOrder> {
 
     @Override
     protected Serializable pkVal() {
-        return null;
+        return this.id;
     }
 
 }

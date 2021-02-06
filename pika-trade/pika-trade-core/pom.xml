@@ -49,24 +49,6 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.seata</groupId>
-                    <artifactId>seata-all</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- seata-all版本与seata server版本保持一致 -->
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-all</artifactId>
-            <exclusions>
-                <!-- 替换druid-1.1.23.jar -->
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>druid</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

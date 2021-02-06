@@ -26,7 +26,7 @@ import org.springframework.util.StopWatch;
 @EnableAsync
 @EnableLeafServer
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = {"com.wenlincheng.pika.common.core.log.feign"})
+@EnableFeignClients(basePackages = {"com.wenlincheng.pika"})
 @MapperScan("com.wenlincheng.pika.trade.mapper")
 @SpringBootApplication
 public class PikaTradeApplication {

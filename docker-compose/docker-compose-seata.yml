@@ -2,7 +2,7 @@ version: "3"
 services:
   # 分布式事务服务
   seata-server:
-    image: seataio/seata-server:1.4.0
+    image: seataio/seata-server:1.3.0
     container_name: seata-server
     ports:
       - "8091:8091"
