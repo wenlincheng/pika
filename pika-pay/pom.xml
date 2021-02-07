@@ -19,7 +19,7 @@
 
 	<modules>
 		<module>pika-pay-api</module>
-		<module>pika-pay-core</module>
+		<module>pika-pay-boot</module>
 	</modules>
 
 	<dependencies>
