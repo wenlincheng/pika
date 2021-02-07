@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.item.service.impl;
+package com.wenlincheng.pika.item.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

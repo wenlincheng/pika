@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @date 2021/1/1 10:10 上午
  */
 @Slf4j
-//@Component
+@Component
 public class ItemServiceFallbackFactory implements FallbackFactory<ItemService> {
 
     @Override
@@ -35,7 +35,7 @@ public class ItemServiceFallbackFactory implements FallbackFactory<ItemService> 
             }
 
             @Override
-            public Result<Boolean> stock(Long id) {
+            public Result<Boolean> reduceStock(Long id) {
                 log.error("商品扣减库存失败：id:{}, {}, {}", id, throwable.getMessage(), throwable.getStackTrace());
                 return Result.fail();
             }

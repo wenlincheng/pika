@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.item.service.impl;
+package com.wenlincheng.pika.item.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -144,7 +144,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
     public Boolean stock(Long id) {
         Item item = initItem();
         this.save(item);
-        int i = 10/0;
+        //int i = 10/0;
         return true;
     }
 

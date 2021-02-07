@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.trade.api;
 
+import com.wenlincheng.pika.trade.entity.form.order.PlaceOrderForm;
 import com.wenlincheng.pika.trade.entity.po.TradeOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -14,5 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface TradeOrderService extends IService<TradeOrder> {
 
 
-    Boolean placeOrder(Long itemId);
+    /**
+     * 下单
+     *
+     * @param placeOrderForm 下单请求参数
+     * @return java.lang.Boolean
+     */
+    Boolean placeOrder(PlaceOrderForm placeOrderForm);
 }

@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.item.service.impl;
+package com.wenlincheng.pika.item.service;
 
 import com.wenlincheng.pika.item.entity.po.Product;
 import com.wenlincheng.pika.item.mapper.ProductMapper;

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,7 +21,9 @@ import java.util.Date;
  */
 @ApiModel(value = "表单基类")
 @Data
-public class BaseForm<T> {
+public class BaseForm<T> implements Serializable {
+
+    private static final long serialVersionUID = 6870300955287532306L;
 
     @ApiModelProperty(value = "id")
     private Long id;

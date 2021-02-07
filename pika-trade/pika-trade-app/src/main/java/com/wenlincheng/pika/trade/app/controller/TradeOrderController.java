@@ -3,11 +3,11 @@ package com.wenlincheng.pika.trade.app.controller;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.trade.api.TradeOrderService;
+import com.wenlincheng.pika.trade.entity.form.order.PlaceOrderForm;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import com.wenlincheng.pika.common.core.base.controller.BaseController;
 
 /**
@@ -25,9 +25,12 @@ public class TradeOrderController extends BaseController {
     @Autowired
     private TradeOrderService tradeOrderService;
 
-    @GetMapping("/place")
-    public Result<Boolean> placeOrder() {
-        tradeOrderService.placeOrder(1L);
+    @ApiOperation(value = "下单", notes = "用户下单", httpMethod = "POST")
+    @PostMapping("/place")
+    public Result<Boolean> placeOrder(@RequestBody PlaceOrderForm placeOrderForm) {
+        // 参数检验
+
+        tradeOrderService.placeOrder(placeOrderForm);
 
         return Result.success(true);
     }

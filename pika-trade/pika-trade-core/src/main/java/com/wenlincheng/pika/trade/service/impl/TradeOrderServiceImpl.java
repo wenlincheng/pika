@@ -1,14 +1,19 @@
 package com.wenlincheng.pika.trade.service.impl;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
+import com.wenlincheng.pika.common.core.exception.BaseException;
 import com.wenlincheng.pika.trade.api.TradeOrderService;
+import com.wenlincheng.pika.trade.entity.form.order.PlaceOrderForm;
 import com.wenlincheng.pika.trade.entity.po.TradeOrder;
 import com.wenlincheng.pika.trade.feign.ItemService;
 import com.wenlincheng.pika.trade.mapper.TradeOrderMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.wenlincheng.pika.trade.enums.TradeErrorCodeEnum.PLACE_ORDER_ERROR;
 
 /**
  * <p>
@@ -26,13 +31,20 @@ public class TradeOrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOr
 
     @Override
     @GlobalTransactional(name = "placeOrder", rollbackFor = Exception.class)
-    public Boolean placeOrder(Long itemId) {
+    public Boolean placeOrder(PlaceOrderForm placeOrderForm) {
         TradeOrder tradeOrder = new TradeOrder();
 
+        // 创建订单
         this.save(tradeOrder);
 
-        Result<Boolean> stock = itemService.stock(itemId);
+        if (CollectionUtils.isEmpty(placeOrderForm.getOrderItemList())) {
+            throw new BaseException(PLACE_ORDER_ERROR, "下单失败，请选择商品");
+        }
+        // 扣减库存
+        placeOrderForm.getOrderItemList().forEach(orderItemForm -> {
+            itemService.reduceStock(orderItemForm.getSaleSkuId());
+        });
 
-        return null;
+        return true;
     }
 }
