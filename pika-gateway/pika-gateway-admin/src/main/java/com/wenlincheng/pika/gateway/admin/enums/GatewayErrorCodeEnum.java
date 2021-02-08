@@ -9,7 +9,7 @@ import lombok.Getter;
  *
  * @author Pikaman
  * @version 1.0.0
- * @date 2021/2/8 11:57 上午
+ * @date 2021/2/8 9:57 下午
  */
 @Getter
 public enum GatewayErrorCodeEnum implements ErrorCode {
