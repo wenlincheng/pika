@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 
 /**
- * 解决Feign降级造成分布式事务不生效问题
+ * 解决Sentinel服务降级造成分布式事务不生效问题
  *
  * @author Pikaman
  * @version 1.0.0

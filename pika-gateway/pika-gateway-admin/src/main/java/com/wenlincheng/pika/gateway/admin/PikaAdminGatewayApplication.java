@@ -2,7 +2,6 @@ package com.wenlincheng.pika.gateway.admin;
 
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import com.alicp.jetcache.anno.config.EnableMethodCache;
-import com.wenlincheng.pika.gateway.admin.event.GatewayRouteAddEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

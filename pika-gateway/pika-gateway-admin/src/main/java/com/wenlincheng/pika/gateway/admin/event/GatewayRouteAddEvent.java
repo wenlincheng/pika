@@ -1,7 +1,5 @@
 package com.wenlincheng.pika.gateway.admin.event;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 import org.springframework.cloud.bus.event.RemoteApplicationEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;

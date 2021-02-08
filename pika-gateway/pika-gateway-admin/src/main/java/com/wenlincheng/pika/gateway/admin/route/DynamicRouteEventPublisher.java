@@ -62,22 +62,13 @@ public class DynamicRouteEventPublisher implements ApplicationEventPublisherAwar
      * @param definition 路由
      * @return java.lang.String
      */
-    public String update(RouteDefinition definition) {
+    public void update(RouteDefinition definition) {
         // 删除
-        try {
-            delete(definition.getId());
-        } catch (Exception e) {
-            return "更新路由失败 routeId: "+definition.getId();
-        }
+        delete(definition.getId());
         // 新增
-        try {
-            routeDefinitionWriter.save(Mono.just(definition)).subscribe();
-            notifyChanged();
-            routeService.update(definition);
-            return "success";
-        } catch (Exception e) {
-            return "更新路由失败  fail";
-        }
+        routeDefinitionWriter.save(Mono.just(definition)).subscribe();
+        notifyChanged();
+        routeService.update(definition);
     }
 
     /**

@@ -6,11 +6,11 @@ import com.alicp.jetcache.anno.CreateCache;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.gateway.app.service.RouteService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.net.URI;
@@ -44,7 +44,7 @@ public class RouteServiceImpl implements RouteService {
     @PostConstruct
     private void loadRouteDefinition() {
         log.info("开始初使化路由");
-        // 从缓存中获取路由
+        // 从Redis缓存中加载路由到内存
         Set<String> gatewayKeys = redisUtils.keys(GATEWAY_ROUTES_APP + "*");
         if (CollectionUtils.isEmpty(gatewayKeys)) {
             return;

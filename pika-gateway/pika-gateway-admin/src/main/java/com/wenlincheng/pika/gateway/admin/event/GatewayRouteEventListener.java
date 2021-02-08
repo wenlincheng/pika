@@ -9,14 +9,14 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
- * 消息确认
+ * 事件监听
  *
  * @author Pikaman
  * @version 1.0.0
  * @date 2021/1/1 10:10 上午
  */
-@Component
 @Slf4j
+@Component
 public class GatewayRouteEventListener {
 
     @Autowired

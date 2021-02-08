@@ -1,12 +1,15 @@
 package com.wenlincheng.pika.gateway.admin.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
+import com.wenlincheng.pika.common.core.exception.BaseException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.gateway.admin.service.RouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.wenlincheng.pika.common.core.constant.CommonRedisKeyConstants.GATEWAY_ROUTES_ADMIN;
+import static com.wenlincheng.pika.gateway.admin.enums.GatewayErrorCodeEnum.GATEWAY_LOAD_ROUTE_ERROR;
 
 /**
  * 路由
@@ -42,22 +46,30 @@ public class RouteServiceImpl implements RouteService {
     @PostConstruct
     private void loadRouteDefinition() {
         log.info("开始初使化路由");
-        // 从缓存中获取路由
+        // 从Redis缓存中加载路由到内存
         Set<String> gatewayKeys = redisUtils.keys(GATEWAY_ROUTES_ADMIN + "*");
         if (CollectionUtils.isEmpty(gatewayKeys)) {
-            return;
+            log.error("初始化路由异常，无法从缓存中加载数据");
+            throw new BaseException(GATEWAY_LOAD_ROUTE_ERROR);
         }
-        Set<String> gatewayKeyIds = gatewayKeys.stream().map(key -> key.replace(GATEWAY_ROUTES_ADMIN, StringUtils.EMPTY)).collect(Collectors.toSet());
-        Map<String, RouteDefinition> allRoutes = gatewayRouteCache.getAll(gatewayKeyIds);
-        // 以下代码原因是，jetcache将RouteDefinition返序列化后，uri发生变化，未初使化，导致路由异常，以下代码是重新初使化uri
-        allRoutes.values().forEach(routeDefinition -> {
-            try {
-                routeDefinition.setUri(new URI(routeDefinition.getUri().toASCIIString()));
-            } catch (URISyntaxException e) {
-                log.error("初始化路由异常：", e);
-            }
+        gatewayKeys.forEach(routeKey -> {
+            String routeStr = redisUtils.get(routeKey);
+            RouteDefinition routeDefinition = JSON.parseObject(routeStr, RouteDefinition.class);
+            routeDefinitions.put(routeKey.replace(GATEWAY_ROUTES_ADMIN, StringUtils.EMPTY),routeDefinition);
         });
-        routeDefinitions.putAll(allRoutes);
+
+//        Set<String> gatewayKeyIds = gatewayKeys.stream().map(key -> key.replace(GATEWAY_ROUTES_ADMIN, StringUtils.EMPTY)).collect(Collectors.toSet());
+//        Map<String, RouteDefinition> allRoutes = gatewayRouteCache.getAll(gatewayKeyIds);
+//        // 以下代码原因是，jetcache将RouteDefinition返序列化后，uri发生变化，未初使化，导致路由异常，以下代码是重新初使化uri
+//        allRoutes.values().forEach(routeDefinition -> {
+//            try {
+//                routeDefinition.setUri(new URI(routeDefinition.getUri().toASCIIString()));
+//            } catch (URISyntaxException e) {
+//                log.error("初始化路由异常：", e);
+//            }
+//        });
+//        routeDefinitions.putAll(allRoutes);
+
         log.info("共初始化路由 {} 条", routeDefinitions.size());
     }
 
