@@ -52,8 +52,10 @@ public class CodeGenerator {
         //自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setMapperName("%sMapper");
         gc.setXmlName("%sMapper");
-        gc.setFileOverride(true);
-        gc.setActiveRecord(true);
+        // 覆盖已有文件
+        gc.setFileOverride(false);
+        // ActiveRecord 模式
+        gc.setActiveRecord(false);
         // XML 二级缓存
         gc.setEnableCache(false);
         // XML ResultMap
@@ -119,7 +121,9 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         //自定义继承的Entity类全称，带包名
         strategy.setSuperEntityClass("com.wenlincheng.pika.common.core.base.model.BaseModel");
+        // 自定义基础的Entity类，公共字段
         strategy.setSuperEntityColumns("id", "create_time", "update_time", "create_user_id", "update_user_id", "is_deleted");
+        strategy.setVersionFieldName("opt_version");
         //【实体】是否为lombok模型（默认 false）
         strategy.setEntityLombokModel(true);
         // 添加@TableName("order")注解
@@ -132,8 +136,6 @@ public class CodeGenerator {
 
         String[] tableNames = rb.getString("tableName").split(",");
         strategy.setInclude(tableNames);
-        //自定义基础的Entity类，公共字段
-        //strategy.setSuperEntityColumns("id");
         // 驼峰转连字符
         strategy.setControllerMappingHyphenStyle(true);
         // 表前缀

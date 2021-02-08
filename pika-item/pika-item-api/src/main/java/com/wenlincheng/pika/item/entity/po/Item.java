@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import com.wenlincheng.pika.common.core.annotation.PikaModel;
 import com.wenlincheng.pika.common.core.base.model.BaseModel;
+import com.wenlincheng.pika.common.core.base.model.IdModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -26,15 +27,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("item")
 @PikaModel.Code(type = "DATE_ORDERLY_SEQ", prefix = "I", size = 8, format = "yyyyMMdd")
-public class Item extends BaseModel<Item> {
+public class Item extends IdModel<Item> {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
 
     /**
      * 卖家ID
@@ -341,10 +336,5 @@ public class Item extends BaseModel<Item> {
      */
     @TableField("is_fixed")
     private Integer isFixed;
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }

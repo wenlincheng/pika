@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 带编码的实体
+ * 带乐观锁、编码的实体
  *
  * @author Pikaman
  * @version 1.0.0
@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class CodeModel<T extends CodeModel<?>> extends IdModel<T> {
+public abstract class VersionCodeModel<T extends CodeModel<?>> extends CodeModel<T> {
 
     /**
-     * 编码
+     * 乐观锁
      */
-    private String code;
+    private Long optVersion;
 }

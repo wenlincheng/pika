@@ -78,7 +78,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
                 .setMinLinePrice(new BigDecimal("8999"))
                 .setMaxUnitPrice(new BigDecimal("9999"))
                 .setMinUnitPrice(new BigDecimal("7999"));
-        this.save(item);
+        item.insert();
 
         return item.getId();
     }

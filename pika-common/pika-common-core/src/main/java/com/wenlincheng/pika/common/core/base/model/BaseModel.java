@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 /**
- * Model基类
+ * 实体基类
  *
  * @author : Pikaman
  * @version : 1.0.0
@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseModel<T extends Model<?>> extends Model<T> {
+public abstract class BaseModel<T extends Model<?>> extends Model<T> {
 
     private static final long serialVersionUID = -6387524599153408156L;
 
