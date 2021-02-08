@@ -11,7 +11,7 @@ import lombok.Getter;
  * @date 2021/1/1 10:10 上午
  */
 @Getter
-public enum SequenceEnum implements IEnum<String> {
+public enum SequenceTypeEnum implements IEnum<String> {
 
     SEQ("SEQ", "SEQ", "自增流水号"),
     ORDERLY_SEQ("ORDERLY_SEQ", "ORDERLY_SEQ", "自增强有序流水号"),
@@ -26,7 +26,7 @@ public enum SequenceEnum implements IEnum<String> {
     private String name;
     private String help;
 
-    SequenceEnum(String value, String name, String help) {
+    SequenceTypeEnum(String value, String name, String help) {
         this.value = value;
         this.name = name;
         this.help = help;

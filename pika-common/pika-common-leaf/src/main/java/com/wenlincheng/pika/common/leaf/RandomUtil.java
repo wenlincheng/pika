@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.trade.util;
+package com.wenlincheng.pika.common.leaf;
 
 /**
  * 订单编号生成

@@ -3,6 +3,7 @@ package com.wenlincheng.pika.common.data.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.wenlincheng.pika.common.core.context.UserContextHolder;
 import com.wenlincheng.pika.common.core.annotation.PikaModel;
+import com.wenlincheng.pika.common.leaf.enums.SequenceTypeEnum;
 import com.wenlincheng.pika.common.leaf.model.SequenceConfig;
 import com.wenlincheng.pika.common.leaf.service.LeafSegmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,19 +37,26 @@ public class PikaMetaObjectHandler implements MetaObjectHandler {
         if (Objects.nonNull(codeAnnotation)) {
             SequenceConfig sequenceConfig = new SequenceConfig();
             sequenceConfig.setKey(aClass.getName())
+                    .setType(codeAnnotation.type())
                     .setSize(codeAnnotation.size())
                     .setPrefix(codeAnnotation.prefix())
                     .setSuffix(codeAnnotation.suffix())
                     .setStep(codeAnnotation.step())
                     .setSeparator(codeAnnotation.separator())
                     .setFormat(codeAnnotation.format());
-            String code = segmentService.genCodeDateSeq(sequenceConfig);
+
+            String code;
+            if (SequenceTypeEnum.DATE_ORDERLY_SEQ.getValue().equals(sequenceConfig.getType())) {
+                code = segmentService.genDateOrderlySeq(sequenceConfig);
+            } else {
+                code = segmentService.genCode(sequenceConfig);
+            }
             this.setFieldValByName("code", code, metaObject);
         }
 
         this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
         this.strictInsertFill(metaObject, "isDeleted", Integer.class, 0);
-        // this.strictInsertFill(metaObject, "createUserId", Long.class, UserContextHolder.getInstance().getUserId());
+        this.strictInsertFill(metaObject, "createUserId", Long.class, UserContextHolder.getInstance().getUserId());
 
     }
 

@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.trade.util;
+package com.wenlincheng.pika.common.leaf;
 
 /**
  * TODO 订单号生成
@@ -12,7 +12,7 @@ package com.wenlincheng.pika.trade.util;
 public class OrderNoGenerator {
 
     public static String genOrderNo(long userId, int orderType, int sourceType) {
-        // 时间戳(200607)
+        // 时间戳(20210208)
 
         // 业务类型(01)
 
@@ -20,7 +20,7 @@ public class OrderNoGenerator {
 
         // 随机码(095777796)
 
-        // 用户ID后四位(7788)
+        // 用户ID后6位(7788)
 
         return "";
     }

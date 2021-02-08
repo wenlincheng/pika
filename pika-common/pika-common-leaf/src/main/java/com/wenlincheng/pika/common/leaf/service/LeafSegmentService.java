@@ -13,7 +13,7 @@ import com.wenlincheng.pika.common.leaf.model.SequenceConfig;
 public interface LeafSegmentService {
 
     /**
-     * 生成分布式id
+     * 分布式有序id
      *
      * @param key 业务标识
      * @throws BaseException
@@ -22,11 +22,34 @@ public interface LeafSegmentService {
     Long genId(String key);
 
     /**
-     * 生成日期流水号
+     * 日期自增流水号
      *
-     * @param seqConfig 序列生成配置
-     * @throws BaseException
+     * @param seqConfig 配置
      * @return java.lang.String
      */
-    String genCodeDateSeq(SequenceConfig seqConfig);
+    String genDateOrderlySeq(SequenceConfig seqConfig);
+
+    /**
+     * 日期流水号
+     *
+     * @param seqConfig 配置
+     * @return java.lang.String
+     */
+    String genDateSeq(SequenceConfig seqConfig);
+
+    /**
+     * 自增流水号
+     *
+     * @param seqConfig 配置
+     * @return java.lang.String
+     */
+    String genSeq(SequenceConfig seqConfig);
+    
+    /**
+     * 生成随机编号
+     * 
+     * @param seqConfig 配置
+     * @return java.lang.String
+     */
+    String genCode(SequenceConfig seqConfig);
 }

@@ -13,12 +13,17 @@ import lombok.Data;
 public class PikaUser {
 
     /**
-     * id
+     * 用户id
      */
-    private Long id;
+    private Long userId;
 
     /**
      * 用户名
      */
     private String username;
+
+    /**
+     * 商家id
+     */
+    private String merchantId;
 }

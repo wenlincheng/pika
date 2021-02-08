@@ -31,8 +31,8 @@ import static com.wenlincheng.pika.common.core.constant.SecurityConstants.X_CLIE
  * @version 1.0.0
  * @date 2021/1/1 10:10 上午
  */
-@Aspect
 @Slf4j
+@Aspect
 public class SysLogAspect {
 
 	@Around("@annotation(pikaLog)")
@@ -53,11 +53,11 @@ public class SysLogAspect {
 		sysLog.setUserAgent(request.getHeader("user-agent"));
 		sysLog.setTitle(pikaLog.value());
 
-		// user
+		// 用户信息
 		String user = request.getHeader(X_CLIENT_TOKEN_USER);
 		if (StringUtils.isNotBlank(user)) {
 			PikaUser pikaUser = JSON.parseObject(user, PikaUser.class);
-			sysLog.setUserId(pikaUser.getId());
+			sysLog.setUserId(pikaUser.getUserId());
 			sysLog.setUsername(pikaUser.getUsername());
 		}
 

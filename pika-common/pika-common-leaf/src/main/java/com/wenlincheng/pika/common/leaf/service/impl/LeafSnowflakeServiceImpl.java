@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import static com.wenlincheng.pika.common.leaf.enums.LeafErrorCodeEnum.ID_GEN_ERROR;
 
 /**
- * Snowflake Leaf 实现
+ * Snowflake
  *
  * @author Pikaman
  * @version 1.0.0

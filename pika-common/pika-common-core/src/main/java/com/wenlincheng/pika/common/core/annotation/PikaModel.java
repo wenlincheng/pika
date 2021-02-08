@@ -20,6 +20,8 @@ public @interface PikaModel {
     @Retention(RetentionPolicy.RUNTIME)
     @interface Code {
 
+        String type() default "";
+
         String prefix() default "";
 
         String suffix() default "";

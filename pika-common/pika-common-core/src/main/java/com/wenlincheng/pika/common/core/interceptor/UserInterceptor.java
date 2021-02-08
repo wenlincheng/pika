@@ -29,9 +29,13 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         checkToken(request.getHeader(X_CLIENT_TOKEN));
         String userInfoString = StringUtils.defaultIfBlank(request.getHeader(X_CLIENT_TOKEN_USER), "{}");
-        PikaUser user = JSON.parseObject(userInfoString, PikaUser.class);
         UserSessionData userSessionData = new UserSessionData();
-        userSessionData.setUser(user);
+        if (StringUtils.isNotBlank(userInfoString)) {
+            PikaUser user = JSON.parseObject(userInfoString, PikaUser.class);
+            userSessionData.setUser(user);
+        } else {
+            userSessionData.setUser(new PikaUser());
+        }
         UserContextHolder.getInstance().setContext(userSessionData);
         return true;
     }
@@ -40,7 +44,6 @@ public class UserInterceptor implements HandlerInterceptor {
      * TODO 校验服务间调用的认证token
      *
      * @param token 服务间令牌
-     * @return void
      */
     private void checkToken(String token) {
         log.debug("校验token:{}", token);

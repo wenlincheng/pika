@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.common.leaf.model;
 
+import com.wenlincheng.pika.common.leaf.enums.SequenceTypeEnum;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,6 +19,11 @@ public class SequenceConfig {
      * 业务标识
      */
     private String key;
+
+    /**
+     * 序列号类型
+     */
+    private String type;
 
     /**
      * 前缀

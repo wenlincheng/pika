@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("item")
-@PikaModel.Code(prefix = "I", size = 12, format = "yyyyMMdd", initial = 10000, step = 1)
+@PikaModel.Code(type = "DATE_ORDERLY_SEQ", prefix = "I", size = 8, format = "yyyyMMdd")
 public class Item extends BaseModel<Item> {
 
     private static final long serialVersionUID = 1L;
