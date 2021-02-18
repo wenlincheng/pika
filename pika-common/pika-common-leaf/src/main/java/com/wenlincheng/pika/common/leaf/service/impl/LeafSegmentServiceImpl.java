@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.wenlincheng.pika.common.leaf.enums.LeafErrorCodeEnum.*;
 
 /**
- * 分片id
+ * 号段模式id生成器
  *
  * @author Pikaman
  * @version 1.0.0
