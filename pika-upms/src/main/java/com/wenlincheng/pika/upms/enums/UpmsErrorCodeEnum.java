@@ -14,6 +14,7 @@ import lombok.Getter;
 @Getter
 public enum UpmsErrorCodeEnum implements ErrorCode {
 
+    UPMS_ERROR(ErrorTypeEnum.BIZ_ERROR,30000, "操作失败"),
     USER_NOT_FOUND(ErrorTypeEnum.BIZ_ERROR,30100, "用户未找到"),
     USER_ERROR_DETAIL(ErrorTypeEnum.BIZ_ERROR,30101, "获取用户详情失败"),
     ROLE_NOT_FOUND(ErrorTypeEnum.BIZ_ERROR,30102, "角色未找到"),
@@ -21,8 +22,7 @@ public enum UpmsErrorCodeEnum implements ErrorCode {
     MENU_REL_ROLE_DELETE_ERROR(ErrorTypeEnum.BIZ_ERROR,30104, "有角色与菜单关联"),
     ROLE_REL_USER_DELETE_ERROR(ErrorTypeEnum.BIZ_ERROR,30105, "有用户与角色关联"),
     PASSWORD_ERROR(ErrorTypeEnum.BIZ_ERROR,30106, "密码错误"),
-    MOBILE_EXIST_ERROR(ErrorTypeEnum.BIZ_ERROR,30107, "手机号已经被注册"),
-    USERNAME_EXIST_ERROR(ErrorTypeEnum.BIZ_ERROR,30107, "用户名已经被注册"),
+    USER_ADD_ERROR(ErrorTypeEnum.BIZ_ERROR,30107, "添加用户失败"),
     ;
 
     private ErrorTypeEnum type;

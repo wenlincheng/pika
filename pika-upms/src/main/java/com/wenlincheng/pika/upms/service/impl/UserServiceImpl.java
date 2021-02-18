@@ -33,7 +33,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.wenlincheng.pika.upms.constant.UpmsConstants.INITIAL_PASSWORD;
-import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.MOBILE_EXIST_ERROR;
+import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.USER_ADD_ERROR;
 import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.USERNAME_EXIST_ERROR;
 
 /**
@@ -85,13 +85,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper<User> mobileQueryWrapper = new QueryWrapper<>();
         mobileQueryWrapper.lambda().eq(User::getMobile, userForm.getMobile());
         if (Objects.nonNull(this.getOne(mobileQueryWrapper))) {
-            throw PikaException.construct(MOBILE_EXIST_ERROR).build();
+            throw PikaException.construct(USER_ADD_ERROR).appendMsg("手机号已经被注册").build();
         }
         // 校验手机号
         QueryWrapper<User> usernameQueryWrapper = new QueryWrapper<>();
         usernameQueryWrapper.lambda().eq(User::getUsername, userForm.getUsername());
         if (Objects.nonNull(this.getOne(usernameQueryWrapper))) {
-            throw PikaException.construct(USERNAME_EXIST_ERROR).build();
+            throw PikaException.construct(USER_ADD_ERROR).appendMsg("用户名已经被注册").build();
         }
 
 
