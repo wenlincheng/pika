@@ -48,7 +48,7 @@ public class UserController extends BaseController {
         return Result.success(page);
     }
 
-    @PikaLog("新增用户")
+    @PikaLog(value = "新增用户")
     @ApiOperation(value = "新增用户", notes = "新增一个用户", httpMethod = "POST")
     @PostMapping()
     public Result<Boolean> add(@Valid @RequestBody UserForm userForm) {
@@ -57,7 +57,7 @@ public class UserController extends BaseController {
         return Result.success(userService.addUser(userForm));
     }
 
-    @PikaLog("修改用户")
+    @PikaLog(value = "修改用户")
     @ApiOperation(value = "修改用户", notes = "修改指定用户信息", httpMethod = "PUT")
     @PutMapping()
     public Result<Boolean> update(@Valid @RequestBody UserForm userForm) {
@@ -66,7 +66,7 @@ public class UserController extends BaseController {
         return Result.success(userService.updateUser(userForm));
     }
 
-    @PikaLog("删除用户")
+    @PikaLog(value = "删除用户")
     @ApiOperation(value = "删除用户", notes = "根据id删除用户，逻辑删除")
     @DeleteMapping(value = "/{id}")
     public Result<Boolean> delete(@PathVariable Long id) {
@@ -74,7 +74,7 @@ public class UserController extends BaseController {
         return Result.success(userService.deleteById(id));
     }
 
-    @PikaLog("修改密码")
+    @PikaLog(value = "修改密码")
     @ApiOperation(value = "修改密码", notes = "修改用户登录密码")
     @PutMapping(value = "/password")
     public Result<Boolean> updatePassword(@RequestBody UserPasswordForm passwordForm) {
@@ -84,7 +84,7 @@ public class UserController extends BaseController {
         return Result.success(userService.updatePassword(passwordForm));
     }
 
-    @PikaLog("重置密码")
+    @PikaLog(value = "重置密码")
     @ApiOperation(value = "重置密码", notes = "根据id重置用户登录密码")
     @GetMapping(value = "/resetPassword/{id}")
     public Result<Boolean> resetPassword(@PathVariable Long id) {

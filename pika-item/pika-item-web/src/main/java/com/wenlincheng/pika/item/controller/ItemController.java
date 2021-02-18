@@ -57,7 +57,7 @@ public class ItemController extends BaseController {
         return Result.success(itemDetail);
     }
 
-    @PikaLog("创建商品[Step1]")
+    @PikaLog(value = "创建商品[Step1]")
     @ApiOperation(value = "创建商品[Step1]", notes = "创建商品Step1", httpMethod = "POST")
     @PostMapping("/step1")
     public Result<Long> createItemStepOne(ItemStepOneForm itemAddForm) {
@@ -66,7 +66,7 @@ public class ItemController extends BaseController {
         return Result.success(itemId);
     }
 
-    @PikaLog("创建商品[Step2]")
+    @PikaLog(value = "创建商品[Step2]")
     @ApiOperation(value = "创建商品[Step2]", notes = "创建商品Step2", httpMethod = "POST")
     @PostMapping("/step2")
     public Result<Boolean> createItemStepTwo(ItemStepTwoForm itemAddForm) {
@@ -74,7 +74,7 @@ public class ItemController extends BaseController {
         return Result.success(itemService.createItemStepTwo(itemAddForm));
     }
 
-    @PikaLog("编辑商品[Step1]")
+    @PikaLog(value = "编辑商品[Step1]")
     @ApiOperation(value = "编辑商品[Step1]", notes = "编辑商品Step1", httpMethod = "PUT")
     @PutMapping("/step1")
     public Result<Boolean> updateItemStepOne(ItemStepOneForm itemAddForm) {
@@ -82,7 +82,7 @@ public class ItemController extends BaseController {
         return Result.success(itemService.updateItemStepOne(itemAddForm));
     }
 
-    @PikaLog("编辑商品[Step2]")
+    @PikaLog(value = "编辑商品[Step2]")
     @ApiOperation(value = "编辑商品[Step2]", notes = "编辑商品Step2", httpMethod = "PUT")
     @PutMapping("/step2")
     public Result<Boolean> updateItemStepTwo(ItemStepTwoForm itemAddForm) {
@@ -90,14 +90,14 @@ public class ItemController extends BaseController {
         return Result.success(itemService.updateItemStepTwo(itemAddForm));
     }
 
-    @PikaLog("逻辑删除商品")
+    @PikaLog(value = "逻辑删除商品")
     @ApiOperation(value = "逻辑删除商品", notes = "逻辑删除商品", httpMethod = "DELETE")
     @DeleteMapping("/{id}")
     public Result<Boolean> deleteItemById(@PathVariable Long id) {
         return Result.success(itemService.deleteById(id));
     }
 
-    @PikaLog("商品上架")
+    @PikaLog(value = "商品上架")
     @ApiOperation(value = "商品上架", notes = "商品上架", httpMethod = "GET")
     @GetMapping("/onShelf/{id}")
     public Result<Boolean> onShelf(@PathVariable Long id) {

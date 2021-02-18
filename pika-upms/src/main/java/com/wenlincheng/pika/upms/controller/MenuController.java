@@ -67,7 +67,7 @@ public class MenuController {
         return Result.success(sysMenu);
     }
 
-    @PikaLog("删除菜单")
+    @PikaLog(value = "删除菜单")
     @ApiOperation(value = "删除菜单", notes = "根据id删除菜单", httpMethod = "DELETE")
     @DeleteMapping(value = "/{id}")
     public Result<Boolean> deleteById(@PathVariable Long id) {
@@ -75,7 +75,7 @@ public class MenuController {
         return Result.success(menuService.deleteById(id));
     }
 
-    @PikaLog("新增菜单")
+    @PikaLog(value = "新增菜单")
     @ApiOperation(value = "新增菜单", notes = "新增菜单", httpMethod = "POST")
     @PostMapping()
     public Result<Boolean> addMenu(@Valid @RequestBody MenuForm menuForm) {
@@ -83,7 +83,7 @@ public class MenuController {
         return Result.success(menuService.addMenu(menuForm));
     }
 
-    @PikaLog("编辑菜单")
+    @PikaLog(value = "编辑菜单")
     @ApiOperation(value = "编辑菜单", notes = "编辑菜单", httpMethod = "PUT")
     @PutMapping()
     public Result<Boolean> updateMenu(@Valid @RequestBody MenuForm menuForm) {

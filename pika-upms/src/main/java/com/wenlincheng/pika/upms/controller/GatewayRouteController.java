@@ -34,7 +34,7 @@ public class GatewayRouteController {
     @Autowired
     private GatewayRouteService gatewayRoutService;
 
-    @PikaLog("新增路由")
+    @PikaLog(value = "新增路由")
     @ApiOperation(value = "新增路由", notes = "新增一个网关路由")
     @PostMapping()
     public Result<Boolean> add(@Valid @RequestBody GatewayRouteForm gatewayRoutForm) {
@@ -43,7 +43,7 @@ public class GatewayRouteController {
         return Result.success(gatewayRoutService.add(gatewayRout));
     }
 
-    @PikaLog("删除路由")
+    @PikaLog(value = "删除路由")
     @ApiOperation(value = "删除路由", notes = "根据url的id来指定删除对象")
     @DeleteMapping(value = "/{id}")
     public Result<Boolean> delete(@PathVariable String id) {
@@ -51,7 +51,7 @@ public class GatewayRouteController {
         return Result.success(gatewayRoutService.delete(id));
     }
 
-    @PikaLog("修改路由")
+    @PikaLog(value = "修改路由")
     @ApiOperation(value = "修改路由", notes = "修改指定网关路由信息")
     @PutMapping()
     public Result<Boolean> update(@Valid @RequestBody GatewayRouteForm gatewayRoutForm) {
@@ -75,7 +75,7 @@ public class GatewayRouteController {
         return Result.success(pageList);
     }
 
-    @PikaLog("刷新路由")
+    @PikaLog(value = "刷新路由")
     @ApiOperation(value = "刷新路由", notes = "将所以网关路由重新加载到缓存中")
     @PostMapping(value = "/refresh")
     public Result<Boolean> refresh() {

@@ -71,7 +71,7 @@ public class RoleController {
         return Result.success(roleDetailVO);
     }
 
-    @PikaLog("删除角色")
+    @PikaLog(module = "系统管理-角色管理", value = "删除角色", method = "deleteById")
     @ApiOperation(value = "删除角色", notes = "根据id查询角色", httpMethod = "DELETE")
     @DeleteMapping(value = "/{id}")
     public Result<Boolean> deleteById(@PathVariable Long id) {
@@ -79,7 +79,7 @@ public class RoleController {
         return Result.success(roleService.deleteById(id));
     }
 
-    @PikaLog("新增角色")
+    @PikaLog(module = "系统管理-角色管理", value = "新增角色",  method = "addMenu")
     @ApiOperation(value = "新增角色", notes = "新增角色", httpMethod = "POST")
     @PostMapping()
     public Result<Boolean> addMenu(@Valid @RequestBody RoleForm roleForm) {
@@ -87,7 +87,7 @@ public class RoleController {
         return Result.success(roleService.addRole(roleForm));
     }
 
-    @PikaLog("编辑角色")
+    @PikaLog(module = "系统管理-角色管理", value = "编辑角色", method = "updateMenu")
     @ApiOperation(value = "编辑角色", notes = "编辑角色", httpMethod = "PUT")
     @PutMapping()
     public Result<Boolean> updateMenu(@Valid @RequestBody RoleForm roleForm) {
