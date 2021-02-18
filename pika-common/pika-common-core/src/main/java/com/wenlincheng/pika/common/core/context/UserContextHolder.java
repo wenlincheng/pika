@@ -9,9 +9,9 @@ import static com.wenlincheng.pika.common.core.exception.SystemErrorCodeEnum.USE
 /**
  * 用户上下文
  *
- * @author  wenlincheng
- * @date    2020/11/24 19:39 下午
- * @version 1.0
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 public class UserContextHolder {
 

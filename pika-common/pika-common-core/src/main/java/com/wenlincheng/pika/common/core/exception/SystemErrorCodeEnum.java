@@ -5,9 +5,9 @@ import lombok.Getter;
 /**
  * 系统异常类型枚举
  *
- * @author  wenlincheng
- * @date    2019/11/24 12:42 下午
- * @version 1.0
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 @Getter
 public enum SystemErrorCodeEnum implements ErrorCode {

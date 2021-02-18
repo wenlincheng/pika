@@ -3,9 +3,9 @@ package com.wenlincheng.pika.common.core.enums;
 /**
  * 文件上传类型枚举
  *
- * @author  wenlincheng
- * @date  2019-09-06 13:21
- * @version 1.0
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 public enum FileUploadTypeEnum {
     

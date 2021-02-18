@@ -5,7 +5,10 @@ import lombok.Getter;
 
 /**
  * 支付类型
- * @author zh
+ *
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 @Getter
 public enum PayTypeEnum {

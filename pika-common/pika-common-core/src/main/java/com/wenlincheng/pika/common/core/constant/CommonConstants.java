@@ -3,9 +3,9 @@ package com.wenlincheng.pika.common.core.constant;
 /**
  * 通用常量
  *
- * @author  wenlincheng
- * @date    2019-09-22 13:43
- * @version 1.0
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 public class CommonConstants {
     /**

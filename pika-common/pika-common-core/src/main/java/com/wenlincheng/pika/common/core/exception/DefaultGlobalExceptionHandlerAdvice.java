@@ -14,9 +14,9 @@ import org.springframework.web.multipart.MultipartException;
 /**
  * 全局异常处理
  *
- * @author wenlincheng
- * @date    2019/11/24 12:37 下午
- * @version 1.0
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 @Slf4j
 public class DefaultGlobalExceptionHandlerAdvice {

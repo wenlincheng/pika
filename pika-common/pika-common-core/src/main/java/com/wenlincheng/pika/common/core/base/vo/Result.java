@@ -14,9 +14,9 @@ import java.util.Date;
 /**
  * 请求统一返回该类的对象
  *
- * @author  wenlincheng
- * @date    2019/11/24 12:47 下午
- * @version 1.0
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 @ApiModel(description = "请求的统一返回模型")
 @Getter
@@ -24,9 +24,6 @@ public class Result<T> {
 
     public static final int SUCCESSFUL_CODE = 200;
     public static final String SUCCESSFUL_MSG = "成功";
-
-    @ApiModelProperty(value = "是否成功", required = true)
-    private Boolean success;
 
     @ApiModelProperty(value = "状态码", required = true)
     private Integer code;

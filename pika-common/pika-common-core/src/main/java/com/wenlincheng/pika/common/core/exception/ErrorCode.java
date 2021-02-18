@@ -3,9 +3,9 @@ package com.wenlincheng.pika.common.core.exception;
 /**
  * 错误码
  *
- * @author  wenlincheng
- * @date    2019/11/24 12:47 下午
- * @version 1.0
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 public interface ErrorCode {
     /**
