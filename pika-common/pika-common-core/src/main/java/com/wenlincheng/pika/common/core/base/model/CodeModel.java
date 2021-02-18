@@ -1,5 +1,7 @@
 package com.wenlincheng.pika.common.core.base.model;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,5 +19,6 @@ public abstract class CodeModel<T extends CodeModel<?>> extends IdModel<T> {
     /**
      * 编码
      */
+    @TableField(value = "code", fill = FieldFill.INSERT)
     private String code;
 }
