@@ -16,7 +16,7 @@ import com.wenlincheng.pika.auth.exception.AuthErrorCodeEnum;
 import com.wenlincheng.pika.auth.security.PikaGrantedAuthority;
 import com.wenlincheng.pika.auth.manager.JwtTokenManager;
 import com.wenlincheng.pika.common.core.base.vo.Result;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.InvalidKeyException;
@@ -98,10 +98,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 Long userId = tokenManager.getUserIdByToken(token);
                 String oldToken = redisUtils.get(SecurityConstants.JWT_TOKEN_REDIS_PREFIX + userId);
                 if (StringUtils.isBlank(oldToken)) {
-                    throw BaseException.construct(AuthErrorCodeEnum.TOKEN_LOGOUT).build();
+                    throw PikaException.construct(AuthErrorCodeEnum.TOKEN_LOGOUT).build();
                 }
                 if (!oldToken.equals(token.replace(SecurityConstants.JWT_TOKEN_PREFIX, ""))) {
-                    throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
+                    throw PikaException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
                 }
                 List<PikaGrantedAuthority> authorities = getUserAuthorities(userId);
                 if (StringUtils.isNotEmpty(username)) {
@@ -110,18 +110,18 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 }
             } catch (ExpiredJwtException e) {
                 log.warn("Request to parse expired JWT : {} failed : {}", token, e.getMessage());
-                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
+                throw PikaException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
             } catch (UnsupportedJwtException e) {
                 log.warn("Request to parse unsupported JWT : {} failed : {}", token, e.getMessage());
-                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_UNSUPPORTED).build();
+                throw PikaException.construct(AuthErrorCodeEnum.TOKEN_UNSUPPORTED).build();
             } catch (MalformedJwtException e) {
                 log.warn("Request to parse malformed JWT : {} failed : {}", token, e.getMessage());
-                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_MALFORMED).build();
+                throw PikaException.construct(AuthErrorCodeEnum.TOKEN_MALFORMED).build();
             } catch (InvalidKeyException e) {
-                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_INVALID_KEY).build();
+                throw PikaException.construct(AuthErrorCodeEnum.TOKEN_INVALID_KEY).build();
             } catch (IllegalArgumentException e) {
                 log.warn("Request to parse empty or null JWT : {} failed : {}", token, e.getMessage());
-                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EMPTY).build();
+                throw PikaException.construct(AuthErrorCodeEnum.TOKEN_EMPTY).build();
             }
 
         }

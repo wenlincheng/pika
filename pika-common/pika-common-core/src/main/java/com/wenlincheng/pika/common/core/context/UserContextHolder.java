@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.common.core.context;
 
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 
 import java.util.Objects;
 
@@ -63,7 +63,7 @@ public class UserContextHolder {
     public PikaUser getUser() {
         UserSessionData userSessionData = USER_CONTEXT.get();
         if (Objects.isNull(userSessionData)) {
-            throw BaseException.construct(USER_NOT_LOGIN).build();
+            throw PikaException.construct(USER_NOT_LOGIN).build();
         }
         return userSessionData.getUser();
     }

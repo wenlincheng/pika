@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.upms.entity.form.role.RoleForm;
 import com.wenlincheng.pika.upms.entity.query.role.RolePageQuery;
@@ -115,7 +115,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements
         userRoleQueryWrapper.lambda().eq(UserRoleRelation::getRoleId, id);
         List<UserRoleRelation> userRoleList = userRoleService.list(userRoleQueryWrapper);
         if (CollectionUtils.isNotEmpty(userRoleList)) {
-            throw BaseException.construct(ROLE_REL_USER_DELETE_ERROR).build();
+            throw PikaException.construct(ROLE_REL_USER_DELETE_ERROR).build();
         }
         boolean remove = this.removeById(id);
         if (remove) {

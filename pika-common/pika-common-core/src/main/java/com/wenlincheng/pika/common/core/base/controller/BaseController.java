@@ -2,7 +2,7 @@ package com.wenlincheng.pika.common.core.base.controller;
 
 import com.wenlincheng.pika.common.core.context.PikaUser;
 import com.wenlincheng.pika.common.core.context.UserContextHolder;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,7 +20,7 @@ public class BaseController {
      *
      * @return AuthUser
      */
-    public PikaUser currentUser() throws BaseException {
+    public PikaUser currentUser() throws PikaException {
         return UserContextHolder.getInstance().getUser();
     }
 

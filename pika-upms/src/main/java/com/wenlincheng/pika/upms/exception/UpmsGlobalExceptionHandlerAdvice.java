@@ -21,6 +21,6 @@ public class UpmsGlobalExceptionHandlerAdvice extends DefaultGlobalExceptionHand
     @ExceptionHandler(value = {UserNotFoundException.class})
     public Result<Object> userNotFound(UserNotFoundException e) {
         log.error("msg:{} exception:{}",e.getMessage(), e.getStackTrace());
-        return Result.fail(e.getErrorCode());
+        return Result.fail(e);
     }
 }

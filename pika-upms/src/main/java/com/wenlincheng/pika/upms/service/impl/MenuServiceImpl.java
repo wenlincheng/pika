@@ -3,7 +3,7 @@ package com.wenlincheng.pika.upms.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.upms.entity.form.menu.MenuForm;
 import com.wenlincheng.pika.upms.entity.query.menu.MenuPageQuery;
@@ -93,18 +93,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
     }
 
     @Override
-    public boolean deleteById(Long id) throws BaseException {
+    public boolean deleteById(Long id) throws PikaException {
         QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(SysMenu::getParentId, id);
         List<SysMenu> menuList = this.list(queryWrapper);
         if (CollectionUtils.isNotEmpty(menuList)) {
-            throw BaseException.construct(MENU_HAS_CHILDREN).build();
+            throw PikaException.construct(MENU_HAS_CHILDREN).build();
         }
         QueryWrapper<RoleMenuRelation> roleMenuQueryWrapper = new QueryWrapper<>();
         roleMenuQueryWrapper.lambda().eq(RoleMenuRelation::getMenuId, id);
         List<RoleMenuRelation> roleMenuList = roleMenuService.list(roleMenuQueryWrapper);
         if (CollectionUtils.isNotEmpty(roleMenuList)) {
-            throw BaseException.construct(MENU_REL_ROLE_DELETE_ERROR).build();
+            throw PikaException.construct(MENU_REL_ROLE_DELETE_ERROR).build();
         }
         boolean remove = this.removeById(id);
         if (remove) {

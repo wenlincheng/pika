@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.common.core.base.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.exception.ErrorCode;
 import com.wenlincheng.pika.common.core.exception.SystemErrorCodeEnum;
 import io.swagger.annotations.ApiModel;
@@ -88,17 +88,17 @@ public class Result<T> {
     }
 
     /**
-     * 快速创建成功结果并返回结果数据
+     * 成功并返回结果数据
      *
      * @param data 返回数据
      * @return Result
      */
-    public static <E> Result<E>  success(E data) {
+    public static <E> Result<E> success(E data) {
         return new Result<>(SUCCESSFUL_CODE, SUCCESSFUL_MSG, data);
     }
 
     /**
-     * 快速创建成功结果
+     * 成功
      *
      * @return Result
      */
@@ -107,7 +107,7 @@ public class Result<T> {
     }
 
     /**
-     * 系统异常类没有返回数据
+     * 系统异常没有返回数据
      *
      * @return Result
      */
@@ -116,13 +116,13 @@ public class Result<T> {
     }
 
     /**
-     * 系统异常类没有返回数据
+     * 系统异常没有返回数据
      *
-     * @param baseException 系统异常
+     * @param pikaException 系统异常
      * @return Result
      */
-    public static <E> Result<E> fail(BaseException baseException) {
-        return fail(baseException, null);
+    public static <E> Result<E> fail(PikaException pikaException) {
+        return fail(pikaException, null);
     }
 
     /**
@@ -131,8 +131,8 @@ public class Result<T> {
      * @param data 返回数据
      * @return Result
      */
-    public static <E> Result<E> fail(BaseException baseException, E data) {
-        return new Result<>(baseException.getErrorCode(), data);
+    public static <E> Result<E> fail(PikaException pikaException, E data) {
+        return new Result<>(pikaException.getCode(), pikaException.getMsg(), data);
     }
 
     /**

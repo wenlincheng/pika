@@ -45,10 +45,10 @@ public class DefaultGlobalExceptionHandlerAdvice {
         return Result.fail(SystemErrorCodeEnum.DUPLICATE_PRIMARY_KEY);
     }
 
-    @ExceptionHandler(value = {BaseException.class})
-    public <E>Result<E> baseException(BaseException e) {
+    @ExceptionHandler(value = {PikaException.class})
+    public <E>Result<E> pikaException(PikaException e) {
         log.error("msg:{} exception:{}",e.getMessage(), e.getStackTrace());
-        return Result.fail(e.getErrorCode());
+        return Result.fail(e);
     }
 
     @ExceptionHandler(value = {Exception.class})

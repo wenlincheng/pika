@@ -2,7 +2,7 @@ package com.wenlincheng.pika.upms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.upms.entity.form.user.UserForm;
 import com.wenlincheng.pika.upms.entity.form.user.UserPasswordForm;
 import com.wenlincheng.pika.upms.entity.query.user.UserPageQuery;
@@ -32,19 +32,19 @@ public interface UserService extends IService<User> {
      * 根据用户id获取用户详情
      * 
      * @param id                用户id
-     * @throws BaseException    异常
+     * @throws PikaException    异常
      * @return UserDetailVO
      */
-    UserDetailVO queryUserDetail(Long id) throws BaseException;
+    UserDetailVO queryUserDetail(Long id) throws PikaException;
 
     /**
      * 根据用户名获取用户信息
      *
      * @param username          用户名
-     * @throws BaseException    异常
+     * @throws PikaException    异常
      * @return UserDetailVO
      */
-    UserDetailVO queryByUsername(String username) throws BaseException;
+    UserDetailVO queryByUsername(String username) throws PikaException;
 
     /**
      * 添加用户信息

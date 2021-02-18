@@ -2,7 +2,7 @@ package com.wenlincheng.pika.upms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.upms.entity.form.menu.MenuForm;
 import com.wenlincheng.pika.upms.entity.query.menu.MenuPageQuery;
 import com.wenlincheng.pika.upms.entity.po.SysMenu;
@@ -55,10 +55,10 @@ public interface MenuService extends IService<SysMenu> {
      * 根据id删除
      *
      * @param id 菜单id
-     * @throws BaseException 异常
+     * @throws PikaException 异常
      * @return boolean
      */
-    boolean deleteById(Long id) throws BaseException;
+    boolean deleteById(Long id) throws PikaException;
 
     /**
      * 新增菜单

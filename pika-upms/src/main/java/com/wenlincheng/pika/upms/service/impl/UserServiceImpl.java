@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.upms.entity.form.user.UserForm;
 import com.wenlincheng.pika.upms.entity.form.user.UserPasswordForm;
 import com.wenlincheng.pika.upms.entity.po.SysRole;
@@ -15,7 +15,6 @@ import com.wenlincheng.pika.upms.entity.query.user.UserPageQuery;
 import com.wenlincheng.pika.upms.entity.vo.user.UserDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.user.UserListVO;
 import com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum;
-import com.wenlincheng.pika.upms.enums.UserTypeEnum;
 import com.wenlincheng.pika.upms.exception.UserNotFoundException;
 import com.wenlincheng.pika.upms.mapper.UserMapper;
 import com.wenlincheng.pika.upms.service.RoleService;
@@ -86,13 +85,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper<User> mobileQueryWrapper = new QueryWrapper<>();
         mobileQueryWrapper.lambda().eq(User::getMobile, userForm.getMobile());
         if (Objects.nonNull(this.getOne(mobileQueryWrapper))) {
-            throw BaseException.construct(MOBILE_EXIST_ERROR).build();
+            throw PikaException.construct(MOBILE_EXIST_ERROR).build();
         }
         // 校验手机号
         QueryWrapper<User> usernameQueryWrapper = new QueryWrapper<>();
         usernameQueryWrapper.lambda().eq(User::getUsername, userForm.getUsername());
         if (Objects.nonNull(this.getOne(usernameQueryWrapper))) {
-            throw BaseException.construct(USERNAME_EXIST_ERROR).build();
+            throw PikaException.construct(USERNAME_EXIST_ERROR).build();
         }
 
 
@@ -164,10 +163,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public boolean updatePassword(UserPasswordForm passwordForm) {
         User user = this.getById(passwordForm.getId());
         if (Objects.isNull(user)) {
-            throw BaseException.construct(UpmsErrorCodeEnum.USER_NOT_FOUND).build();
+            throw PikaException.construct(UpmsErrorCodeEnum.USER_NOT_FOUND).build();
         }
         if (!user.getPassword().equals(PasswordEncodeUtil.encode(passwordForm.getOldPassword()))) {
-            throw BaseException.construct(UpmsErrorCodeEnum.PASSWORD_ERROR).build();
+            throw PikaException.construct(UpmsErrorCodeEnum.PASSWORD_ERROR).build();
         }
         user = passwordForm.toPo(User.class);
         user.setPassword(PasswordEncodeUtil.encode(passwordForm.getPassword()));
@@ -175,7 +174,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserDetailVO queryUserDetail(Long id) throws BaseException {
+    public UserDetailVO queryUserDetail(Long id) throws PikaException {
         User user = this.getById(id);
         if (user == null) {
             throw new UserNotFoundException();
@@ -194,7 +193,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserDetailVO queryByUsername(String username) throws BaseException{
+    public UserDetailVO queryByUsername(String username) throws PikaException {
         User user = this.getOne(new QueryWrapper<User>().lambda()
                 .eq(true, User::getUsername, username));
         if (user == null) {

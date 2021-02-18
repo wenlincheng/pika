@@ -2,8 +2,7 @@ package com.wenlincheng.pika.common.leaf.service.impl;
 
 import com.sankuai.inf.leaf.common.Result;
 import com.sankuai.inf.leaf.service.SnowflakeService;
-import com.wenlincheng.pika.common.core.exception.BaseException;
-import com.wenlincheng.pika.common.leaf.service.LeafSegmentService;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.leaf.service.LeafSnowflakeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class LeafSnowflakeServiceImpl implements LeafSnowflakeService {
         Result result = snowflakeService.getId(key);
         long id = result.getId();
         if (id <= 0) {
-            throw BaseException.construct(ID_GEN_ERROR).build();
+            throw PikaException.construct(ID_GEN_ERROR).build();
         }
         return id;
     }

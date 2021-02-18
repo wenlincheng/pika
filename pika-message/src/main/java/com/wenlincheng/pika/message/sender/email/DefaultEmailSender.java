@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.message.sender.email;
 
 import com.sun.mail.util.MailSSLSocketFactory;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.message.enums.EmailSenderSecurityTypeEnum;
 import com.wenlincheng.pika.message.entity.dto.EmailFile;
 import com.wenlincheng.pika.message.entity.dto.EmailPoster;
@@ -83,7 +83,7 @@ public class DefaultEmailSender implements EmailSender {
             Transport.send(message);
             log.debug("发送邮件成功");
         } catch (MessagingException e) {
-            throw BaseException.construct(e).build();
+            throw PikaException.construct(e).build();
         }
         return true;
     }
@@ -120,7 +120,7 @@ public class DefaultEmailSender implements EmailSender {
                     buf.replace(startIndex, endIndex + PLACEHOLDER_SUFFIX.length(), valStr);
                     nextIndex = startIndex + valStr.length();
                 } else {
-                    throw BaseException.construct().appendMsg("模板内容参数为空").build();
+                    throw PikaException.construct().appendMsg("模板内容参数为空").build();
                 }
                 startIndex = buf.indexOf(PLACEHOLDER_PREFIX, nextIndex);
             } else {
@@ -170,7 +170,7 @@ public class DefaultEmailSender implements EmailSender {
                 }
             });
         } catch (Exception e) {
-            throw BaseException.construct(e).appendMsg("发送邮件获取Session失败").build();
+            throw PikaException.construct(e).appendMsg("发送邮件获取Session失败").build();
         }
      }
 

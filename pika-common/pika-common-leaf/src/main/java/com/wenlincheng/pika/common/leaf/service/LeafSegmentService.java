@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.common.leaf.service;
 
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.leaf.model.SequenceConfig;
 
 /**
@@ -16,7 +16,7 @@ public interface LeafSegmentService {
      * 分布式有序id
      *
      * @param key 业务标识
-     * @throws BaseException
+     * @throws PikaException
      * @return java.lang.Long
      */
     Long genId(String key);

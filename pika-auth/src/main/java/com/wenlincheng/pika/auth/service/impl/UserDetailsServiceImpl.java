@@ -9,7 +9,7 @@ import com.wenlincheng.pika.auth.client.dto.User;
 import com.wenlincheng.pika.common.core.constant.SecurityConstants;
 import com.wenlincheng.pika.auth.entity.AuthUser;
 import com.wenlincheng.pika.auth.security.AuthUserDetails;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.common.core.util.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -78,7 +78,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 查询用户角色列表
         List<Role> roleList = roleService.getRolesByUserId(user.getId()).getData();
         if(CollectionUtils.isEmpty(roleList)){
-            throw BaseException.construct(ROLE_EMPTY).build();
+            throw PikaException.construct(ROLE_EMPTY).build();
         }
         authUser.setRoleList(roleList);
         // 查询用户权限列表

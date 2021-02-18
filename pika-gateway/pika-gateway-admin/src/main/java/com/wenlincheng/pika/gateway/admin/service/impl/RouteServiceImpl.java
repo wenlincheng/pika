@@ -4,22 +4,18 @@ import com.alibaba.fastjson.JSON;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.gateway.admin.service.RouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.wenlincheng.pika.common.core.constant.CommonRedisKeyConstants.GATEWAY_ROUTES_ADMIN;
 import static com.wenlincheng.pika.gateway.admin.enums.GatewayErrorCodeEnum.GATEWAY_LOAD_ROUTE_ERROR;
@@ -50,7 +46,7 @@ public class RouteServiceImpl implements RouteService {
         Set<String> gatewayKeys = redisUtils.keys(GATEWAY_ROUTES_ADMIN + "*");
         if (CollectionUtils.isEmpty(gatewayKeys)) {
             log.error("初始化路由异常，无法从缓存中加载数据");
-            throw BaseException.construct(GATEWAY_LOAD_ROUTE_ERROR).build();
+            throw PikaException.construct(GATEWAY_LOAD_ROUTE_ERROR).build();
         }
         gatewayKeys.forEach(routeKey -> {
             String routeStr = redisUtils.get(routeKey);

@@ -4,7 +4,7 @@ package com.wenlincheng.pika.upms.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.user.UserForm;
 import com.wenlincheng.pika.upms.entity.form.user.UserPasswordForm;
@@ -97,7 +97,7 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "用户详情", notes = "【我的】页获取用户详情信息")
     @GetMapping(value = "/{id}")
-    public Result<UserDetailVO> getUserById(@PathVariable Long id) throws BaseException {
+    public Result<UserDetailVO> getUserById(@PathVariable Long id) throws PikaException {
         log.debug("get with id:{}", id);
         UserDetailVO userDetail = userService.queryUserDetail(id);
         if (userDetail == null) {
@@ -122,7 +122,7 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "获取用户信息", notes = "根据用户名获取用户信息")
     @GetMapping(value = "/username/{username}")
-    public Result<UserDetailVO> getByUsername(@PathVariable String username) throws BaseException {
+    public Result<UserDetailVO> getByUsername(@PathVariable String username) throws PikaException {
         log.debug("get with username:{}", username);
         UserDetailVO userDetail = userService.queryByUsername(username);
         if (userDetail == null) {

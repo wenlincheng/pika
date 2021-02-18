@@ -1,7 +1,6 @@
 package com.wenlincheng.pika.trade.service.impl;
 
-import com.wenlincheng.pika.common.core.base.vo.Result;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.trade.api.TradeOrderService;
 import com.wenlincheng.pika.trade.entity.form.order.PlaceOrderForm;
 import com.wenlincheng.pika.trade.entity.po.TradeOrder;
@@ -38,7 +37,7 @@ public class TradeOrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOr
         this.save(tradeOrder);
 
         if (CollectionUtils.isEmpty(placeOrderForm.getOrderItemList())) {
-            throw BaseException.construct(PLACE_ORDER_ERROR).appendMsg("请选择商品").build();
+            throw PikaException.construct(PLACE_ORDER_ERROR).appendMsg("请选择商品").build();
         }
         // 扣减库存
         placeOrderForm.getOrderItemList().forEach(orderItemForm -> {

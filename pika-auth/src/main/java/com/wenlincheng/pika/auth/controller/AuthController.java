@@ -4,7 +4,7 @@ import com.wenlincheng.pika.auth.entity.AuthUser;
 import com.wenlincheng.pika.auth.service.AuthService;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.constant.SecurityConstants;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class AuthController {
      * @return Result<Boolean>
      */
     @GetMapping(value = "/token/logout")
-    public Result<Boolean> logout(HttpServletRequest request) throws BaseException {
+    public Result<Boolean> logout(HttpServletRequest request) throws PikaException {
         String token = request.getHeader(SecurityConstants.JWT_TOKEN_HEADER);
         if (StringUtils.isBlank(token) || !token.startsWith(SecurityConstants.JWT_TOKEN_PREFIX)) {
             return Result.success(true);

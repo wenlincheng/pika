@@ -11,7 +11,7 @@ import com.wenlincheng.pika.auth.manager.JwtTokenManager;
 import com.wenlincheng.pika.auth.service.AuthService;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.constant.SecurityConstants;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.exception.SystemErrorCodeEnum;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import io.jsonwebtoken.Claims;
@@ -87,9 +87,9 @@ public class AuthServiceImpl implements AuthService {
             }
 
         } catch (ExpiredJwtException e) {
-            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
+            throw PikaException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
         } catch (Exception e) {
-            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_MALFORMED).build();
+            throw PikaException.construct(AuthErrorCodeEnum.TOKEN_MALFORMED).build();
         }
 
         return authUser;
@@ -99,25 +99,25 @@ public class AuthServiceImpl implements AuthService {
     public AuthUser authDecide(HttpServletRequestWrapper requestWrapper, String uri, String method) throws JwtException{
         String token = requestWrapper.getHeader(SecurityConstants.JWT_TOKEN_HEADER);
         if (StringUtils.isBlank(token) || !token.startsWith(SecurityConstants.JWT_TOKEN_PREFIX)) {
-            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EMPTY).build();
+            throw PikaException.construct(AuthErrorCodeEnum.TOKEN_EMPTY).build();
         }
         Long userId = jwtTokenManager.getUserIdByToken(token);
         String redisToken = redisUtils.get(SecurityConstants.JWT_TOKEN_REDIS_PREFIX + userId);
         if (StringUtils.isBlank(redisToken)) {
-            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_LOGOUT).build();
+            throw PikaException.construct(AuthErrorCodeEnum.TOKEN_LOGOUT).build();
         }
         if (!redisToken.equals(token.replace(SecurityConstants.JWT_TOKEN_PREFIX, ""))) {
-            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
+            throw PikaException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
         }
         // 获取用户认证信息
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         ConfigAttribute urlConfigAttribute = getPermissionByUrl(uri, method);
         if (Objects.isNull(urlConfigAttribute)) {
-            throw BaseException.construct(SystemErrorCodeEnum.RESOURCE_NOT_FOUND).build();
+            throw PikaException.construct(SystemErrorCodeEnum.RESOURCE_NOT_FOUND).build();
         }
         if (!isMatch(urlConfigAttribute, authorities)) {
-            throw BaseException.construct(AuthErrorCodeEnum.UNAUTHORIZED).build();
+            throw PikaException.construct(AuthErrorCodeEnum.UNAUTHORIZED).build();
         }
         return getUserInfo(authentication.getName());
     }
@@ -169,7 +169,7 @@ public class AuthServiceImpl implements AuthService {
         Result<User> userResult = userService.getUserByUsername(username);
         User user = userResult.getData();
         if (Objects.isNull(user)) {
-            throw BaseException.construct(USER_NOT_FOUND).build();
+            throw PikaException.construct(USER_NOT_FOUND).build();
         }
         AuthUser authUser = new AuthUser();
         authUser.setId(user.getId());

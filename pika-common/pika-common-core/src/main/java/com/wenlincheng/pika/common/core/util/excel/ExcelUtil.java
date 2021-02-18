@@ -2,7 +2,7 @@ package com.wenlincheng.pika.common.core.util.excel;
 
 import com.google.common.collect.Maps;
 import com.wenlincheng.pika.common.core.annotation.CsvField;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.util.CheckUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -109,7 +109,7 @@ public class ExcelUtil<T> {
             if (CheckUtils.isNotEmpty(needFieldSet)) {
                 for (String needFieldName : needFieldSet) {
                     if (!existFieldName.contains(needFieldName)) {
-                        throw BaseException.construct(EXCEL_PARSING_FAIL).appendMsg("Excel表格中未包含" + needFieldName + "列").build();
+                        throw PikaException.construct(EXCEL_PARSING_FAIL).appendMsg("Excel表格中未包含" + needFieldName + "列").build();
                     }
                 }
             }
@@ -214,7 +214,7 @@ public class ExcelUtil<T> {
                 descriptorMap.put(fieldMetaName, propertyDescriptor);
             }
         } catch (Exception e) {
-            throw BaseException.construct(EXCEL_PARSING_FAIL, e).build();
+            throw PikaException.construct(EXCEL_PARSING_FAIL, e).build();
         }
         return descriptorMap;
     }
@@ -252,7 +252,7 @@ public class ExcelUtil<T> {
                 }
             }
         } catch (Exception e) {
-            throw BaseException.construct(e).build();
+            throw PikaException.construct(e).build();
         }
         return descriptorMap;
     }

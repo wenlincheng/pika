@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.common.core.exception;
 
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +13,8 @@ import java.lang.reflect.UndeclaredThrowableException;
  * @date    2019/11/24 12:37 下午
  * @version 1.0
  */
-public class BaseException extends RuntimeException {
+@Getter
+public class PikaException extends RuntimeException {
     private static final long serialVersionUID = -8264841079576589792L;
 
     /**
@@ -30,14 +32,21 @@ public class BaseException extends RuntimeException {
      */
     private String msg;
 
-    private BaseException(int code, String type, String msg) {
+    public PikaException(ErrorCode errorCode) {
+        super("code: " + errorCode.getCode() + ", type: " + errorCode.getType() + ", msg: " + errorCode.getMsg());
+        this.code = errorCode.getCode();
+        this.type = errorCode.getType().type;
+        this.msg = msg;
+    }
+
+    private PikaException(int code, String type, String msg) {
         super("code: " + code + ", type: " + type + ", msg: " + msg);
         this.code = code;
         this.type = type;
         this.msg = msg;
     }
 
-    private BaseException(int code, String type, String msg, Throwable e) {
+    private PikaException(int code, String type, String msg, Throwable e) {
         super("code: " + code + ", type: " + type + ", msg: " + msg, e);
         this.code = code;
         this.type = type;
@@ -46,7 +55,7 @@ public class BaseException extends RuntimeException {
 
     @Override
     public String toString() {
-        return "BaseException code: " + code + ", type: " + type + ", msg: " + msg;
+        return "PikaException code: " + code + ", type: " + type + ", msg: " + msg;
     }
 
     public static Builder<?> construct() {
@@ -94,7 +103,7 @@ public class BaseException extends RuntimeException {
             return this;
         }
 
-        public BaseException build() {
+        public PikaException build() {
             String msg = this.msg;
             String otherMsg = msgBuilder.toString();
             if (StringUtils.isNotBlank(otherMsg)) {
@@ -105,24 +114,24 @@ public class BaseException extends RuntimeException {
                 }
             }
             if (e == null) {
-                return new BaseException(this.code, this.type, msg);
+                return new PikaException(this.code, this.type, msg);
             } else {
-                if (e instanceof BaseException) {
-                    return (BaseException) e;
+                if (e instanceof PikaException) {
+                    return (PikaException) e;
                 }
                 if (e instanceof UndeclaredThrowableException) {
                     Throwable targetException = ((InvocationTargetException) e.getCause()).getTargetException();
-                    if (targetException instanceof BaseException) {
-                        return (BaseException) targetException;
+                    if (targetException instanceof PikaException) {
+                        return (PikaException) targetException;
                     }
                 }
                 if (e instanceof InvocationTargetException) {
                     Throwable targetException = ((InvocationTargetException) e).getTargetException();
-                    if (targetException instanceof BaseException) {
-                        return (BaseException) targetException;
+                    if (targetException instanceof PikaException) {
+                        return (PikaException) targetException;
                     }
                 }
-                return new BaseException(this.code, this.type, msg, e);
+                return new PikaException(this.code, this.type, msg, e);
             }
         }
     }

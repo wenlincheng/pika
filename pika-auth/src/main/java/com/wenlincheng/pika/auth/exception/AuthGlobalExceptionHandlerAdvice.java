@@ -24,7 +24,7 @@ public class AuthGlobalExceptionHandlerAdvice extends DefaultGlobalExceptionHand
     @ExceptionHandler(value = {UserNotFoundException.class})
     public Result<?> userNotFound(UserNotFoundException ex) {
         log.error(ex.getMessage());
-        return Result.fail(ex.getErrorCode());
+        return Result.fail(ex);
     }
 
     @ExceptionHandler(value = {ExpiredJwtException.class})

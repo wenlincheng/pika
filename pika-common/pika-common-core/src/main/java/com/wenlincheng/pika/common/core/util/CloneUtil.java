@@ -4,7 +4,7 @@
 package com.wenlincheng.pika.common.core.util;
 
 
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -42,7 +42,7 @@ public class CloneUtil {
 			PropertyUtils.copyProperties(result, obj);
 			return result;
 		} catch (Exception e) {
-			throw BaseException.construct(CLONE_OBJECT_FAIL, e).appendMsg(obj.getClass().getName()).build();
+			throw PikaException.construct(CLONE_OBJECT_FAIL, e).appendMsg(obj.getClass().getName()).build();
 		}
 	}
 

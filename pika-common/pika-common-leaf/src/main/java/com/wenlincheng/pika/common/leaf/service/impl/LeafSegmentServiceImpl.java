@@ -3,7 +3,7 @@ package com.wenlincheng.pika.common.leaf.service.impl;
 import com.sankuai.inf.leaf.common.Result;
 import com.sankuai.inf.leaf.common.Status;
 import com.sankuai.inf.leaf.service.SegmentService;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.leaf.enums.LeafErrorCodeEnum;
 import com.wenlincheng.pika.common.leaf.enums.SequenceTypeEnum;
 import com.wenlincheng.pika.common.leaf.model.SequenceConfig;
@@ -39,11 +39,11 @@ public class LeafSegmentServiceImpl implements LeafSegmentService {
     private SegmentService segmentService;
 
     @Override
-    public Long genId(String key) throws BaseException{
+    public Long genId(String key) throws PikaException {
         Result result = segmentService.getId(key);
         long id = result.getId();
         if (id <= 0) {
-            throw BaseException.construct(ID_GEN_ERROR).build();
+            throw PikaException.construct(ID_GEN_ERROR).build();
         }
         return id;
     }
@@ -100,7 +100,7 @@ public class LeafSegmentServiceImpl implements LeafSegmentService {
             }
         } else {
             log.error("Leaf Id 丢失 [{}] [{}]", SequenceTypeEnum.DATE_SEQ, LeafErrorCodeEnum.ID_GEN_ERROR.getMsg());
-            throw BaseException.construct(LeafErrorCodeEnum.ID_GEN_ERROR).build();
+            throw PikaException.construct(LeafErrorCodeEnum.ID_GEN_ERROR).build();
         }
 
         if (suffixLen > 0) {
@@ -140,19 +140,19 @@ public class LeafSegmentServiceImpl implements LeafSegmentService {
         return null;
     }
 
-    public void genIdExp(Result leafRt, String code, SequenceTypeEnum sequenceTypeEnum, LeafErrorCodeEnum expEnumBid) throws BaseException {
+    public void genIdExp(Result leafRt, String code, SequenceTypeEnum sequenceTypeEnum, LeafErrorCodeEnum expEnumBid) throws PikaException {
         long eid = leafRt.getId();
         if (eid == -1) {
             log.error("Leaf Code: [{}] [{}] [{}] [{}]", sequenceTypeEnum, leafRt.getId(), code, LeafErrorCodeEnum.ID_CACHE_INIT_FALSE.getMsg());
-            throw BaseException.construct(LeafErrorCodeEnum.ID_CACHE_INIT_FALSE).build();
+            throw PikaException.construct(LeafErrorCodeEnum.ID_CACHE_INIT_FALSE).build();
         } else if (eid == -2) {
             log.error("Leaf Code: [{}] [{}] [{}] [{}]", sequenceTypeEnum, leafRt.getId(), code, LeafErrorCodeEnum.ID_KEY_NOT_EXISTS.getMsg());
-            throw BaseException.construct(LeafErrorCodeEnum.ID_KEY_NOT_EXISTS).build();
+            throw PikaException.construct(LeafErrorCodeEnum.ID_KEY_NOT_EXISTS).build();
         } else if (eid == -3) {
             log.error("Leaf Code: [{}] [{}] [{}] [{}]", sequenceTypeEnum, leafRt.getId(), code, LeafErrorCodeEnum.ID_TWO_SEGMENTS_ARE_NULL.getMsg());
-            throw BaseException.construct(LeafErrorCodeEnum.ID_TWO_SEGMENTS_ARE_NULL).build();
+            throw PikaException.construct(LeafErrorCodeEnum.ID_TWO_SEGMENTS_ARE_NULL).build();
         }
         log.error("Leaf Code: [{}] [{}] [{}] [{}]", sequenceTypeEnum, leafRt.getId(), code, expEnumBid.getMsg());
-        throw BaseException.construct(ID_GEN_ERROR).build();
+        throw PikaException.construct(ID_GEN_ERROR).build();
     }
 }

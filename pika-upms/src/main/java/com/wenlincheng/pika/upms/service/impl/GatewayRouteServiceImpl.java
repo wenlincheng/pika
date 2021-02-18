@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
-import com.wenlincheng.pika.common.core.exception.BaseException;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.upms.constant.UpmsConstants;
 import com.wenlincheng.pika.upms.entity.po.GatewayRoute;
@@ -146,7 +146,7 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteMapper, Gat
             routeDefinition.setPredicates(objectMapper.readValue(gatewayRoute.getPredicates(), new TypeReference<List<PredicateDefinition>>() {}));
         } catch (IOException e) {
             log.error("网关路由转换失败 {}", e.getMessage(), e.getCause());
-            throw BaseException.construct(e).build();
+            throw PikaException.construct(e).build();
         }
         return routeDefinition;
     }
