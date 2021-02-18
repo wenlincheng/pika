@@ -18,7 +18,7 @@ import java.util.Date;
  * @version 1.0.0
  * @date 2021/1/1 10:10 上午
  */
-@ApiModel(description = "请求的统一返回模型")
+@ApiModel(description = "统一返回模型")
 @Getter
 public class Result<T> {
 
