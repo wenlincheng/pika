@@ -66,11 +66,11 @@ public class DefaultSmsSender implements SmsSender {
             JSONObject jsonObject = JSON.parseObject(data);
             String code = (String) jsonObject.get("Code");
             if (!"OK".equals(code)) {
-                throw new BaseException(SMS_SEND_ERROR);
+                throw BaseException.construct(SMS_SEND_ERROR).build();
             }
         } catch (ClientException e) {
             e.printStackTrace();
-            throw new BaseException(SMS_SEND_ERROR);
+            throw BaseException.construct(SMS_SEND_ERROR).build();
         }
     }
 
@@ -93,11 +93,11 @@ public class DefaultSmsSender implements SmsSender {
             JSONObject jsonObject = JSON.parseObject(data);
             String code = (String) jsonObject.get("Code");
             if (!"OK".equals(code)) {
-                throw new BaseException(SMS_SEND_ERROR);
+                throw BaseException.construct(SMS_SEND_ERROR).build();
             }
         } catch (ClientException e) {
             e.printStackTrace();
-            throw new BaseException(SMS_SEND_ERROR);
+            throw BaseException.construct(SMS_SEND_ERROR).build();
         }
     }
 }

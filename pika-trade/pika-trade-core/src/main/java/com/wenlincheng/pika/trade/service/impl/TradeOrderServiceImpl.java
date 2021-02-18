@@ -38,7 +38,7 @@ public class TradeOrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOr
         this.save(tradeOrder);
 
         if (CollectionUtils.isEmpty(placeOrderForm.getOrderItemList())) {
-            throw new BaseException(PLACE_ORDER_ERROR, "下单失败，请选择商品");
+            throw BaseException.construct(PLACE_ORDER_ERROR).appendMsg("请选择商品").build();
         }
         // 扣减库存
         placeOrderForm.getOrderItemList().forEach(orderItemForm -> {

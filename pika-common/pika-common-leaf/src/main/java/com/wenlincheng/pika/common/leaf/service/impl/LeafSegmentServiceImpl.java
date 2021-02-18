@@ -43,7 +43,7 @@ public class LeafSegmentServiceImpl implements LeafSegmentService {
         Result result = segmentService.getId(key);
         long id = result.getId();
         if (id <= 0) {
-            throw new BaseException(ID_GEN_ERROR);
+            throw BaseException.construct(ID_GEN_ERROR).build();
         }
         return id;
     }
@@ -100,7 +100,7 @@ public class LeafSegmentServiceImpl implements LeafSegmentService {
             }
         } else {
             log.error("Leaf Id 丢失 [{}] [{}]", SequenceTypeEnum.DATE_SEQ, LeafErrorCodeEnum.ID_GEN_ERROR.getMsg());
-            throw new BaseException(LeafErrorCodeEnum.ID_GEN_ERROR);
+            throw BaseException.construct(LeafErrorCodeEnum.ID_GEN_ERROR).build();
         }
 
         if (suffixLen > 0) {
@@ -144,15 +144,15 @@ public class LeafSegmentServiceImpl implements LeafSegmentService {
         long eid = leafRt.getId();
         if (eid == -1) {
             log.error("Leaf Code: [{}] [{}] [{}] [{}]", sequenceTypeEnum, leafRt.getId(), code, LeafErrorCodeEnum.ID_CACHE_INIT_FALSE.getMsg());
-            throw new BaseException(LeafErrorCodeEnum.ID_CACHE_INIT_FALSE);
+            throw BaseException.construct(LeafErrorCodeEnum.ID_CACHE_INIT_FALSE).build();
         } else if (eid == -2) {
             log.error("Leaf Code: [{}] [{}] [{}] [{}]", sequenceTypeEnum, leafRt.getId(), code, LeafErrorCodeEnum.ID_KEY_NOT_EXISTS.getMsg());
-            throw new BaseException(LeafErrorCodeEnum.ID_KEY_NOT_EXISTS);
+            throw BaseException.construct(LeafErrorCodeEnum.ID_KEY_NOT_EXISTS).build();
         } else if (eid == -3) {
             log.error("Leaf Code: [{}] [{}] [{}] [{}]", sequenceTypeEnum, leafRt.getId(), code, LeafErrorCodeEnum.ID_TWO_SEGMENTS_ARE_NULL.getMsg());
-            throw new BaseException(LeafErrorCodeEnum.ID_TWO_SEGMENTS_ARE_NULL);
+            throw BaseException.construct(LeafErrorCodeEnum.ID_TWO_SEGMENTS_ARE_NULL).build();
         }
         log.error("Leaf Code: [{}] [{}] [{}] [{}]", sequenceTypeEnum, leafRt.getId(), code, expEnumBid.getMsg());
-        throw new BaseException(ID_GEN_ERROR);
+        throw BaseException.construct(ID_GEN_ERROR).build();
     }
 }

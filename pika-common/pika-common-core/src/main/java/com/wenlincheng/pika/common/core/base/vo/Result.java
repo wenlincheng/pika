@@ -25,8 +25,11 @@ public class Result<T> {
     public static final int SUCCESSFUL_CODE = 200;
     public static final String SUCCESSFUL_MSG = "成功";
 
+    @ApiModelProperty(value = "是否成功", required = true)
+    private Boolean success;
+
     @ApiModelProperty(value = "状态码", required = true)
-    private int code;
+    private Integer code;
 
     @ApiModelProperty(value = "描述信息")
     private String msg;

@@ -115,7 +115,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements
         userRoleQueryWrapper.lambda().eq(UserRoleRelation::getRoleId, id);
         List<UserRoleRelation> userRoleList = userRoleService.list(userRoleQueryWrapper);
         if (CollectionUtils.isNotEmpty(userRoleList)) {
-            throw new BaseException(ROLE_REL_USER_DELETE_ERROR);
+            throw BaseException.construct(ROLE_REL_USER_DELETE_ERROR).build();
         }
         boolean remove = this.removeById(id);
         if (remove) {

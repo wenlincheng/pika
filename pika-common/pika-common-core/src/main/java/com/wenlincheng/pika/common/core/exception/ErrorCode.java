@@ -16,14 +16,14 @@ public interface ErrorCode {
     ErrorTypeEnum getType();
 
     /**
-     * 返回code
+     * 错误码
      *
      * @return int
      */
     int getCode();
 
     /**
-     * 返回msg
+     * 错误信息
      *
      * @return String
      */

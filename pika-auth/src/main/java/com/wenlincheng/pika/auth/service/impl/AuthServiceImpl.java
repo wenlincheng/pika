@@ -87,9 +87,9 @@ public class AuthServiceImpl implements AuthService {
             }
 
         } catch (ExpiredJwtException e) {
-            throw new BaseException(AuthErrorCodeEnum.TOKEN_EXPIRED);
+            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
         } catch (Exception e) {
-            throw new BaseException(AuthErrorCodeEnum.TOKEN_MALFORMED);
+            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_MALFORMED).build();
         }
 
         return authUser;
@@ -99,25 +99,25 @@ public class AuthServiceImpl implements AuthService {
     public AuthUser authDecide(HttpServletRequestWrapper requestWrapper, String uri, String method) throws JwtException{
         String token = requestWrapper.getHeader(SecurityConstants.JWT_TOKEN_HEADER);
         if (StringUtils.isBlank(token) || !token.startsWith(SecurityConstants.JWT_TOKEN_PREFIX)) {
-            throw new BaseException(AuthErrorCodeEnum.TOKEN_EMPTY);
+            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EMPTY).build();
         }
         Long userId = jwtTokenManager.getUserIdByToken(token);
         String redisToken = redisUtils.get(SecurityConstants.JWT_TOKEN_REDIS_PREFIX + userId);
         if (StringUtils.isBlank(redisToken)) {
-            throw new BaseException(AuthErrorCodeEnum.TOKEN_LOGOUT);
+            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_LOGOUT).build();
         }
         if (!redisToken.equals(token.replace(SecurityConstants.JWT_TOKEN_PREFIX, ""))) {
-            throw new BaseException(AuthErrorCodeEnum.TOKEN_EXPIRED);
+            throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
         }
         // 获取用户认证信息
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         ConfigAttribute urlConfigAttribute = getPermissionByUrl(uri, method);
         if (Objects.isNull(urlConfigAttribute)) {
-            throw new BaseException(SystemErrorCodeEnum.RESOURCE_NOT_FOUND);
+            throw BaseException.construct(SystemErrorCodeEnum.RESOURCE_NOT_FOUND).build();
         }
         if (!isMatch(urlConfigAttribute, authorities)) {
-            throw new BaseException(AuthErrorCodeEnum.UNAUTHORIZED);
+            throw BaseException.construct(AuthErrorCodeEnum.UNAUTHORIZED).build();
         }
         return getUserInfo(authentication.getName());
     }
@@ -169,7 +169,7 @@ public class AuthServiceImpl implements AuthService {
         Result<User> userResult = userService.getUserByUsername(username);
         User user = userResult.getData();
         if (Objects.isNull(user)) {
-            throw new BaseException(USER_NOT_FOUND);
+            throw BaseException.construct(USER_NOT_FOUND).build();
         }
         AuthUser authUser = new AuthUser();
         authUser.setId(user.getId());

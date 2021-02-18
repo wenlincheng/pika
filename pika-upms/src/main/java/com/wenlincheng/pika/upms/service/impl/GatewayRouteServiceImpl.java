@@ -146,7 +146,7 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteMapper, Gat
             routeDefinition.setPredicates(objectMapper.readValue(gatewayRoute.getPredicates(), new TypeReference<List<PredicateDefinition>>() {}));
         } catch (IOException e) {
             log.error("网关路由转换失败 {}", e.getMessage(), e.getCause());
-            throw new BaseException();
+            throw BaseException.construct(e).build();
         }
         return routeDefinition;
     }

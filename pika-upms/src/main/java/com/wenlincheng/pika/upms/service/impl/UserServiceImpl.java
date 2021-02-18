@@ -86,13 +86,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper<User> mobileQueryWrapper = new QueryWrapper<>();
         mobileQueryWrapper.lambda().eq(User::getMobile, userForm.getMobile());
         if (Objects.nonNull(this.getOne(mobileQueryWrapper))) {
-            throw new BaseException(MOBILE_EXIST_ERROR);
+            throw BaseException.construct(MOBILE_EXIST_ERROR).build();
         }
         // 校验手机号
         QueryWrapper<User> usernameQueryWrapper = new QueryWrapper<>();
         usernameQueryWrapper.lambda().eq(User::getUsername, userForm.getUsername());
         if (Objects.nonNull(this.getOne(usernameQueryWrapper))) {
-            throw new BaseException(USERNAME_EXIST_ERROR);
+            throw BaseException.construct(USERNAME_EXIST_ERROR).build();
         }
 
 
@@ -164,10 +164,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public boolean updatePassword(UserPasswordForm passwordForm) {
         User user = this.getById(passwordForm.getId());
         if (Objects.isNull(user)) {
-            throw new BaseException(UpmsErrorCodeEnum.USER_NOT_FOUND);
+            throw BaseException.construct(UpmsErrorCodeEnum.USER_NOT_FOUND).build();
         }
         if (!user.getPassword().equals(PasswordEncodeUtil.encode(passwordForm.getOldPassword()))) {
-            throw new BaseException(UpmsErrorCodeEnum.PASSWORD_ERROR);
+            throw BaseException.construct(UpmsErrorCodeEnum.PASSWORD_ERROR).build();
         }
         user = passwordForm.toPo(User.class);
         user.setPassword(PasswordEncodeUtil.encode(passwordForm.getPassword()));

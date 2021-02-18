@@ -78,7 +78,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 查询用户角色列表
         List<Role> roleList = roleService.getRolesByUserId(user.getId()).getData();
         if(CollectionUtils.isEmpty(roleList)){
-            throw new BaseException(ROLE_EMPTY);
+            throw BaseException.construct(ROLE_EMPTY).build();
         }
         authUser.setRoleList(roleList);
         // 查询用户权限列表

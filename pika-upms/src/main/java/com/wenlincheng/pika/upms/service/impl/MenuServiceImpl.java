@@ -98,13 +98,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
         queryWrapper.lambda().eq(SysMenu::getParentId, id);
         List<SysMenu> menuList = this.list(queryWrapper);
         if (CollectionUtils.isNotEmpty(menuList)) {
-            throw new BaseException(MENU_HAS_CHILDREN);
+            throw BaseException.construct(MENU_HAS_CHILDREN).build();
         }
         QueryWrapper<RoleMenuRelation> roleMenuQueryWrapper = new QueryWrapper<>();
         roleMenuQueryWrapper.lambda().eq(RoleMenuRelation::getMenuId, id);
         List<RoleMenuRelation> roleMenuList = roleMenuService.list(roleMenuQueryWrapper);
         if (CollectionUtils.isNotEmpty(roleMenuList)) {
-            throw new BaseException(MENU_REL_ROLE_DELETE_ERROR);
+            throw BaseException.construct(MENU_REL_ROLE_DELETE_ERROR).build();
         }
         boolean remove = this.removeById(id);
         if (remove) {

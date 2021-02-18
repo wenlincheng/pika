@@ -83,7 +83,7 @@ public class DefaultEmailSender implements EmailSender {
             Transport.send(message);
             log.debug("发送邮件成功");
         } catch (MessagingException e) {
-            throw new BaseException();
+            throw BaseException.construct(e).build();
         }
         return true;
     }
@@ -120,7 +120,7 @@ public class DefaultEmailSender implements EmailSender {
                     buf.replace(startIndex, endIndex + PLACEHOLDER_SUFFIX.length(), valStr);
                     nextIndex = startIndex + valStr.length();
                 } else {
-                    throw new BaseException();
+                    throw BaseException.construct().appendMsg("模板内容参数为空").build();
                 }
                 startIndex = buf.indexOf(PLACEHOLDER_PREFIX, nextIndex);
             } else {
@@ -164,12 +164,13 @@ public class DefaultEmailSender implements EmailSender {
             }
             // 获取默认的session对象
             return Session.getDefaultInstance(properties, new Authenticator() {
+                @Override
                 public PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(from, emailSenderConfig.getSmtpPassword());
                 }
             });
         } catch (Exception e) {
-            throw new BaseException();
+            throw BaseException.construct(e).appendMsg("发送邮件获取Session失败").build();
         }
      }
 

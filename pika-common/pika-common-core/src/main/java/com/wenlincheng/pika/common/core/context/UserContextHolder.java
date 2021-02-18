@@ -63,7 +63,7 @@ public class UserContextHolder {
     public PikaUser getUser() {
         UserSessionData userSessionData = USER_CONTEXT.get();
         if (Objects.isNull(userSessionData)) {
-            throw new BaseException(USER_NOT_LOGIN);
+            throw BaseException.construct(USER_NOT_LOGIN).build();
         }
         return userSessionData.getUser();
     }

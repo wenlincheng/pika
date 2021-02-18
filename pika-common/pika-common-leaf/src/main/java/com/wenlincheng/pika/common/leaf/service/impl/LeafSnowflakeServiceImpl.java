@@ -30,7 +30,7 @@ public class LeafSnowflakeServiceImpl implements LeafSnowflakeService {
         Result result = snowflakeService.getId(key);
         long id = result.getId();
         if (id <= 0) {
-            throw new BaseException(ID_GEN_ERROR);
+            throw BaseException.construct(ID_GEN_ERROR).build();
         }
         return id;
     }

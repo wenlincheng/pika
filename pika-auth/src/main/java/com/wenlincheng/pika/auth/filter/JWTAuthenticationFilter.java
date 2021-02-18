@@ -98,10 +98,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 Long userId = tokenManager.getUserIdByToken(token);
                 String oldToken = redisUtils.get(SecurityConstants.JWT_TOKEN_REDIS_PREFIX + userId);
                 if (StringUtils.isBlank(oldToken)) {
-                    throw new BaseException(AuthErrorCodeEnum.TOKEN_LOGOUT);
+                    throw BaseException.construct(AuthErrorCodeEnum.TOKEN_LOGOUT).build();
                 }
                 if (!oldToken.equals(token.replace(SecurityConstants.JWT_TOKEN_PREFIX, ""))) {
-                    throw new BaseException(AuthErrorCodeEnum.TOKEN_EXPIRED);
+                    throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
                 }
                 List<PikaGrantedAuthority> authorities = getUserAuthorities(userId);
                 if (StringUtils.isNotEmpty(username)) {
@@ -110,18 +110,18 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 }
             } catch (ExpiredJwtException e) {
                 log.warn("Request to parse expired JWT : {} failed : {}", token, e.getMessage());
-                throw new BaseException(AuthErrorCodeEnum.TOKEN_EXPIRED);
+                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EXPIRED).build();
             } catch (UnsupportedJwtException e) {
                 log.warn("Request to parse unsupported JWT : {} failed : {}", token, e.getMessage());
-                throw new BaseException(AuthErrorCodeEnum.TOKEN_UNSUPPORTED);
+                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_UNSUPPORTED).build();
             } catch (MalformedJwtException e) {
                 log.warn("Request to parse malformed JWT : {} failed : {}", token, e.getMessage());
-                throw new BaseException(AuthErrorCodeEnum.TOKEN_MALFORMED);
+                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_MALFORMED).build();
             } catch (InvalidKeyException e) {
-                throw new BaseException(AuthErrorCodeEnum.TOKEN_INVALID_KEY);
+                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_INVALID_KEY).build();
             } catch (IllegalArgumentException e) {
                 log.warn("Request to parse empty or null JWT : {} failed : {}", token, e.getMessage());
-                throw new BaseException(AuthErrorCodeEnum.TOKEN_EMPTY);
+                throw BaseException.construct(AuthErrorCodeEnum.TOKEN_EMPTY).build();
             }
 
         }

@@ -56,7 +56,7 @@ public class CsvUtils {
             }
 
         } catch (Exception e) {
-            throw new BaseException(CSV_PARSING_FAIL, e);
+            throw BaseException.construct(CSV_PARSING_FAIL, e).build();
         } finally {
             if (null != reader) {
                 reader.close();
@@ -93,7 +93,7 @@ public class CsvUtils {
         } else if ("class java.lang.Double".equals(xclass)) {
             f.setDouble(entity, Double.parseDouble(value));
         } else {
-            throw new BaseException(CSV_PROPERTIES_DO_NOT_SUPPORT);
+            throw BaseException.construct(CSV_PROPERTIES_DO_NOT_SUPPORT).build();
         }
     }
 
@@ -128,7 +128,7 @@ public class CsvUtils {
             os.flush();
             return true;
         } catch (Exception e) {
-            throw new BaseException(CSV_PARSING_FAIL, e);
+            throw BaseException.construct(CSV_PARSING_FAIL, e).build();
         }
     }
 

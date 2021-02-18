@@ -42,7 +42,7 @@ public class CloneUtil {
 			PropertyUtils.copyProperties(result, obj);
 			return result;
 		} catch (Exception e) {
-			throw new BaseException(CLONE_OBJECT_FAIL, obj.getClass().getName(), e);
+			throw BaseException.construct(CLONE_OBJECT_FAIL, e).appendMsg(obj.getClass().getName()).build();
 		}
 	}
 

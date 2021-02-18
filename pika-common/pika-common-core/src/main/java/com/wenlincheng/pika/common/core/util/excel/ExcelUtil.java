@@ -109,7 +109,7 @@ public class ExcelUtil<T> {
             if (CheckUtils.isNotEmpty(needFieldSet)) {
                 for (String needFieldName : needFieldSet) {
                     if (!existFieldName.contains(needFieldName)) {
-                        throw new BaseException(EXCEL_PARSING_FAIL, "Excel表格中未包含" + needFieldName + "列");
+                        throw BaseException.construct(EXCEL_PARSING_FAIL).appendMsg("Excel表格中未包含" + needFieldName + "列").build();
                     }
                 }
             }
@@ -214,7 +214,7 @@ public class ExcelUtil<T> {
                 descriptorMap.put(fieldMetaName, propertyDescriptor);
             }
         } catch (Exception e) {
-            throw new BaseException(EXCEL_PARSING_FAIL, e);
+            throw BaseException.construct(EXCEL_PARSING_FAIL, e).build();
         }
         return descriptorMap;
     }
@@ -252,7 +252,7 @@ public class ExcelUtil<T> {
                 }
             }
         } catch (Exception e) {
-            throw new BaseException();
+            throw BaseException.construct(e).build();
         }
         return descriptorMap;
     }

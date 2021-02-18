@@ -50,7 +50,7 @@ public class RouteServiceImpl implements RouteService {
         Set<String> gatewayKeys = redisUtils.keys(GATEWAY_ROUTES_ADMIN + "*");
         if (CollectionUtils.isEmpty(gatewayKeys)) {
             log.error("初始化路由异常，无法从缓存中加载数据");
-            throw new BaseException(GATEWAY_LOAD_ROUTE_ERROR);
+            throw BaseException.construct(GATEWAY_LOAD_ROUTE_ERROR).build();
         }
         gatewayKeys.forEach(routeKey -> {
             String routeStr = redisUtils.get(routeKey);
