@@ -5,9 +5,12 @@ import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.wenlincheng.pika.common.core.annotation.PikaModel;
 import com.wenlincheng.pika.common.core.base.model.BaseModel;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.wenlincheng.pika.common.core.base.model.CodeModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -23,16 +26,11 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
+@PikaModel.Code(type = "DATE_ORDERLY_SEQ", prefix = "P", size = 8, format = "yyyyMMdd")
 @TableName("product")
-public class Product extends BaseModel<Product> {
+public class Product extends CodeModel<Product> {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
 
     /**
      * 产品名称
@@ -155,12 +153,6 @@ public class Product extends BaseModel<Product> {
     private String dataStatus;
 
     /**
-     * 编码
-     */
-    @TableField("code")
-    private String code;
-
-    /**
      * 业务所有者ID
      */
     @TableField("owner_id")
@@ -201,11 +193,5 @@ public class Product extends BaseModel<Product> {
      */
     @TableField("remark")
     private String remark;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }

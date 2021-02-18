@@ -2,9 +2,12 @@ package com.wenlincheng.pika.item.entity.po;
 
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.wenlincheng.pika.common.core.annotation.PikaModel;
 import com.wenlincheng.pika.common.core.base.model.BaseModel;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.wenlincheng.pika.common.core.base.model.CodeModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,8 +23,9 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
+@PikaModel.Code(type = "DATE_ORDERLY_SEQ", prefix = "S", size = 8, format = "yyyyMMdd")
 @TableName("sale_sku")
-public class SaleSku extends BaseModel<SaleSku> {
+public class SaleSku extends CodeModel<SaleSku> {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,12 +58,6 @@ public class SaleSku extends BaseModel<SaleSku> {
      */
     @TableField("simple_name")
     private String simpleName;
-
-    /**
-     * 编码
-     */
-    @TableField("code")
-    private String code;
 
     /**
      * 条形码
@@ -156,11 +154,5 @@ public class SaleSku extends BaseModel<SaleSku> {
      */
     @TableField("is_fixed_sku")
     private Integer isFixedSku;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
 
 }

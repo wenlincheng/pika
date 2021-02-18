@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.util.Date;
 import java.io.Serializable;
+
+import com.wenlincheng.pika.common.core.base.model.IdModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,12 +22,9 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("category")
-public class Category extends Model<Category> {
+public class Category extends IdModel<Category> {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
     /**
      * 类别名称
@@ -62,41 +61,5 @@ public class Category extends Model<Category> {
      */
     @TableField("path")
     private String path;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    @TableField("update_time")
-    private Date updateTime;
-
-    /**
-     * 创建人
-     */
-    @TableField("create_user_id")
-    private Long createUserId;
-
-    /**
-     * 更新人
-     */
-    @TableField("update_user_id")
-    private Long updateUserId;
-
-    /**
-     * 逻辑删除
-     */
-    @TableField("is_deleted")
-    private Integer isDeleted;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }
