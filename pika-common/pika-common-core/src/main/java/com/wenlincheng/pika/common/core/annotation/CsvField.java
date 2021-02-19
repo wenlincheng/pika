@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Model注解
+ * Excel文件注解
  *
  * @author Pikaman
  * @version 1.0.0
