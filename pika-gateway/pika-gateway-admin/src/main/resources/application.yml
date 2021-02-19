@@ -2,7 +2,7 @@ server:
   port: 8100
 spring:
   profiles:
-    active: dev
+    active: ${ACTIVE_ENV:dev}
   mvc:
     servlet:
       load-on-startup: 0

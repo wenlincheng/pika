@@ -16,7 +16,7 @@ services:
       - 8100:8100
     depends_on:
       - pika-auth
-    env_file: env/.env
+    env_file: env/dev.env
     environment:
       TZ: Asia/Shanghai
 
@@ -38,7 +38,7 @@ services:
       - redis
       - nacos
       - pika-auth
-    env_file: env/.env
+    env_file: env/dev.env
     environment:
       TZ: Asia/Shanghai
 
@@ -60,7 +60,7 @@ services:
       - redis
       - nacos
       - pika-upms
-    env_file: env/.env
+    env_file: env/dev.env
     environment:
       TZ: Asia/Shanghai
 
@@ -83,7 +83,7 @@ services:
       - mysql
       - redis
       - nacos
-    env_file: env/.env
+    env_file: env/dev.env
     environment:
       TZ: Asia/Shanghai
 
@@ -106,6 +106,6 @@ services:
       - mysql
       - redis
       - nacos
-    env_file: env/.env
+    env_file: env/dev.env
     environment:
       TZ: Asia/Shanghai
