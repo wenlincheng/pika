@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 
 import static com.wenlincheng.pika.upms.constant.UpmsConstants.INITIAL_PASSWORD;
 import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.USER_ADD_ERROR;
-import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.USERNAME_EXIST_ERROR;
 
 /**
  * <p>
@@ -177,7 +176,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public UserDetailVO queryUserDetail(Long id) throws PikaException {
         User user = this.getById(id);
         if (user == null) {
-            throw new UserNotFoundException();
+            throw UserNotFoundException.construct().build();
         }
         UserDetailVO userDetail = new UserDetailVO(user);
         // 查询角色

@@ -243,12 +243,6 @@ public class Item extends CodeModel<Item> {
     private Date lastUpSaleDate;
 
     /**
-     * 编码
-     */
-    @TableField(value = "code", fill = FieldFill.INSERT)
-    private String code;
-
-    /**
      * 商品系列ID
      */
     @TableField("series_id")
