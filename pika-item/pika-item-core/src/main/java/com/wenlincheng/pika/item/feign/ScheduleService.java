@@ -8,23 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
- * 商品服务
+ * 定时任务
  *
  * @author Pikaman
  * @version 1.0.0
  * @date 2021/1/1 10:10 上午
  */
-@FeignClient(contextId = "itemService", value = "pika-item", fallbackFactory = ItemServiceFallbackFactory.class)
-public interface ItemService {
-
-    /**
-     * 查询商品详情
-     *
-     * @param id 商品id
-     * @return Result<ItemDetail>
-     */
-    @GetMapping("/item/detail/{itemId}")
-    Result<ItemDetail> queryItemDetailById(@PathVariable("itemId") Long id);
+@FeignClient(contextId = "scheduleService", value = "pika-schedule", fallbackFactory = ItemServiceFallbackFactory.class)
+public interface ScheduleService {
 
     /**
      * 商品自动上架定时任务
@@ -32,7 +23,15 @@ public interface ItemService {
      * @param id 商品id
      * @return Result<Boolean>
      */
-    @GetMapping("/item/onsale/{itemId}")
+    @GetMapping("/job/item/onsale/{itemId}")
     Result<Boolean> autoOnSaleById(@PathVariable("itemId") Long id);
 
+    /**
+     * 取消商品自动上架定时任务
+     *
+     * @param id 商品id
+     * @return Result<ItemDetail>
+     */
+    @GetMapping("/job/item/onsale/cancel/{itemId}")
+    Result<Boolean> cancelAutoOnSaleById(@PathVariable("itemId") Long id);
 }

@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.item.feign.fallback;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
-import com.wenlincheng.pika.item.feign.ItemService;
+import com.wenlincheng.pika.item.feign.ScheduleService;
 import com.wenlincheng.pika.item.feign.dto.ItemDetail;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -16,21 +16,21 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class ItemServiceFallbackFactory implements FallbackFactory<ItemService> {
+public class ItemServiceFallbackFactory implements FallbackFactory<ScheduleService> {
 
     @Override
-    public ItemService create(Throwable throwable) {
+    public ScheduleService create(Throwable throwable) {
 
-        return new ItemService() {
+        return new ScheduleService() {
             @Override
-            public Result<ItemDetail> queryItemDetailById(Long id) {
-                log.error("获取商品详情失败 id:{}, {}, {}", id, throwable.getMessage(), throwable.getStackTrace());
+            public Result<Boolean> autoOnSaleById(Long id) {
+                log.error("商品自动上架失败：id:{}, {}, {}", id, throwable.getMessage(), throwable.getStackTrace());
                 return Result.fail();
             }
 
             @Override
-            public Result<Boolean> autoOnSaleById(Long id) {
-                log.error("商品自动上架失败：id:{}, {}, {}", id, throwable.getMessage(), throwable.getStackTrace());
+            public Result<Boolean> cancelAutoOnSaleById(Long id) {
+                log.error("取消商品自动上架失败 id:{}, {}, {}", id, throwable.getMessage(), throwable.getStackTrace());
                 return Result.fail();
             }
         };
