@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * 商品Fallback
+ * 定时任务
  *
  * @author Pikaman
  * @version 1.0.0
