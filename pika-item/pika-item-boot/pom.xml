@@ -27,6 +27,12 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>pika-item-app</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>pika-inventory-core</artifactId>
             <version>1.0.0</version>
         </dependency>

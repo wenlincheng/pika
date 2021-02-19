@@ -4,16 +4,20 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.wenlincheng.pika</groupId>
-        <artifactId>pika-inventory</artifactId>
+        <artifactId>pika-item</artifactId>
         <version>1.0.0</version>
     </parent>
-    <artifactId>pika-inventory-api</artifactId>
+    <artifactId>pika-item-app</artifactId>
     <version>1.0.0</version>
-    <name>pika-inventory-api</name>
-    <description>库存中心接口</description>
+    <name>pika-item-app</name>
+    <description>APP端API</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>pika-item-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 
 </project>
