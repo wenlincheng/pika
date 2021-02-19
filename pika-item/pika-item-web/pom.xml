@@ -14,8 +14,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.wenlincheng.pika</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>pika-item-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>pika-inventory-api</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

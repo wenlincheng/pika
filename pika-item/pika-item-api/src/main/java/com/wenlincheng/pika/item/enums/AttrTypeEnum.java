@@ -14,7 +14,7 @@ import lombok.Getter;
 public enum AttrTypeEnum implements IEnum<String> {
 
     SALE("SALE", "销售属性", "销售属性"),
-    BOXGAUGE("BOXGAUGE", "箱规属性", "箱规属性"),
+    BOX_GAUGE("BOX_GAUGE", "箱规属性", "箱规属性"),
     NORMAL("NORMAL", "普通属性", "普通属性"),
     LOGISTICS("LOGISTICS", "物流属性", "物流属性"),
     SERVICE("SERVICE", "服务属性", "服务属性"),

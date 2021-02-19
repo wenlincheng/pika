@@ -20,6 +20,7 @@
     <modules>
         <module>pika-inventory-api</module>
         <module>pika-inventory-core</module>
+        <module>pika-inventory-boot</module>
     </modules>
 
     <dependencies>

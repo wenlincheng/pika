@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: pika-inventory
+  cloud:
+    nacos:
+      config:
+        server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
+        prefix: ${spring.application.name}
+        file-extension: yml
+        namespace: ${REGISTER_NAMESPACE:5a0187d7-9f8f-445a-a3bf-e17e11457e4d}
+        group: ${REGISTER_GROUP:PIKA}
+        username: ${REGISTER_USERNAME:nacos}
+        password: ${REGISTER_PASSWORD:nacos}
+
+# logstash
+logstash:
+  host: ${LOGSTASH_HOST:127.0.0.1}
+  port: ${LOGSTASH_PORT:5044}
