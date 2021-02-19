@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2021/1/1 10:10 上午
  */
 @Slf4j
-public class BaseController {
+public abstract class BaseController {
 
     /**
      * 获取当前请求用户

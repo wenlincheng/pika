@@ -14,7 +14,7 @@ import java.util.Date;
  * @date 2021/1/1 10:10 上午
  */
 @Data
-public class BaseQuery<T> {
+public abstract class BaseQuery<T> {
 
     @ApiModelProperty(value = "开始时间")
     private Date createTimeStart;

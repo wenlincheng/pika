@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 @ApiModel(value = "分页查询参数基类")
 @Data
-public class BasePageQuery<T> {
+public abstract class BasePageQuery<T> {
 
     @ApiModelProperty(value = "当前页数")
     private long current = 1;

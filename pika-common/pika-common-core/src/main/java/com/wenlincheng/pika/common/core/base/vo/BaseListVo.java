@@ -20,7 +20,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class BaseListVo<T> extends BaseVo<T> {
+public abstract class BaseListVo<T> extends BaseVo<T> {
     private static final long serialVersionUID = -1102164501562674959L;
 
     public BaseListVo(T t) {
