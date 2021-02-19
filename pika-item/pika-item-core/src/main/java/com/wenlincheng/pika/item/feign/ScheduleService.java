@@ -2,7 +2,6 @@ package com.wenlincheng.pika.item.feign;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.item.feign.fallback.ItemServiceFallbackFactory;
-import com.wenlincheng.pika.item.feign.dto.ItemDetail;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

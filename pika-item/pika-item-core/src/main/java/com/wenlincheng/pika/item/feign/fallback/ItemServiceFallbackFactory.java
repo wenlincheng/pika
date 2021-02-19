@@ -2,7 +2,6 @@ package com.wenlincheng.pika.item.feign.fallback;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.item.feign.ScheduleService;
-import com.wenlincheng.pika.item.feign.dto.ItemDetail;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
