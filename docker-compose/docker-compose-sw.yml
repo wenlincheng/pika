@@ -1,5 +1,6 @@
 version: '3'
 services:
+  # 分布式追踪与监控
   skywalking-oap:
     image: apache/skywalking-oap-server:6.6.0-es7
     container_name: skywalking-oap
@@ -16,7 +17,7 @@ services:
     links:
       - es-node01
     networks:
-      - elastic
+      - pika-net
 
   skywalking-ui:
     image: apache/skywalking-ui:6.6.0
@@ -32,4 +33,4 @@ services:
       - 8080:8080
     restart: always
     networks:
-      - elastic
+      - pika-net
