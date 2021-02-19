@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.trade;
+package com.wenlincheng.pika.trade.web;
 
 import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
