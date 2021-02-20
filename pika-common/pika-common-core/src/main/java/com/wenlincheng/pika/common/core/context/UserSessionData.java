@@ -13,7 +13,7 @@ import lombok.Data;
 public class UserSessionData {
 
     /**
-     * 登录用户
+     * 用户信息
      */
     private PikaUser user;
 
