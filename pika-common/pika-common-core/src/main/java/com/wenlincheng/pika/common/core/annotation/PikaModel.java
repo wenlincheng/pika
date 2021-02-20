@@ -16,24 +16,51 @@ import java.lang.annotation.Target;
 @Target(value = { ElementType.TYPE })
 public @interface PikaModel {
 
+    /**
+     * 编码注解
+     */
     @Target({ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     @interface Code {
 
+        /**
+         * 类型
+         */
         String type() default "";
 
+        /**
+         * 前缀
+         */
         String prefix() default "";
 
+        /**
+         * 后缀
+         */
         String suffix() default "";
 
+        /**
+         * 分隔符
+         */
         String separator() default "";
 
+        /**
+         * 大小
+         */
         int size() default 16;
 
+        /**
+         * 步长
+         */
         int step() default 1;
 
+        /**
+         * 初始值
+         */
         int initial() default 1000;
 
+        /**
+         * 时间格式
+         */
         String format() default "";
 
     }
