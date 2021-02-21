@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import java.util.Date;
  * @date : 2021/1/31 12:07 上午
  */
 @EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 @Data
 public abstract class BaseModel<T extends Model<?>> extends Model<T> {
 

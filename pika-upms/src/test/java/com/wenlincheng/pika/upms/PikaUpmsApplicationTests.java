@@ -2,7 +2,7 @@ package com.wenlincheng.pika.upms;
 
 import com.wenlincheng.pika.upms.entity.vo.region.AreaDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.region.AreaListVO;
-import com.wenlincheng.pika.upms.service.AreaService;
+import com.wenlincheng.pika.upms.service.RegionService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class PikaUpmsApplicationTests {
 	}
 
 	@Autowired
-	private AreaService areaService;
+	private RegionService areaService;
 
 	@Test
 	public void getAreaByLevel() {

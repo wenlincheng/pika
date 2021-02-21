@@ -4,7 +4,7 @@ package com.wenlincheng.pika.upms.controller;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.upms.entity.vo.region.AreaListVO;
 import com.wenlincheng.pika.upms.entity.vo.region.AreaDetailVO;
-import com.wenlincheng.pika.upms.service.AreaService;
+import com.wenlincheng.pika.upms.service.RegionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import java.util.List;
 public class AreaController {
 
     @Autowired
-    private AreaService areaService;
+    private RegionService areaService;
 
     @GetMapping("/level/{level}")
     @ApiOperation(value = "查询地址区域", notes = "根据地址级别获取地址列表", httpMethod = "GET")

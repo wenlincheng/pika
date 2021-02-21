@@ -15,7 +15,7 @@ public class PikaUser {
     /**
      * 用户id
      */
-    private Long userId;
+    private Long id;
 
     /**
      * 用户名

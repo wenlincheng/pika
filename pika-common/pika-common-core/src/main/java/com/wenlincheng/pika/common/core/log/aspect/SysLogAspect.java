@@ -57,7 +57,7 @@ public class SysLogAspect {
 		String user = request.getHeader(X_CLIENT_TOKEN_USER);
 		if (StringUtils.isNotBlank(user)) {
 			PikaUser pikaUser = JSON.parseObject(user, PikaUser.class);
-			sysLog.setUserId(pikaUser.getUserId());
+			sysLog.setUserId(pikaUser.getId());
 			sysLog.setUsername(pikaUser.getUsername());
 		}
 

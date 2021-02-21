@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.upms.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
@@ -121,8 +122,10 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteMapper, Gat
                 .eq(GatewayRoute::getIsDeleted, YnEnum.NO.getValue());
         List<GatewayRoute> gatewayRoutes = this.list(queryWrapper);
         gatewayRoutes.forEach(gatewayRoute -> {
-                gatewayRouteCache.remove(gatewayRoute.getRouteId());
-                gatewayRouteCache.put(gatewayRoute.getRouteId(), gatewayRouteToRouteDefinition(gatewayRoute));
+                // gatewayRouteCache.remove(gatewayRoute.getRouteId());
+                // gatewayRouteCache.put(gatewayRoute.getRouteId(), gatewayRouteToRouteDefinition(gatewayRoute));
+                redisUtils.delete(GATEWAY_ROUTES_ADMIN + gatewayRoute.getRouteId());
+                redisUtils.set(GATEWAY_ROUTES_ADMIN + gatewayRoute.getRouteId(), JSON.toJSONString(gatewayRouteToRouteDefinition(gatewayRoute)));
             });
         eventPublisher.publishEvent(new GatewayRouteRefreshEvent(this, busServiceMatcher.getServiceId(), UpmsConstants.GATEWAY_ROUTE_ADMIN_BUS_ID));
         log.info("刷新网关路由成功!");

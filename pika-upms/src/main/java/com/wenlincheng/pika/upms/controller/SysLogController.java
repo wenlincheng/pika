@@ -48,7 +48,7 @@ public class SysLogController {
     public Result<Boolean> add(@Valid @RequestBody SysLog sysLog) {
         sysLog.setIsDeleted(YnEnum.NO.getValue());
         Date now = new Date();
-        sysLog.setCreateTime(now).setCreateTime(now);
+        sysLog.setCreateTime(now);
         return Result.success(sysLogService.save(sysLog));
     }
 

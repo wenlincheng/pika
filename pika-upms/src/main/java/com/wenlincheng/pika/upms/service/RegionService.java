@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.upms.service;
 
-import com.wenlincheng.pika.upms.entity.po.Area;
+import com.wenlincheng.pika.upms.entity.po.Region;
 import com.wenlincheng.pika.upms.entity.vo.region.AreaDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.region.AreaListVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author Pikaman
  * @date 2021/1/1 10:10 上午
  */
-public interface AreaService extends IService<Area> {
+public interface RegionService extends IService<Region> {
     /**
      * 根据级别查询地址区域
      *

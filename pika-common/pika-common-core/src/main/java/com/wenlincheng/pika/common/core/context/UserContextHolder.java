@@ -83,7 +83,7 @@ public class UserContextHolder {
     * @return Long
     */
     public Long getUserId() {
-        return getUser().getUserId();
+        return getUser().getId();
     }
 
    /**

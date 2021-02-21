@@ -1,11 +1,11 @@
 package com.wenlincheng.pika.upms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.wenlincheng.pika.upms.entity.po.Area;
+import com.wenlincheng.pika.upms.entity.po.Region;
 import com.wenlincheng.pika.upms.entity.vo.region.AreaListVO;
 import com.wenlincheng.pika.upms.entity.vo.region.AreaDetailVO;
-import com.wenlincheng.pika.upms.mapper.AreaMapper;
-import com.wenlincheng.pika.upms.service.AreaService;
+import com.wenlincheng.pika.upms.mapper.RegionMapper;
+import com.wenlincheng.pika.upms.service.RegionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,33 +22,33 @@ import java.util.List;
  * @date 2021/1/1 10:10 上午
  */
 @Service
-public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements AreaService {
+public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> implements RegionService {
 
     @Autowired
-    private AreaMapper areaMapper;
+    private RegionMapper areaMapper;
 
     @Override
     public List<AreaListVO> getAreaListByLevel(Integer level) {
         List<AreaListVO> list = new ArrayList<>();
-        QueryWrapper<Area> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<Region> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("level", level);
-        List<Area> areaList = this.baseMapper.selectList(queryWrapper);
+        List<Region> areaList = this.baseMapper.selectList(queryWrapper);
         return convertArea(list, areaList);
     }
 
     @Override
     public List<AreaListVO> getAreaListByParentId(Long parentId) {
         List<AreaListVO> list = new ArrayList<>();
-        QueryWrapper<Area> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<Region> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("parent_id", parentId);
-        List<Area> areaList = areaMapper.selectList(queryWrapper);
+        List<Region> areaList = areaMapper.selectList(queryWrapper);
         return convertArea(list, areaList);
     }
 
     @Override
     public AreaDetailVO getAreaDetailById(Long id) {
         AreaDetailVO areaDetailVO = new AreaDetailVO();
-        Area area = areaMapper.selectById(id);
+        Region area = areaMapper.selectById(id);
         areaDetailVO.setId(area.getId());
         String s = get(area.getParentId());
         areaDetailVO.setFullName(s + area.getName());
@@ -56,7 +56,7 @@ public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements Ar
     }
 
     private String get(Long parentId) {
-        Area parentArea = areaMapper.selectById(parentId);
+        Region parentArea = areaMapper.selectById(parentId);
         String name = "";
         if (parentArea != null) {
             name = parentArea.getName();
@@ -66,8 +66,8 @@ public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements Ar
         return name;
     }
 
-    private List<AreaListVO> convertArea(List<AreaListVO> list, List<Area> areaList) {
-        for (Area area :areaList) {
+    private List<AreaListVO> convertArea(List<AreaListVO> list, List<Region> areaList) {
+        for (Region area :areaList) {
             AreaListVO areaListVO = new AreaListVO();
             areaListVO.setId(area.getId());
             areaListVO.setName(area.getName());
