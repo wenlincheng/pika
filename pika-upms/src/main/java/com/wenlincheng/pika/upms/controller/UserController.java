@@ -44,7 +44,7 @@ public class UserController extends BaseController {
     public Result<IPage<UserListVO>> query(UserPageQuery pageQuery) {
         log.debug("query with pageQuery:{}", pageQuery);
         IPage<UserListVO> page = userService.queryPageList(pageQuery);
-
+        System.out.println(currentUser());
         return Result.success(page);
     }
 

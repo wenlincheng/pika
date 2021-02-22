@@ -1,9 +1,13 @@
 package com.wenlincheng.pika.common.core.base.controller;
 
 import com.wenlincheng.pika.common.core.context.PikaUser;
-import com.wenlincheng.pika.common.core.context.UserContextHolder;
+import com.wenlincheng.pika.common.core.context.UserSessionHolder;
 import com.wenlincheng.pika.common.core.exception.PikaException;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Objects;
+
+import static com.wenlincheng.pika.common.core.exception.SystemErrorCodeEnum.USER_NOT_LOGIN;
 
 /**
  * 基础控制器
@@ -21,7 +25,11 @@ public abstract class BaseController {
      * @return AuthUser
      */
     public PikaUser currentUser() throws PikaException {
-        return UserContextHolder.getInstance().getUser();
+        PikaUser pikaUser = UserSessionHolder.getInstance().getUser();
+        if (Objects.isNull(pikaUser)) {
+            throw PikaException.construct(USER_NOT_LOGIN).build();
+        }
+        return pikaUser;
     }
 
     /**
@@ -30,6 +38,6 @@ public abstract class BaseController {
      * @return java.lang.Long
      */
     public Long currentUserId() {
-        return UserContextHolder.getInstance().getUserId();
+        return currentUser().getId();
     }
 }

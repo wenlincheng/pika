@@ -1,7 +1,8 @@
 package com.wenlincheng.pika.common.data.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.wenlincheng.pika.common.core.context.UserContextHolder;
+import com.wenlincheng.pika.common.core.context.PikaUser;
+import com.wenlincheng.pika.common.core.context.UserSessionHolder;
 import com.wenlincheng.pika.common.core.annotation.PikaModel;
 import com.wenlincheng.pika.common.leaf.enums.SequenceTypeEnum;
 import com.wenlincheng.pika.common.leaf.model.SequenceConfig;
@@ -56,7 +57,7 @@ public class PikaMetaObjectHandler implements MetaObjectHandler {
 
         this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
         this.strictInsertFill(metaObject, "isDeleted", Integer.class, 0);
-        this.strictInsertFill(metaObject, "createUserId", Long.class, UserContextHolder.getInstance().getUserId());
+        this.strictInsertFill(metaObject, "createUserId", Long.class, getUserId());
 
     }
 
@@ -64,7 +65,20 @@ public class PikaMetaObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         log.debug("修改自动填充");
         this.strictUpdateFill(metaObject, "updateTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "updateUserId", Long.class, UserContextHolder.getInstance().getUserId());
+        this.strictInsertFill(metaObject, "updateUserId", Long.class, getUserId());
 
+    }
+
+    /**
+     * 获取用户id
+     *
+     * @return java.lang.Long
+     */
+    private Long getUserId() {
+        PikaUser pikaUser = UserSessionHolder.getInstance().getUser();
+        if (Objects.nonNull(pikaUser)) {
+            return pikaUser.getId();
+        }
+        return null;
     }
 }

@@ -2,8 +2,8 @@ package com.wenlincheng.pika.common.core.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.wenlincheng.pika.common.core.context.PikaUser;
-import com.wenlincheng.pika.common.core.context.UserContextHolder;
-import com.wenlincheng.pika.common.core.context.UserSessionData;
+import com.wenlincheng.pika.common.core.context.UserSessionHolder;
+import com.wenlincheng.pika.common.core.context.UserSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.lang.Nullable;
@@ -29,14 +29,12 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         checkToken(request.getHeader(X_CLIENT_TOKEN));
         String userInfoString = StringUtils.defaultIfBlank(request.getHeader(X_CLIENT_TOKEN_USER), "{}");
-        UserSessionData userSessionData = new UserSessionData();
+        UserSession userSession = new UserSession();
         if (StringUtils.isNotBlank(userInfoString)) {
             PikaUser user = JSON.parseObject(userInfoString, PikaUser.class);
-            userSessionData.setUser(user);
-        } else {
-            userSessionData.setUser(new PikaUser());
+            userSession.setUser(user);
         }
-        UserContextHolder.getInstance().setContext(userSessionData);
+        UserSessionHolder.getInstance().setSession(userSession);
         return true;
     }
 
@@ -51,6 +49,6 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
-        UserContextHolder.getInstance().clear();
+        UserSessionHolder.getInstance().clear();
     }
 }

@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2021/1/1 10:10 上午
  */
 @Data
-public class UserSessionData {
+public class UserSession {
 
     /**
      * 用户信息
