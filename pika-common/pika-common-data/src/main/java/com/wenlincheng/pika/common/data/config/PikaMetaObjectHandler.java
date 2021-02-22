@@ -1,8 +1,8 @@
 package com.wenlincheng.pika.common.data.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.wenlincheng.pika.common.core.context.PikaUser;
-import com.wenlincheng.pika.common.core.context.UserSessionHolder;
+import com.wenlincheng.pika.common.core.session.PikaUser;
+import com.wenlincheng.pika.common.core.session.UserSessionHolder;
 import com.wenlincheng.pika.common.core.annotation.PikaModel;
 import com.wenlincheng.pika.common.leaf.enums.SequenceTypeEnum;
 import com.wenlincheng.pika.common.leaf.model.SequenceConfig;

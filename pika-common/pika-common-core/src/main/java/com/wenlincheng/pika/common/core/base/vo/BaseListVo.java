@@ -1,14 +1,11 @@
 package com.wenlincheng.pika.common.core.base.vo;
 
-import com.wenlincheng.pika.common.core.context.PikaUser;
+import com.wenlincheng.pika.common.core.session.PikaUser;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 列表VO基类

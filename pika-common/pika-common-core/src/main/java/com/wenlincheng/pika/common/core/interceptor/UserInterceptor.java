@@ -1,9 +1,9 @@
 package com.wenlincheng.pika.common.core.interceptor;
 
 import com.alibaba.fastjson.JSON;
-import com.wenlincheng.pika.common.core.context.PikaUser;
-import com.wenlincheng.pika.common.core.context.UserSessionHolder;
-import com.wenlincheng.pika.common.core.context.UserSession;
+import com.wenlincheng.pika.common.core.session.PikaUser;
+import com.wenlincheng.pika.common.core.session.UserSessionHolder;
+import com.wenlincheng.pika.common.core.session.UserSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.lang.Nullable;

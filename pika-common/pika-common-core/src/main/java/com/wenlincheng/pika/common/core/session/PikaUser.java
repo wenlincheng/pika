@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.common.core.context;
+package com.wenlincheng.pika.common.core.session;
 
 import lombok.Data;
 
@@ -22,8 +22,4 @@ public class PikaUser {
      */
     private String username;
 
-    /**
-     * 商家id
-     */
-    private String merchantId;
 }

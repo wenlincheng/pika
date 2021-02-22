@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.common.core.context;
+package com.wenlincheng.pika.common.core.session;
 
 import lombok.Data;
 
@@ -17,6 +17,9 @@ public class UserSession {
      */
     private PikaUser user;
 
-    // TODO Shop
+    /**
+     * 卖家信息
+     */
+    private PikaSeller seller;
 
 }

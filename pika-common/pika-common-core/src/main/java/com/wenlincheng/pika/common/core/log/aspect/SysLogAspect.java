@@ -4,7 +4,7 @@ package com.wenlincheng.pika.common.core.log.aspect;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.wenlincheng.pika.common.core.context.PikaUser;
+import com.wenlincheng.pika.common.core.session.PikaUser;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.common.core.log.event.SysLogEvent;
 import com.wenlincheng.pika.common.core.log.feign.dto.SysLog;

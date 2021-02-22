@@ -1,10 +1,4 @@
-package com.wenlincheng.pika.common.core.context;
-
-import com.wenlincheng.pika.common.core.exception.PikaException;
-
-import java.util.Objects;
-
-import static com.wenlincheng.pika.common.core.exception.SystemErrorCodeEnum.USER_NOT_LOGIN;
+package com.wenlincheng.pika.common.core.session;
 
 /**
  * 用户Session
@@ -34,10 +28,10 @@ public class UserSessionHolder {
    /**
     * 设置用户Session
     *
-    * @param userSessionData 用户信息
+    * @param userSession 用户信息
     */
-   public void setSession(UserSession userSessionData) {
-       USER_SESSION_THREAD_LOCAL.set(userSessionData);
+   public void setSession(UserSession userSession) {
+       USER_SESSION_THREAD_LOCAL.set(userSession);
    }
 
    /**
@@ -59,22 +53,13 @@ public class UserSessionHolder {
     }
 
    /**
-    * 获取Session中的用户名
+    * 获取Session中的卖家信息
     *
-    * @return String
+    * @return PikaSeller
     */
-   public String getUsername() {
-       return getUser().getUsername();
+   public PikaSeller getSeller() {
+       return USER_SESSION_THREAD_LOCAL.get() == null ? null : USER_SESSION_THREAD_LOCAL.get().getSeller();
    }
-
-   /**
-    * 获取Session中的用户id
-    *
-    * @return Long
-    */
-    public Long getUserId() {
-        return getUser().getId();
-    }
 
    /**
     * 清空Session
