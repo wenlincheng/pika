@@ -65,7 +65,7 @@ public class PikaMetaObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         log.debug("修改自动填充");
         this.strictUpdateFill(metaObject, "updateTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "updateUserId", Long.class, getUserId());
+        this.strictUpdateFill(metaObject, "updateUserId", Long.class, getUserId());
 
     }
 

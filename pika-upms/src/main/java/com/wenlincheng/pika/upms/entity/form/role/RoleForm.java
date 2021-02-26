@@ -19,8 +19,6 @@ import java.util.List;
 @ApiModel
 public class RoleForm extends BaseForm<SysRole> {
 
-    @ApiModelProperty(value = "id")
-    private Long id;
     @ApiModelProperty(value = "编码")
     private String code;
     @ApiModelProperty(value = "名称")

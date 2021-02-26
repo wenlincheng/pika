@@ -142,12 +142,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean deleteById(Long id) {
-        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.lambda().eq(User::getId, id);
-        User user = new User();
-        user.setIsDeleted(YnEnum.YES.getValue())
-                .setUpdateTime(new Date());
-        return this.update(user, updateWrapper);
+        return this.removeById(id);
     }
 
     @Override

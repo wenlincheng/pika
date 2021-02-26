@@ -11,6 +11,7 @@ import com.wenlincheng.pika.common.core.annotation.PikaModel;
 import com.wenlincheng.pika.common.core.base.model.BaseModel;
 import com.wenlincheng.pika.common.core.base.model.CodeModel;
 import com.wenlincheng.pika.common.core.base.model.IdModel;
+import com.wenlincheng.pika.common.core.base.model.VersionCodeModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

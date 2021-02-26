@@ -49,6 +49,7 @@ public abstract class BaseModel<T extends Model<?>> extends Model<T> {
     /**
      * 逻辑删除
      */
+    @TableLogic
     @TableField(value = "is_deleted", fill = FieldFill.INSERT)
     private Integer isDeleted;
 }

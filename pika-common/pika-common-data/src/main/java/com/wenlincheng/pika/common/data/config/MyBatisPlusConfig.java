@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.common.data.config;
 
 import com.baomidou.mybatisplus.extension.injector.methods.LogicDeleteByIdWithFill;
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import lombok.extern.slf4j.Slf4j;
@@ -44,5 +45,14 @@ public class MyBatisPlusConfig {
     @Bean
     public LogicDeleteByIdWithFill sqlInjector() {
         return new LogicDeleteByIdWithFill();
+    }
+    /**
+     * 乐观锁插件
+     *
+     * @return OptimisticLockerInterceptor
+     */
+    @Bean
+    public OptimisticLockerInterceptor versionInterceptor() {
+        return new OptimisticLockerInterceptor();
     }
 }

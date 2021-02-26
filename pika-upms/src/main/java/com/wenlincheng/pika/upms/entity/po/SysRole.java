@@ -18,6 +18,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 @TableName("sys_role")
 public class SysRole extends IdModel<SysRole> {
 

@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.common.core.base.model;
 
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -19,6 +20,7 @@ public abstract class VersionModel<T extends VersionModel<?>> extends IdModel<T>
     /**
      * 乐观锁
      */
+    @Version
     private Long optVersion;
 
 }

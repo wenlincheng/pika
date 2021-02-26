@@ -18,8 +18,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @ApiModel
 public class MenuForm extends BaseForm<SysMenu> {
-    @ApiModelProperty(value = "id")
-    private Long id;
+
     @ApiModelProperty(value = "父级id")
     private Long parentId;
     @NotBlank(message = "名称不能为空")

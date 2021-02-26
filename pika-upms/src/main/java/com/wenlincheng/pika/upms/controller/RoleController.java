@@ -79,20 +79,19 @@ public class RoleController {
         return Result.success(roleService.deleteById(id));
     }
 
-    @PikaLog(module = "系统管理-角色管理", value = "新增角色",  method = "addMenu")
+    @PikaLog(module = "系统管理-角色管理", value = "新增角色",  method = "addRole")
     @ApiOperation(value = "新增角色", notes = "新增角色", httpMethod = "POST")
     @PostMapping()
-    public Result<Boolean> addMenu(@Valid @RequestBody RoleForm roleForm) {
+    public Result<Boolean> addRole(@Valid @RequestBody RoleForm roleForm) {
         log.debug("query with roleForm:{}", roleForm);
         return Result.success(roleService.addRole(roleForm));
     }
 
-    @PikaLog(module = "系统管理-角色管理", value = "编辑角色", method = "updateMenu")
+    @PikaLog(module = "系统管理-角色管理", value = "编辑角色", method = "updateRole")
     @ApiOperation(value = "编辑角色", notes = "编辑角色", httpMethod = "PUT")
     @PutMapping()
-    public Result<Boolean> updateMenu(@Valid @RequestBody RoleForm roleForm) {
+    public Result<Boolean> updateRole(@Valid @RequestBody RoleForm roleForm) {
         log.debug("query with roleForm:{}", roleForm);
         return Result.success(roleService.updateRole(roleForm));
-
     }
 }
