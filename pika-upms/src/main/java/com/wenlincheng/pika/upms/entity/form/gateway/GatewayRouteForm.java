@@ -16,11 +16,12 @@ import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
-@ApiModel
-@Data
 @Slf4j
+@Data
+@ApiModel
 public class GatewayRouteForm extends BaseForm<GatewayRoute> {
+
+    private static final long serialVersionUID = 5307363040458534332L;
 
     @NotEmpty(message = "网关断言不能为空")
     @ApiModelProperty(value = "网关断言")

@@ -19,6 +19,8 @@ import java.util.List;
 @ApiModel
 public class RoleForm extends BaseForm<SysRole> {
 
+    private static final long serialVersionUID = -971395315427556595L;
+
     @ApiModelProperty(value = "编码")
     private String code;
     @ApiModelProperty(value = "名称")

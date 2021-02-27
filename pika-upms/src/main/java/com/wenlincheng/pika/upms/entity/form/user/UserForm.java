@@ -22,6 +22,8 @@ import java.util.Set;
 @ApiModel
 public class UserForm  extends BaseForm<User> {
 
+    private static final long serialVersionUID = -3293566082824871698L;
+
     @ApiModelProperty(value = "用户名")
     @NotBlank(message = "用户名不能为空")
     @Length(min = 3, max = 20, message = "用户名长度在3到20个字符")

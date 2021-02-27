@@ -92,13 +92,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (Objects.nonNull(this.getOne(usernameQueryWrapper))) {
             throw PikaException.construct(USER_ADD_ERROR).appendMsg("用户名已经被注册").build();
         }
-
-
         User user = userForm.toPo(User.class);
         user.setPassword(PasswordEncodeUtil.encode(INITIAL_PASSWORD));
-        user.setCreateTime(new Date());
-        user.setUpdateTime(new Date());
-        // 添加用户信息
         boolean add = this.save(user);
         // 添加角色
         if (add) {

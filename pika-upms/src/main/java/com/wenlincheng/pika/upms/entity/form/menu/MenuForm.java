@@ -19,6 +19,8 @@ import javax.validation.constraints.NotBlank;
 @ApiModel
 public class MenuForm extends BaseForm<SysMenu> {
 
+    private static final long serialVersionUID = -7599593094508913922L;
+
     @ApiModelProperty(value = "父级id")
     private Long parentId;
     @NotBlank(message = "名称不能为空")

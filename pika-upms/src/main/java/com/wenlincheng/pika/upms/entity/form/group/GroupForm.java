@@ -19,6 +19,8 @@ import javax.validation.constraints.NotBlank;
 @ApiModel
 public class GroupForm extends BaseForm<SysGroup> {
 
+    private static final long serialVersionUID = 6876853823765194620L;
+
     @NotBlank(message = "用户组父id不能为空")
     @ApiModelProperty(value = "用户组父id")
     private String parentId;

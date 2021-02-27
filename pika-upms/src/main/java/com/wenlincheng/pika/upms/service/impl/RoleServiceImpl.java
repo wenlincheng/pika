@@ -150,9 +150,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements
         for (Long menuId : roleForm.getMenuIdList()) {
             RoleMenuRelation roleMenu = new RoleMenuRelation();
             roleMenu.setMenuId(menuId)
-                    .setRoleId(roleForm.getId())
-                    .setCreateTime(new Date())
-                    .setUpdateTime(new Date());
+                    .setRoleId(roleForm.getId());
             roleMenuService.save(roleMenu);
         }
     }
