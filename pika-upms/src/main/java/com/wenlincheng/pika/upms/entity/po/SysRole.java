@@ -2,7 +2,6 @@ package com.wenlincheng.pika.upms.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.wenlincheng.pika.common.core.base.model.IdModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
