@@ -2,8 +2,8 @@ package com.wenlincheng.pika.upms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wenlincheng.pika.upms.entity.po.Region;
-import com.wenlincheng.pika.upms.entity.vo.region.AreaListVO;
-import com.wenlincheng.pika.upms.entity.vo.region.AreaDetailVO;
+import com.wenlincheng.pika.upms.entity.vo.region.RegionListVO;
+import com.wenlincheng.pika.upms.entity.vo.region.RegionDetailVO;
 import com.wenlincheng.pika.upms.mapper.RegionMapper;
 import com.wenlincheng.pika.upms.service.RegionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -28,8 +28,8 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     private RegionMapper areaMapper;
 
     @Override
-    public List<AreaListVO> getAreaListByLevel(Integer level) {
-        List<AreaListVO> list = new ArrayList<>();
+    public List<RegionListVO> getAreaListByLevel(Integer level) {
+        List<RegionListVO> list = new ArrayList<>();
         QueryWrapper<Region> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("level", level);
         List<Region> areaList = this.baseMapper.selectList(queryWrapper);
@@ -37,8 +37,8 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     }
 
     @Override
-    public List<AreaListVO> getAreaListByParentId(Long parentId) {
-        List<AreaListVO> list = new ArrayList<>();
+    public List<RegionListVO> getAreaListByParentId(Long parentId) {
+        List<RegionListVO> list = new ArrayList<>();
         QueryWrapper<Region> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("parent_id", parentId);
         List<Region> areaList = areaMapper.selectList(queryWrapper);
@@ -46,8 +46,8 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     }
 
     @Override
-    public AreaDetailVO getAreaDetailById(Long id) {
-        AreaDetailVO areaDetailVO = new AreaDetailVO();
+    public RegionDetailVO getAreaDetailById(Long id) {
+        RegionDetailVO areaDetailVO = new RegionDetailVO();
         Region area = areaMapper.selectById(id);
         areaDetailVO.setId(area.getId());
         String s = get(area.getParentId());
@@ -66,9 +66,9 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
         return name;
     }
 
-    private List<AreaListVO> convertArea(List<AreaListVO> list, List<Region> areaList) {
+    private List<RegionListVO> convertArea(List<RegionListVO> list, List<Region> areaList) {
         for (Region area :areaList) {
-            AreaListVO areaListVO = new AreaListVO();
+            RegionListVO areaListVO = new RegionListVO();
             areaListVO.setId(area.getId());
             areaListVO.setName(area.getName());
             areaListVO.setLevel(area.getLevel());

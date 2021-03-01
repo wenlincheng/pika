@@ -14,8 +14,8 @@ import java.io.Serializable;
  * @date 2021/1/1 10:10 上午
  */
 @Data
-@ApiModel(value = "AreaListVO", description = "地址区域列表返回对象")
-public class AreaListVO implements Serializable {
+@ApiModel(value = "RegionListVO", description = "地址区域列表返回对象")
+public class RegionListVO implements Serializable {
 
     private static final long serialVersionUID = -7518286089470450653L;
 

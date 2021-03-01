@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms;
 
-import com.wenlincheng.pika.upms.entity.vo.region.AreaDetailVO;
-import com.wenlincheng.pika.upms.entity.vo.region.AreaListVO;
+import com.wenlincheng.pika.upms.entity.vo.region.RegionDetailVO;
+import com.wenlincheng.pika.upms.entity.vo.region.RegionListVO;
 import com.wenlincheng.pika.upms.service.RegionService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -26,22 +26,22 @@ class PikaUpmsApplicationTests {
 
 	@Test
 	public void getAreaByLevel() {
-		List<AreaListVO> list = areaService.getAreaListByLevel(1);
-		for (AreaListVO area : list) {
+		List<RegionListVO> list = areaService.getAreaListByLevel(1);
+		for (RegionListVO area : list) {
 			System.out.printf("%d == %d == %s \n", area.getId(), area.getLevel(), area.getName());
 		}
 	}
 
 	@Test
 	public void getAreaByParentId() {
-		List<AreaListVO> list = areaService.getAreaListByParentId(110101L);
-		for (AreaListVO area : list) {
+		List<RegionListVO> list = areaService.getAreaListByParentId(110101L);
+		for (RegionListVO area : list) {
 			System.out.printf("%d == %d == %s \n", area.getId(), area.getLevel(), area.getName());
 		}
 	}
 	@Test
 	public void getAreaDetailById() {
-		AreaDetailVO areaDetail = areaService.getAreaDetailById(110000L);
+		RegionDetailVO areaDetail = areaService.getAreaDetailById(110000L);
 		System.out.println(areaDetail.getFullName());
 	}
 
