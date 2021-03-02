@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.common.core.base.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.wenlincheng.pika.common.core.base.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 @ApiModel(value = "分页查询参数基类")
 @Data
-public abstract class BasePageQuery<T> {
+public abstract class BasePageQuery<T extends BaseModel<?>> {
 
     @ApiModelProperty(value = "当前页数")
     private long current = 1;
@@ -38,14 +39,14 @@ public abstract class BasePageQuery<T> {
     private Date createTimeEnd;
 
     /**
-     * 构建分页QueryWrapper
+     * 构建查询条件
      *
      * @return QueryWrapper
      */
     public QueryWrapper<T> buildWrapper() {
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ge(Objects.nonNull(this.createTimeStart), "create_time", this.createTimeStart)
-                .le(Objects.nonNull(this.createTimeEnd), "create_time", this.createTimeEnd);
+        queryWrapper.lambda().ge(Objects.nonNull(this.createTimeStart), T::getCreateTime, this.createTimeStart)
+                .le(Objects.nonNull(this.createTimeEnd), T::getCreateTime, this.createTimeEnd);
         return queryWrapper;
     }
 

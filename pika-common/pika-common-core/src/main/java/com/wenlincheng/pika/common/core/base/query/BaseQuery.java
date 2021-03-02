@@ -24,8 +24,8 @@ public abstract class BaseQuery<T> {
 
     public QueryWrapper<T> build() {
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ge(null != this.createTimeStart, "create_time", this.createTimeStart)
-                .le(null != this.createTimeEnd, "create_time", this.createTimeEnd);
+        queryWrapper.ge(this.createTimeStart != null, "create_time", this.createTimeStart)
+                .le(this.createTimeEnd != null, "create_time", this.createTimeEnd);
         return queryWrapper;
     }
 }
