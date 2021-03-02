@@ -80,18 +80,4 @@ public class SysLog implements Serializable {
      */
     private Integer type;
 
-    /**
-     * 是否已删除 0 否 1 是
-     */
-    private Integer isDeleted;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 }

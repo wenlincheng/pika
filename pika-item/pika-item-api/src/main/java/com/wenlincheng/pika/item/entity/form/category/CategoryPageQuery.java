@@ -21,6 +21,7 @@ public class CategoryPageQuery extends BasePageQuery<Category> {
 
     @ApiModelProperty(value = "类目名称")
     private String name;
+
     @ApiModelProperty(value = "父级id")
     private Integer parentId;
 }

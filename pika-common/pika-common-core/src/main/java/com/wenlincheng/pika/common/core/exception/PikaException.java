@@ -33,21 +33,21 @@ public class PikaException extends RuntimeException {
     private String msg;
 
     public PikaException(ErrorCode errorCode) {
-        super("code: " + errorCode.getCode() + ", type: " + errorCode.getType() + ", msg: " + errorCode.getMsg());
+        super("PikaException code: " + errorCode.getCode() + ", type: " + errorCode.getType() + ", msg: " + errorCode.getMsg());
         this.code = errorCode.getCode();
         this.type = errorCode.getType().type;
         this.msg = msg;
     }
 
     private PikaException(int code, String type, String msg) {
-        super("code: " + code + ", type: " + type + ", msg: " + msg);
+        super("PikaException code: " + code + ", type: " + type + ", msg: " + msg);
         this.code = code;
         this.type = type;
         this.msg = msg;
     }
 
     private PikaException(int code, String type, String msg, Throwable e) {
-        super("code: " + code + ", type: " + type + ", msg: " + msg, e);
+        super("PikaException code: " + code + ", type: " + type + ", msg: " + msg, e);
         this.code = code;
         this.type = type;
         this.msg = msg;
