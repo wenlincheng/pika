@@ -24,14 +24,6 @@ public abstract class BaseForm<T> implements Serializable {
 
     @ApiModelProperty(value = "id")
     private Long id;
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-    @ApiModelProperty(value = "修改时间")
-    private Date updateTime;
-    @ApiModelProperty(value = "创建用户id")
-    private Long createUserId;
-    @ApiModelProperty(value = "修改用户id")
-    private Long updateUserId;
 
     /**
      * 表单转化为Po

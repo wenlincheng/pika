@@ -61,7 +61,6 @@ public class ItemController extends BaseController {
     @ApiOperation(value = "创建商品[Step1]", notes = "创建商品Step1", httpMethod = "POST")
     @PostMapping("/step1")
     public Result<Long> createItemStepOne(ItemStepOneForm itemAddForm) {
-        itemAddForm.setCreateUserId(this.currentUserId());
         Long itemId = itemService.createItemStepOne(itemAddForm);
         return Result.success(itemId);
     }
@@ -70,7 +69,6 @@ public class ItemController extends BaseController {
     @ApiOperation(value = "创建商品[Step2]", notes = "创建商品Step2", httpMethod = "POST")
     @PostMapping("/step2")
     public Result<Boolean> createItemStepTwo(ItemStepTwoForm itemAddForm) {
-        itemAddForm.setCreateUserId(this.currentUserId());
         return Result.success(itemService.createItemStepTwo(itemAddForm));
     }
 
@@ -78,7 +76,6 @@ public class ItemController extends BaseController {
     @ApiOperation(value = "编辑商品[Step1]", notes = "编辑商品Step1", httpMethod = "PUT")
     @PutMapping("/step1")
     public Result<Boolean> updateItemStepOne(ItemStepOneForm itemAddForm) {
-        itemAddForm.setUpdateUserId(this.currentUserId());
         return Result.success(itemService.updateItemStepOne(itemAddForm));
     }
 
@@ -86,7 +83,6 @@ public class ItemController extends BaseController {
     @ApiOperation(value = "编辑商品[Step2]", notes = "编辑商品Step2", httpMethod = "PUT")
     @PutMapping("/step2")
     public Result<Boolean> updateItemStepTwo(ItemStepTwoForm itemAddForm) {
-        itemAddForm.setUpdateUserId(this.currentUserId());
         return Result.success(itemService.updateItemStepTwo(itemAddForm));
     }
 

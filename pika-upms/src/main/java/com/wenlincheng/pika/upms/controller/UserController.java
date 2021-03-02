@@ -51,7 +51,6 @@ public class UserController extends BaseController {
     @ApiOperation(value = "新增用户", notes = "新增一个用户", httpMethod = "POST")
     @PostMapping()
     public Result<Boolean> add(@Valid @RequestBody UserForm userForm) {
-        userForm.setCreateUserId(currentUserId());
         log.debug("add with userForm:{}", userForm);
         return Result.success(userService.addUser(userForm));
     }
@@ -60,7 +59,6 @@ public class UserController extends BaseController {
     @ApiOperation(value = "修改用户", notes = "修改指定用户信息", httpMethod = "PUT")
     @PutMapping()
     public Result<Boolean> update(@Valid @RequestBody UserForm userForm) {
-        userForm.setUpdateUserId(currentUserId());
         log.debug("update with userForm:{}", userForm);
         return Result.success(userService.updateUser(userForm));
     }
@@ -79,7 +77,6 @@ public class UserController extends BaseController {
     public Result<Boolean> updatePassword(@RequestBody UserPasswordForm passwordForm) {
         log.debug("updatePassword with id:{}", passwordForm);
         passwordForm.setId(currentUserId());
-        passwordForm.setUpdateUserId(currentUserId());
         return Result.success(userService.updatePassword(passwordForm));
     }
 
@@ -90,7 +87,6 @@ public class UserController extends BaseController {
         log.debug("resetPassword with id:{}", id);
         UserPasswordForm passwordForm = new UserPasswordForm();
         passwordForm.setId(id);
-        passwordForm.setUpdateUserId(currentUserId());
         return Result.success(userService.resetPassword(passwordForm));
     }
 
