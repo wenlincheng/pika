@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms.entity.vo.role;
 
 import com.wenlincheng.pika.common.core.base.vo.BaseVo;
-import com.wenlincheng.pika.upms.entity.po.SysRole;
+import com.wenlincheng.pika.upms.entity.po.Role;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,10 +17,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(value = "RoleListVO", description = "角色列表VO")
-public class RoleListVO extends BaseVo<SysRole> {
+public class RoleListVO extends BaseVo<Role> {
     private static final long serialVersionUID = 59345947510627473L;
 
-    public RoleListVO(SysRole role) {
+    public RoleListVO(Role role) {
         super(role);
     }
 

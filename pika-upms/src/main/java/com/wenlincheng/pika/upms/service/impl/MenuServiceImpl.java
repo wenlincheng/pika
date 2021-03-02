@@ -8,7 +8,7 @@ import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.upms.entity.form.menu.MenuForm;
 import com.wenlincheng.pika.upms.entity.query.menu.MenuPageQuery;
 import com.wenlincheng.pika.upms.entity.po.RoleMenuRelation;
-import com.wenlincheng.pika.upms.entity.po.SysMenu;
+import com.wenlincheng.pika.upms.entity.po.Menu;
 import com.wenlincheng.pika.upms.entity.po.UserRoleRelation;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuListVO;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuRouter;
@@ -42,7 +42,7 @@ import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.MENU_REL_ROLE_DE
  * @date 2021/1/1 10:10 上午
  */
 @Service
-public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Autowired
     private RoleMenuRelationService roleMenuService;
@@ -53,11 +53,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
 
     @Override
     public IPage<MenuListVO> queryPageList(MenuPageQuery pageQuery) {
-        QueryWrapper<SysMenu> queryWrapper = pageQuery.buildWrapper();
-        queryWrapper.lambda().like(StringUtils.isNotBlank(pageQuery.getName()),SysMenu::getName,pageQuery.getName())
-                .eq(SysMenu::getParentId, 0)
-                .orderByDesc(SysMenu::getSequence);
-        IPage<SysMenu> rolePage = this.page(pageQuery.getPage(), queryWrapper);
+        QueryWrapper<Menu> queryWrapper = pageQuery.buildWrapper();
+        queryWrapper.lambda().like(StringUtils.isNotBlank(pageQuery.getName()), Menu::getName,pageQuery.getName())
+                .eq(Menu::getParentId, 0)
+                .orderByDesc(Menu::getSequence);
+        IPage<Menu> rolePage = this.page(pageQuery.getPage(), queryWrapper);
         IPage<MenuListVO> menuListPage = rolePage.convert(MenuListVO::new);
         menuListPage.getRecords().forEach(menuListVO -> menuListVO.setChildren(getChildren(menuListVO.getId())));
         return menuListPage;
@@ -73,11 +73,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
         List<MenuListVO> menuListVOList = new ArrayList<>();
         Set<Long> menuIds = queryUserMenuIds(userId);
         if (CollectionUtils.isNotEmpty(menuIds)) {
-            QueryWrapper<SysMenu> menuQueryWrapper = new QueryWrapper<>();
+            QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
             menuQueryWrapper.lambda()
-                    .eq(SysMenu::getParentId, 0L)
-                    .in(SysMenu::getId, menuIds);
-            List<SysMenu> menuList = this.list(menuQueryWrapper);
+                    .eq(Menu::getParentId, 0L)
+                    .in(Menu::getId, menuIds);
+            List<Menu> menuList = this.list(menuQueryWrapper);
             menuList.forEach(menu -> {
                 MenuListVO menuListVO = new MenuListVO(menu);
                 menuListVO.setChildren(getChildren(menuListVO.getId()));
@@ -88,15 +88,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
     }
 
     @Override
-    public SysMenu queryById(Long id) {
+    public Menu queryById(Long id) {
         return this.getById(id);
     }
 
     @Override
     public boolean deleteById(Long id) throws PikaException {
-        QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(SysMenu::getParentId, id);
-        List<SysMenu> menuList = this.list(queryWrapper);
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Menu::getParentId, id);
+        List<Menu> menuList = this.list(queryWrapper);
         if (CollectionUtils.isNotEmpty(menuList)) {
             throw PikaException.construct(MENU_HAS_CHILDREN).build();
         }
@@ -145,7 +145,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
 
     @Override
     public boolean addMenu(MenuForm menuForm) {
-        SysMenu sysMenu = menuForm.toPo(SysMenu.class);
+        Menu sysMenu = menuForm.toPo(Menu.class);
         boolean save = this.save(sysMenu);
         if (save) {
             clearAllPermissionsCache();
@@ -155,7 +155,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
 
     @Override
     public boolean updateMenu(MenuForm menuForm) {
-        SysMenu sysMenu = menuForm.toPo(SysMenu.class);
+        Menu sysMenu = menuForm.toPo(Menu.class);
         boolean update = this.updateById(sysMenu);
         if (update) {
             clearUserPermissionsCache(menuForm.getId());
@@ -165,12 +165,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
     }
 
     @Override
-    public List<SysMenu> queryPermsByRoleId(Long roleId) {
+    public List<Menu> queryPermsByRoleId(Long roleId) {
         QueryWrapper<RoleMenuRelation> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(RoleMenuRelation::getRoleId, roleId);
         List<RoleMenuRelation> roleMenuRelationList = roleMenuService.list(queryWrapper);
         Set<Long> menuIds = roleMenuRelationList.stream().map(RoleMenuRelation::getMenuId).collect(Collectors.toSet());
-        List<SysMenu> menuList = new ArrayList<>();
+        List<Menu> menuList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(menuIds)) {
             menuList = this.listByIds(menuIds);
         }
@@ -178,14 +178,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
     }
 
     @Override
-    public List<SysMenu> queryPermsByUserId(Long userId) {
-        List<SysMenu> menuList = new ArrayList<>();
+    public List<Menu> queryPermsByUserId(Long userId) {
+        List<Menu> menuList = new ArrayList<>();
         Set<Long> menuIds = queryUserMenuIds(userId);
         if (CollectionUtils.isNotEmpty(menuIds)) {
-            QueryWrapper<SysMenu> menuQueryWrapper = new QueryWrapper<>();
+            QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
             menuQueryWrapper.lambda()
-                    .eq(SysMenu::getType, SysMenuTypeEnum.BUTTON.getValue())
-                    .in(SysMenu::getId, menuIds);
+                    .eq(Menu::getType, SysMenuTypeEnum.BUTTON.getValue())
+                    .in(Menu::getId, menuIds);
             menuList = this.list(menuQueryWrapper);
         }
 
@@ -217,9 +217,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
     }
 
     @Override
-    public List<SysMenu> queryAllPerms() {
-        QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(SysMenu::getType, SysMenuTypeEnum.BUTTON.getValue());
+    public List<Menu> queryAllPerms() {
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Menu::getType, SysMenuTypeEnum.BUTTON.getValue());
         return this.list(queryWrapper);
     }
 
@@ -229,10 +229,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
     }
 
     private List<MenuListVO> getChildren(Long parentId) {
-        QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(SysMenu::getParentId, parentId)
-                .orderByAsc(SysMenu::getSequence);
-        List<SysMenu> menuList = this.list(queryWrapper);
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Menu::getParentId, parentId)
+                .orderByAsc(Menu::getSequence);
+        List<Menu> menuList = this.list(queryWrapper);
 
         if (CollectionUtils.isEmpty(menuList)) {
             return new ArrayList<>();
@@ -255,12 +255,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
      */
     @SuppressWarnings("unchecked")
     private List<MenuRouter> getNodeChildren(Long parentId) {
-        QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(SysMenu::getParentId, parentId)
-                .notIn(SysMenu::getType, SysMenuTypeEnum.BUTTON.getValue())
-                .orderByDesc(parentId == 0,SysMenu::getSequence)
-                .orderByAsc(parentId > 0, SysMenu::getSequence);
-        List<SysMenu> sysMenuList = this.list(queryWrapper);
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Menu::getParentId, parentId)
+                .notIn(Menu::getType, SysMenuTypeEnum.BUTTON.getValue())
+                .orderByDesc(parentId == 0, Menu::getSequence)
+                .orderByAsc(parentId > 0, Menu::getSequence);
+        List<Menu> sysMenuList = this.list(queryWrapper);
 
         if (CollectionUtils.isEmpty(sysMenuList)) {
             return new ArrayList<>();

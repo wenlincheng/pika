@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms.entity.query.menu;
 
 import com.wenlincheng.pika.common.core.base.query.BasePageQuery;
-import com.wenlincheng.pika.upms.entity.po.SysMenu;
+import com.wenlincheng.pika.upms.entity.po.Menu;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "MenuQueryForm", description = "菜单分页查询参数")
-public class MenuPageQuery extends BasePageQuery<SysMenu> {
+public class MenuPageQuery extends BasePageQuery<Menu> {
 
     @ApiModelProperty(value = "菜单名")
     private String name;

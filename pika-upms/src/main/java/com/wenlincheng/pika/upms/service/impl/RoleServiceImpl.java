@@ -9,7 +9,7 @@ import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.upms.entity.form.role.RoleForm;
 import com.wenlincheng.pika.upms.entity.query.role.RolePageQuery;
 import com.wenlincheng.pika.upms.entity.po.RoleMenuRelation;
-import com.wenlincheng.pika.upms.entity.po.SysRole;
+import com.wenlincheng.pika.upms.entity.po.Role;
 import com.wenlincheng.pika.upms.entity.po.UserRoleRelation;
 import com.wenlincheng.pika.upms.entity.vo.role.RoleDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.role.RoleListVO;
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,7 +40,7 @@ import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.ROLE_REL_USER_DE
  * @date 2021/1/1 10:10 上午
  */
 @Service
-public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements RoleService {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     @Autowired
     UserRoleRelationService userRoleService;
     @Autowired
@@ -51,13 +50,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements
     private RedisUtils redisUtils;
 
     @Override
-    public List<SysRole> listByUserId(Long userId) {
-        List<SysRole> roleList = new ArrayList<>();
+    public List<Role> listByUserId(Long userId) {
+        List<Role> roleList = new ArrayList<>();
         Set<Long> roleIds = userRoleService.queryByUserId(userId);
         if (roleIds.size() > 0) {
-            QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
-            queryWrapper.lambda().in(SysRole::getId, roleIds)
-                    .eq(SysRole::getStatus, YnEnum.YES.getValue());
+            QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+            queryWrapper.lambda().in(Role::getId, roleIds)
+                    .eq(Role::getStatus, YnEnum.YES.getValue());
             roleList = this.list(queryWrapper);
         }
 
@@ -66,12 +65,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements
 
     @Override
     public IPage<RoleListVO> queryPageList(RolePageQuery pageQuery) {
-        QueryWrapper<SysRole> queryWrapper = pageQuery.buildWrapper();
-        queryWrapper.lambda().like(StringUtils.isNotBlank(pageQuery.getName()), SysRole::getName,pageQuery.getName())
-                .like(StringUtils.isNotBlank(pageQuery.getCode()), SysRole::getCode,pageQuery.getCode())
-                .eq(pageQuery.getStatus() != null, SysRole::getStatus,pageQuery.getStatus());
+        QueryWrapper<Role> queryWrapper = pageQuery.buildWrapper();
+        queryWrapper.lambda().like(StringUtils.isNotBlank(pageQuery.getName()), Role::getName,pageQuery.getName())
+                .like(StringUtils.isNotBlank(pageQuery.getCode()), Role::getCode,pageQuery.getCode())
+                .eq(pageQuery.getStatus() != null, Role::getStatus,pageQuery.getStatus());
 
-        IPage<SysRole> rolePage = this.page(pageQuery.getPage(), queryWrapper);
+        IPage<Role> rolePage = this.page(pageQuery.getPage(), queryWrapper);
         IPage<RoleListVO> roleListVOIPage = rolePage.convert(RoleListVO::new);
         // 统计角色关联的用户数
         for (RoleListVO roleListVO : roleListVOIPage.getRecords()) {
@@ -86,7 +85,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements
 
     @Override
     public RoleDetailVO getRoleDetailById(Long id) {
-        SysRole role = this.getById(id);
+        Role role = this.getById(id);
         RoleDetailVO roleDetailVO = new RoleDetailVO(role);
         QueryWrapper<RoleMenuRelation> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(RoleMenuRelation::getRoleId, id);
@@ -100,7 +99,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addRole(RoleForm roleForm) {
-        SysRole role = roleForm.toPo(SysRole.class);
+        Role role = roleForm.toPo(Role.class);
         boolean save = this.save(role);
         if (save) {
             saveRoleMenuRelation(roleForm);
@@ -132,7 +131,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, SysRole> implements
         QueryWrapper<RoleMenuRelation> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(RoleMenuRelation::getRoleId, roleForm.getId());
         roleMenuService.remove(queryWrapper);
-        boolean update = this.updateById(roleForm.toPo(SysRole.class));
+        boolean update = this.updateById(roleForm.toPo(Role.class));
         if (update) {
             saveRoleMenuRelation(roleForm);
             clearRolePermissionsCache(roleForm.getId());

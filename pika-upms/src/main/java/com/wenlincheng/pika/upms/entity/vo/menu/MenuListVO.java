@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms.entity.vo.menu;
 
 import com.wenlincheng.pika.common.core.base.vo.BaseVo;
-import com.wenlincheng.pika.upms.entity.po.SysMenu;
+import com.wenlincheng.pika.upms.entity.po.Menu;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,10 +20,10 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(value = "MenuListVO", description = "菜单列表VO")
-public class MenuListVO extends BaseVo<SysMenu> {
+public class MenuListVO extends BaseVo<Menu> {
     private static final long serialVersionUID = 59345947510627473L;
 
-    public MenuListVO(SysMenu menu) {
+    public MenuListVO(Menu menu) {
         super(menu);
     }
 

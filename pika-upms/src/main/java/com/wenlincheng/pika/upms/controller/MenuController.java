@@ -6,7 +6,7 @@ import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.menu.MenuForm;
 import com.wenlincheng.pika.upms.entity.query.menu.MenuPageQuery;
-import com.wenlincheng.pika.upms.entity.po.SysMenu;
+import com.wenlincheng.pika.upms.entity.po.Menu;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuListVO;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuRouter;
 import com.wenlincheng.pika.upms.service.MenuService;
@@ -61,9 +61,9 @@ public class MenuController {
 
     @ApiOperation(value = "查询菜单", notes = "根据id查询菜单", httpMethod = "GET")
     @GetMapping(value = "/{id}")
-    public Result<SysMenu> queryById(@PathVariable Long id) {
+    public Result<Menu> queryById(@PathVariable Long id) {
         log.debug("query with id:{}", id);
-        SysMenu sysMenu = menuService.queryById(id);
+        Menu sysMenu = menuService.queryById(id);
         return Result.success(sysMenu);
     }
 
@@ -93,22 +93,22 @@ public class MenuController {
 
     @ApiOperation(value = "根据用户id查询菜单权限列表", notes = "查询用户的菜单权限列表", httpMethod = "GET")
     @GetMapping(value = "/perms/user/{userId}")
-    public Result<List<SysMenu>> queryPermsByUserId(@PathVariable Long userId) {
+    public Result<List<Menu>> queryPermsByUserId(@PathVariable Long userId) {
         log.debug("query with userId:{}", userId);
         return Result.success(menuService.queryPermsByUserId(userId));
     }
 
     @ApiOperation(value = "查询所有菜单权限列表", notes = "查询所有菜单权限列表", httpMethod = "GET")
     @GetMapping(value = "/perms/list")
-    public Result<List<SysMenu>> queryAllPerms() {
+    public Result<List<Menu>> queryAllPerms() {
         log.debug("query list");
-        List<SysMenu> resourceList = menuService.queryAllPerms();
+        List<Menu> resourceList = menuService.queryAllPerms();
         return Result.success(resourceList);
     }
 
     @ApiOperation(value = "根据角色id查询菜单权限列表", notes = "查询角色的菜单权限列表", httpMethod = "GET")
     @GetMapping(value = "/perms/role/{roleId}")
-    public Result<List<SysMenu>> queryPermsByRoleId(@PathVariable("roleId") Long roleId) {
+    public Result<List<Menu>> queryPermsByRoleId(@PathVariable("roleId") Long roleId) {
         log.debug("query with roleId:{}", roleId);
         return Result.success(menuService.queryPermsByRoleId(roleId));
     }

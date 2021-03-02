@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms.entity.form.role;
 
 import com.wenlincheng.pika.common.core.base.form.BaseForm;
-import com.wenlincheng.pika.upms.entity.po.SysRole;
+import com.wenlincheng.pika.upms.entity.po.Role;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Data
 @ApiModel
-public class RoleForm extends BaseForm<SysRole> {
+public class RoleForm extends BaseForm<Role> {
 
     private static final long serialVersionUID = -971395315427556595L;
 

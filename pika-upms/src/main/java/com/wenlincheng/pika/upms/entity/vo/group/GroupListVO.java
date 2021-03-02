@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms.entity.vo.group;
 
 import com.wenlincheng.pika.common.core.base.vo.BaseVo;
-import com.wenlincheng.pika.upms.entity.po.SysGroup;
+import com.wenlincheng.pika.upms.entity.po.Organization;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,11 +19,11 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(value = "GroupListVO", description = "组织列表VO")
-public class GroupListVO extends BaseVo<SysGroup> {
+public class GroupListVO extends BaseVo<Organization> {
 
     private static final long serialVersionUID = 5531780696582407364L;
 
-    public GroupListVO(SysGroup group) {
+    public GroupListVO(Organization group) {
         super(group);
     }
     @ApiModelProperty(value = "父级id")

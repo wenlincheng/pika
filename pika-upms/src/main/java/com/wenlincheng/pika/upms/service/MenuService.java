@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.upms.entity.form.menu.MenuForm;
 import com.wenlincheng.pika.upms.entity.query.menu.MenuPageQuery;
-import com.wenlincheng.pika.upms.entity.po.SysMenu;
+import com.wenlincheng.pika.upms.entity.po.Menu;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuListVO;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuRouter;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * @author Pikaman
  * @date 2021/1/1 10:10 上午
  */
-public interface MenuService extends IService<SysMenu> {
+public interface MenuService extends IService<Menu> {
 
     /**
      * 分页查询
@@ -49,7 +49,7 @@ public interface MenuService extends IService<SysMenu> {
      * @param id 菜单id
      * @return SysMenu
      */
-    SysMenu queryById(Long id);
+    Menu queryById(Long id);
 
     /**
      * 根据id删除
@@ -82,7 +82,7 @@ public interface MenuService extends IService<SysMenu> {
      * @param roleId 角色id
      * @return List<SysMenu>
      */
-    List<SysMenu> queryPermsByRoleId(Long roleId);
+    List<Menu> queryPermsByRoleId(Long roleId);
 
     /**
      * 查询用户的权限列表
@@ -90,14 +90,14 @@ public interface MenuService extends IService<SysMenu> {
      * @param userId 用户id
      * @return List<SysMenu>
      */
-    List<SysMenu> queryPermsByUserId(Long userId);
+    List<Menu> queryPermsByUserId(Long userId);
 
     /**
      * 查询所有权限
      *
      * @return List<SysMenu>
      */
-    List<SysMenu> queryAllPerms();
+    List<Menu> queryAllPerms();
 
     /**
      * 查询所有菜单节点列表

@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms.entity.query.role;
 
 import com.wenlincheng.pika.common.core.base.query.BasePageQuery;
-import com.wenlincheng.pika.upms.entity.po.SysRole;
+import com.wenlincheng.pika.upms.entity.po.Role;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "RoleQueryForm", description = "角色分页查询参数")
-public class RolePageQuery extends BasePageQuery<SysRole> {
+public class RolePageQuery extends BasePageQuery<Role> {
 
     @ApiModelProperty(value = "角色名")
     private String name;

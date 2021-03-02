@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms.entity.form.menu;
 
 import com.wenlincheng.pika.common.core.base.form.BaseForm;
-import com.wenlincheng.pika.upms.entity.po.SysMenu;
+import com.wenlincheng.pika.upms.entity.po.Menu;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @ApiModel
-public class MenuForm extends BaseForm<SysMenu> {
+public class MenuForm extends BaseForm<Menu> {
 
     private static final long serialVersionUID = -7599593094508913922L;
 

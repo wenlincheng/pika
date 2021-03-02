@@ -8,7 +8,7 @@ import com.wenlincheng.pika.common.core.enums.YnEnum;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.role.RoleForm;
 import com.wenlincheng.pika.upms.entity.query.role.RolePageQuery;
-import com.wenlincheng.pika.upms.entity.po.SysRole;
+import com.wenlincheng.pika.upms.entity.po.Role;
 import com.wenlincheng.pika.upms.entity.vo.role.RoleDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.role.RoleListVO;
 import com.wenlincheng.pika.upms.service.RoleService;
@@ -48,18 +48,18 @@ public class RoleController {
 
     @ApiOperation(value = "查询用户所有角色列表", notes = "其他服务使用", httpMethod = "GET")
     @GetMapping("/user/{userId}")
-    public Result<List<SysRole>> listByUserId(@PathVariable Long userId){
+    public Result<List<Role>> listByUserId(@PathVariable Long userId){
         log.debug("query with userId:{}", userId);
-        List<SysRole> roles = roleService.listByUserId(userId);
+        List<Role> roles = roleService.listByUserId(userId);
         return Result.success(roles);
     }
 
     @ApiOperation(value = "查询所有角色列表", notes = "查询所有激活的角色列表", httpMethod = "GET")
     @GetMapping(value = "/list")
-    public Result<List<SysRole>> getAllRoles() {
-        QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(SysRole::getStatus, YnEnum.YES.getValue());
-        List<SysRole> roleList = roleService.list(queryWrapper);
+    public Result<List<Role>> getAllRoles() {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Role::getStatus, YnEnum.YES.getValue());
+        List<Role> roleList = roleService.list(queryWrapper);
         return Result.success(roleList);
     }
 

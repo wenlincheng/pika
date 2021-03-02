@@ -18,8 +18,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_role")
-public class SysRole extends IdModel<SysRole> {
+@TableName("role")
+public class Role extends IdModel<Role> {
 
     private static final long serialVersionUID = 1L;
 

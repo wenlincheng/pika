@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 菜单表
+ * 组织
  * </p>
  *
  * @author Pikaman
@@ -18,49 +18,19 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_menu")
-public class SysMenu extends IdModel<SysMenu> {
+@TableName("organization")
+public class Organization extends IdModel<Organization> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 父菜单id
+     * 父id
      */
     @TableField("parent_id")
     private Long parentId;
 
     /**
-     * 菜单类型
-     */
-    @TableField("type")
-    private Integer type;
-
-    /**
-     * URI
-     */
-    @TableField("uri")
-    private String uri;
-
-    /**
-     * 请求方法 GET POST PUT DELETE
-     */
-    @TableField("method")
-    private String method;
-
-    /**
-     * 权限标识
-     */
-    @TableField("code")
-    private String code;
-
-    /**
-     * 菜单图标
-     */
-    @TableField("icon")
-    private String icon;
-
-    /**
-     * 菜单名称
+     * 名称
      */
     @TableField("name")
     private String name;
@@ -70,11 +40,5 @@ public class SysMenu extends IdModel<SysMenu> {
      */
     @TableField("description")
     private String description;
-
-    /**
-     * 排序
-     */
-    @TableField("sequence")
-    private Integer sequence;
 
 }

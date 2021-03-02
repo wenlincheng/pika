@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 岗位表
+ * 岗位
  * </p>
  *
  * @author Pikaman

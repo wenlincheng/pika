@@ -8,7 +8,7 @@ import com.wenlincheng.pika.common.core.enums.YnEnum;
 import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.upms.entity.form.user.UserForm;
 import com.wenlincheng.pika.upms.entity.form.user.UserPasswordForm;
-import com.wenlincheng.pika.upms.entity.po.SysRole;
+import com.wenlincheng.pika.upms.entity.po.Role;
 import com.wenlincheng.pika.upms.entity.po.User;
 import com.wenlincheng.pika.upms.entity.po.UserRoleRelation;
 import com.wenlincheng.pika.upms.entity.query.user.UserPageQuery;
@@ -68,8 +68,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             List<UserRoleRelation> userRoleRelations = userRoleRelationService.list(wrapper);
             Set<Long> roleIds = userRoleRelations.stream().map(UserRoleRelation::getRoleId).collect(Collectors.toSet());
             if (roleIds.size() > 0) {
-                List<SysRole> roleList = roleService.listByIds(roleIds);
-                Set<String> roleNames = roleList.stream().map(SysRole::getName).collect(Collectors.toSet());
+                List<Role> roleList = roleService.listByIds(roleIds);
+                Set<String> roleNames = roleList.stream().map(Role::getName).collect(Collectors.toSet());
                 userListVO.setRoleNames(roleNames);
             }
         }

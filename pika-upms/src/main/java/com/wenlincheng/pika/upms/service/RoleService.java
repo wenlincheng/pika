@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wenlincheng.pika.upms.entity.form.role.RoleForm;
 import com.wenlincheng.pika.upms.entity.query.role.RolePageQuery;
-import com.wenlincheng.pika.upms.entity.po.SysRole;
+import com.wenlincheng.pika.upms.entity.po.Role;
 import com.wenlincheng.pika.upms.entity.vo.role.RoleDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.role.RoleListVO;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @author Pikaman
  * @date 2021/1/1 10:10 上午
  */
-public interface RoleService extends IService<SysRole> {
+public interface RoleService extends IService<Role> {
 
     /**
      * 根据用户id查询用户拥有的角色
@@ -26,7 +26,7 @@ public interface RoleService extends IService<SysRole> {
      * @param userId 用户id
      * @return List<Role>
      */
-    List<SysRole> listByUserId(Long userId);
+    List<Role> listByUserId(Long userId);
 
     /**
      * 角色分页列表

@@ -1,9 +1,7 @@
 package com.wenlincheng.pika.upms.entity.vo.log;
 
 import com.wenlincheng.pika.common.core.base.vo.BaseListVo;
-import com.wenlincheng.pika.common.core.base.vo.BaseVo;
 import com.wenlincheng.pika.upms.entity.po.SysLog;
-import com.wenlincheng.pika.upms.entity.po.SysMenu;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
