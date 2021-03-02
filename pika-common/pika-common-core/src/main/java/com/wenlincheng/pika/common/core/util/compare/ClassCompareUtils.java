@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.common.core.util.compare;
 
 import com.google.common.collect.Maps;
+import com.wenlincheng.pika.common.core.session.PikaUser;
 import com.wenlincheng.pika.common.core.util.CheckUtils;
 import com.wenlincheng.pika.common.core.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -112,7 +113,7 @@ public class ClassCompareUtils {
                                         }
                                     }
                                     Method getValue = classObject.getMethod("getValue");
-                                    Method getDesc = classObject.getMethod("getDesc");
+                                    Method getDesc = classObject.getMethod("getName");
                                     Enum[] objs = (Enum[]) classObject.getEnumConstants();
                                     for (Enum obj : objs) {
                                         int beforeValueEnum = (Integer) getValue.invoke(obj);
@@ -200,5 +201,15 @@ public class ClassCompareUtils {
             list.add(sb.toString());
         }
         return list;
+    }
+
+    public static void main(String[] args) {
+        PikaUser pikaUser = new PikaUser();
+        pikaUser.setUsername("111");
+        PikaUser pikaUser2 = new PikaUser();
+        pikaUser2.setUsername("222");
+
+        List<String> strings = ClassCompareUtils.compareClass(pikaUser, pikaUser2);
+        System.out.println(strings);
     }
 }

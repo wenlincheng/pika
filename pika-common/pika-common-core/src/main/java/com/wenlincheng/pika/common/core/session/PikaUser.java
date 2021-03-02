@@ -1,5 +1,6 @@
 package com.wenlincheng.pika.common.core.session;
 
+import com.wenlincheng.pika.common.core.util.compare.FieldMeta;
 import lombok.Data;
 
 /**
@@ -20,6 +21,7 @@ public class PikaUser {
     /**
      * 用户名
      */
+    @FieldMeta(name = "用户名")
     private String username;
 
 }
