@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.common.core.util.compare;
+package com.wenlincheng.pika.common.core.annotation;
 
 import java.lang.annotation.*;
 
@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Documented
-public @interface FieldMeta {
+public @interface Field {
 
     /**
      * 是否为序列号

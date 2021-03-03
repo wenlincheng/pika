@@ -1,12 +1,12 @@
 package com.wenlincheng.pika.common.core.util.compare;
 
 import com.google.common.collect.Maps;
+import com.wenlincheng.pika.common.core.annotation.Field;
 import com.wenlincheng.pika.common.core.session.PikaUser;
 import com.wenlincheng.pika.common.core.util.CheckUtils;
 import com.wenlincheng.pika.common.core.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,9 +37,9 @@ public class ClassCompareUtils {
         }
         Map<String, String> map = Maps.newHashMap();
         //获得对象所有属性
-        Field[] fields = before.getClass().getDeclaredFields();
+        java.lang.reflect.Field[] fields = before.getClass().getDeclaredFields();
         //获得对象所有属性
-        Field[] fields2 = after.getClass().getDeclaredFields();
+        java.lang.reflect.Field[] fields2 = after.getClass().getDeclaredFields();
         try {
             // 遍历所有属性
             for (int j = 0; j < fields.length; j++) {
@@ -56,7 +56,7 @@ public class ClassCompareUtils {
                 // 获取属性的类型
                 String type2 = fields2[j].getGenericType().toString();
                 // 获取字段中包含fieldMeta的注解
-                FieldMeta meta = fields[j].getAnnotation(FieldMeta.class);
+                Field meta = fields[j].getAnnotation(Field.class);
                 if (null == meta) {
                     continue;
                 }
