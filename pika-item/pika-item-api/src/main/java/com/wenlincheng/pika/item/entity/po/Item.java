@@ -202,7 +202,7 @@ public class Item extends CodeModel<Item> {
     private String afterSaleServices;
 
     /**
-     * 用,分隔
+     * 标签 用,分隔
      */
     @TableField("tags")
     private String tags;

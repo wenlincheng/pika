@@ -37,7 +37,6 @@
         <result column="is_publish_by_time" property="isPublishByTime" />
         <result column="publish_time" property="publishTime" />
         <result column="channel_code" property="channelCode" />
-        <result column="out_id" property="outId" />
         <result column="first_up_sale_date" property="firstUpSaleDate" />
         <result column="last_up_sale_date" property="lastUpSaleDate" />
         <result column="code" property="code" />
@@ -50,7 +49,6 @@
         <result column="seo_id" property="seoId" />
         <result column="channel_id" property="channelId" />
         <result column="fixed_price" property="fixedPrice" />
-        <result column="relation_status" property="relationStatus" />
         <result column="is_cycle_buy" property="isCycleBuy" />
         <result column="is_single_order_limit_buy" property="isSingleOrderLimitBuy" />
         <result column="single_order_limit_buy_number" property="singleOrderLimitBuyNumber" />
@@ -66,7 +64,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, seller_id, name, simple_name, source, product_code, shop_code, category_code, brand_code, spec, sale_attr_vals, normal_attr_vals, main_pic_url, pics_url, item_status, sale_status, audit_status, tax_rate, currency_code, min_line_price, max_line_price, min_unit_price, max_unit_price, unit_convert, inventory_reduce_setting, pickup_type, description, detail_html, after_sale_services, tags, is_publish_by_time, publish_time, channel_code, out_id, first_up_sale_date, last_up_sale_date, code, series_id, product_id, invoice_tax_code_id, base_unit_id, inv_unit_id, shipping_fee_template_id, seo_id, channel_id, fixed_price, relation_status, is_cycle_buy, is_single_order_limit_buy, single_order_limit_buy_number, recommend_item_ids, is_gifted, is_fixed, create_time, update_time, create_user_id, update_user_id, is_deleted
+        id, seller_id, name, simple_name, source, product_code, shop_code, category_code, brand_code, spec, sale_attr_vals, normal_attr_vals, main_pic_url, pics_url, item_status, sale_status, audit_status, tax_rate, currency_code, min_line_price, max_line_price, min_unit_price, max_unit_price, unit_convert, inventory_reduce_setting, pickup_type, description, detail_html, after_sale_services, tags, is_publish_by_time, publish_time, channel_code, first_up_sale_date, last_up_sale_date, code, series_id, product_id, invoice_tax_code_id, base_unit_id, inv_unit_id, shipping_fee_template_id, seo_id, channel_id, fixed_price, is_cycle_buy, is_single_order_limit_buy, single_order_limit_buy_number, recommend_item_ids, is_gifted, is_fixed, create_time, update_time, create_user_id, update_user_id, is_deleted
     </sql>
 
 </mapper>
