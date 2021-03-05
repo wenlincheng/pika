@@ -7,11 +7,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
-
 /**
  * <p>
- * 用户和用户组关系表
+ * 用户和角色关系表
  * </p>
  *
  * @author Pikaman
@@ -20,8 +18,8 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("user_group_relation")
-public class UserGroupRelation extends IdModel<UserGroupRelation> {
+@TableName("user_role_rel")
+public class UserRoleRel extends IdModel<UserRoleRel> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,9 +30,9 @@ public class UserGroupRelation extends IdModel<UserGroupRelation> {
     private Long userId;
 
     /**
-     * 用户组id
+     * 角色id
      */
-    @TableField("group_id")
-    private Long groupId;
+    @TableField("role_id")
+    private Long roleId;
 
 }

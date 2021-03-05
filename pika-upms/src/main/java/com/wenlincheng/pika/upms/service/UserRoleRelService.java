@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.upms.service;
 
-import com.wenlincheng.pika.upms.entity.po.UserRoleRelation;
+import com.wenlincheng.pika.upms.entity.po.UserRoleRel;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Set;
@@ -13,7 +13,7 @@ import java.util.Set;
  * @author Pikaman
  * @date 2021/1/1 10:10 上午
  */
-public interface UserRoleRelationService extends IService<UserRoleRelation> {
+public interface UserRoleRelService extends IService<UserRoleRel> {
 
 
     /**

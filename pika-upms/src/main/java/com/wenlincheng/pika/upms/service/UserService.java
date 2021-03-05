@@ -44,7 +44,7 @@ public interface UserService extends IService<User> {
      * @throws PikaException    异常
      * @return UserDetailVO
      */
-    UserDetailVO queryByUsername(String username) throws PikaException;
+    UserDetailVO queryByUsername(String username);
 
     /**
      * 添加用户信息

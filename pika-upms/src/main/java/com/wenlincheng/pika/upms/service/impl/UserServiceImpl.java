@@ -10,7 +10,7 @@ import com.wenlincheng.pika.upms.entity.form.user.UserForm;
 import com.wenlincheng.pika.upms.entity.form.user.UserPasswordForm;
 import com.wenlincheng.pika.upms.entity.po.Role;
 import com.wenlincheng.pika.upms.entity.po.User;
-import com.wenlincheng.pika.upms.entity.po.UserRoleRelation;
+import com.wenlincheng.pika.upms.entity.po.UserRoleRel;
 import com.wenlincheng.pika.upms.entity.query.user.UserPageQuery;
 import com.wenlincheng.pika.upms.entity.vo.user.UserDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.user.UserListVO;
@@ -18,7 +18,7 @@ import com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum;
 import com.wenlincheng.pika.upms.exception.UserNotFoundException;
 import com.wenlincheng.pika.upms.mapper.UserMapper;
 import com.wenlincheng.pika.upms.service.RoleService;
-import com.wenlincheng.pika.upms.service.UserRoleRelationService;
+import com.wenlincheng.pika.upms.service.UserRoleRelService;
 import com.wenlincheng.pika.upms.service.UserService;
 import com.wenlincheng.pika.upms.util.PasswordEncodeUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -47,7 +47,7 @@ import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.USER_ADD_ERROR;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
-    private UserRoleRelationService userRoleRelationService;
+    private UserRoleRelService userRoleService;
     @Autowired
     private RoleService roleService;
 
@@ -63,10 +63,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         IPage<UserListVO> listPage = userPage.convert(UserListVO::new);
         for (UserListVO userListVO : listPage.getRecords()) {
             // 查询用户的角色id
-            QueryWrapper<UserRoleRelation> wrapper = new QueryWrapper<>();
-            wrapper.lambda().eq(UserRoleRelation::getUserId, userListVO.getId());
-            List<UserRoleRelation> userRoleRelations = userRoleRelationService.list(wrapper);
-            Set<Long> roleIds = userRoleRelations.stream().map(UserRoleRelation::getRoleId).collect(Collectors.toSet());
+            QueryWrapper<UserRoleRel> wrapper = new QueryWrapper<>();
+            wrapper.lambda().eq(UserRoleRel::getUserId, userListVO.getId());
+            List<UserRoleRel> userRoleList = userRoleService.list(wrapper);
+            Set<Long> roleIds = userRoleList.stream().map(UserRoleRel::getRoleId).collect(Collectors.toSet());
             if (roleIds.size() > 0) {
                 List<Role> roleList = roleService.listByIds(roleIds);
                 Set<String> roleNames = roleList.stream().map(Role::getName).collect(Collectors.toSet());
@@ -98,14 +98,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 添加角色
         if (add) {
             for (Long roleId : userForm.getRoleIds()) {
-                UserRoleRelation userRole = new UserRoleRelation();
+                UserRoleRel userRole = new UserRoleRel();
                 userRole.setRoleId(roleId)
                         .setUserId(user.getId());
-                userRoleRelationService.save(userRole);
+                userRoleService.save(userRole);
             }
         }
 
-        // 发送注册邮件
+        // TODO 发送注册邮件
 
         return add;
     }
@@ -121,16 +121,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         boolean update = this.update(user, updateWrapper);
 
         // 删除旧角色
-        QueryWrapper<UserRoleRelation> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(UserRoleRelation::getUserId, user.getId());
-        userRoleRelationService.remove(queryWrapper);
+        QueryWrapper<UserRoleRel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(UserRoleRel::getUserId, user.getId());
+        userRoleService.remove(queryWrapper);
 
         // 添加新角色
         for (Long roleId : userForm.getRoleIds()) {
-            UserRoleRelation userRole = new UserRoleRelation();
+            UserRoleRel userRole = new UserRoleRel();
             userRole.setRoleId(roleId)
                     .setUserId(user.getId());
-            userRoleRelationService.save(userRole);
+            userRoleService.save(userRole);
         }
         return update;
     }
@@ -165,16 +165,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public UserDetailVO queryUserDetail(Long id) throws PikaException {
         User user = this.getById(id);
-        if (user == null) {
-            throw UserNotFoundException.construct().build();
+        if (Objects.isNull(user)) {
+            throw PikaException.construct(UpmsErrorCodeEnum.USER_NOT_FOUND).build();
         }
         UserDetailVO userDetail = new UserDetailVO(user);
         // 查询角色
-        QueryWrapper<UserRoleRelation> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(UserRoleRelation::getUserId, id);
-        List<UserRoleRelation> userRoleRelations = userRoleRelationService.list(queryWrapper);
-        Set<Long> roleIds = userRoleRelations.stream()
-                .map(UserRoleRelation::getRoleId)
+        QueryWrapper<UserRoleRel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(UserRoleRel::getUserId, id);
+        List<UserRoleRel> userRoleList = userRoleService.list(queryWrapper);
+        Set<Long> roleIds = userRoleList.stream()
+                .map(UserRoleRel::getRoleId)
                 .collect(Collectors.toSet());
         userDetail.setRoleIds(roleIds);
 
@@ -182,13 +182,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserDetailVO queryByUsername(String username) throws PikaException {
+    public UserDetailVO queryByUsername(String username) {
         User user = this.getOne(new QueryWrapper<User>().lambda()
                 .eq(true, User::getUsername, username));
-        if (user == null) {
-            throw new UserNotFoundException();
+        if (Objects.isNull(user)) {
+            throw PikaException.construct(UpmsErrorCodeEnum.USER_NOT_FOUND).build();
         }
-
         return new UserDetailVO(user);
     }
 

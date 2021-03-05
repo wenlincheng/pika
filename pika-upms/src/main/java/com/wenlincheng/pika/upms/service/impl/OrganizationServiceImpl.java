@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- * 用户组表 服务实现类
+ * 组织表 服务实现类
  * </p>
  *
  * @author Pikaman
@@ -22,14 +22,11 @@ import java.util.List;
 @Service
 public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Organization> implements OrganizationService {
 
-    @Autowired
-    private OrganizationMapper groupMapper;
-
     @Override
     public List<Organization> getByParentId(Long parentId) {
         QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Organization::getParentId, parentId);
-        return groupMapper.selectList(queryWrapper);
+        return this.list(queryWrapper);
     }
 
     @Override

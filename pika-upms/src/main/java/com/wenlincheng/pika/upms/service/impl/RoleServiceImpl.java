@@ -8,15 +8,15 @@ import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.upms.entity.form.role.RoleForm;
 import com.wenlincheng.pika.upms.entity.query.role.RolePageQuery;
-import com.wenlincheng.pika.upms.entity.po.RoleMenuRelation;
+import com.wenlincheng.pika.upms.entity.po.RoleMenuRel;
 import com.wenlincheng.pika.upms.entity.po.Role;
-import com.wenlincheng.pika.upms.entity.po.UserRoleRelation;
+import com.wenlincheng.pika.upms.entity.po.UserRoleRel;
 import com.wenlincheng.pika.upms.entity.vo.role.RoleDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.role.RoleListVO;
 import com.wenlincheng.pika.upms.mapper.RoleMapper;
-import com.wenlincheng.pika.upms.service.RoleMenuRelationService;
+import com.wenlincheng.pika.upms.service.RoleMenuRelService;
 import com.wenlincheng.pika.upms.service.RoleService;
-import com.wenlincheng.pika.upms.service.UserRoleRelationService;
+import com.wenlincheng.pika.upms.service.UserRoleRelService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +42,9 @@ import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.ROLE_REL_USER_DE
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     @Autowired
-    UserRoleRelationService userRoleService;
+    UserRoleRelService userRoleService;
     @Autowired
-    RoleMenuRelationService roleMenuService;
+    RoleMenuRelService roleMenuService;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -74,8 +74,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         IPage<RoleListVO> roleListVOIPage = rolePage.convert(RoleListVO::new);
         // 统计角色关联的用户数
         for (RoleListVO roleListVO : roleListVOIPage.getRecords()) {
-            QueryWrapper<UserRoleRelation> wrapper = new QueryWrapper<>();
-            wrapper.lambda().eq(UserRoleRelation::getRoleId, roleListVO.getId());
+            QueryWrapper<UserRoleRel> wrapper = new QueryWrapper<>();
+            wrapper.lambda().eq(UserRoleRel::getRoleId, roleListVO.getId());
             int count = userRoleService.count(wrapper);
             roleListVO.setRelateUserCount(count);
         }
@@ -87,10 +87,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public RoleDetailVO getRoleDetailById(Long id) {
         Role role = this.getById(id);
         RoleDetailVO roleDetailVO = new RoleDetailVO(role);
-        QueryWrapper<RoleMenuRelation> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(RoleMenuRelation::getRoleId, id);
-        List<RoleMenuRelation> roleResourceRelationList = roleMenuService.list(queryWrapper);
-        List<Long> resourceIds = roleResourceRelationList.stream().map(RoleMenuRelation::getMenuId).collect(Collectors.toList());
+        QueryWrapper<RoleMenuRel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(RoleMenuRel::getRoleId, id);
+        List<RoleMenuRel> roleResourceRelationList = roleMenuService.list(queryWrapper);
+        List<Long> resourceIds = roleResourceRelationList.stream().map(RoleMenuRel::getMenuId).collect(Collectors.toList());
         roleDetailVO.setMenuIdList(resourceIds);
 
         return roleDetailVO;
@@ -110,16 +110,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteById(Long id) {
-        QueryWrapper<UserRoleRelation> userRoleQueryWrapper = new QueryWrapper<>();
-        userRoleQueryWrapper.lambda().eq(UserRoleRelation::getRoleId, id);
-        List<UserRoleRelation> userRoleList = userRoleService.list(userRoleQueryWrapper);
+        QueryWrapper<UserRoleRel> userRoleQueryWrapper = new QueryWrapper<>();
+        userRoleQueryWrapper.lambda().eq(UserRoleRel::getRoleId, id);
+        List<UserRoleRel> userRoleList = userRoleService.list(userRoleQueryWrapper);
         if (CollectionUtils.isNotEmpty(userRoleList)) {
             throw PikaException.construct(ROLE_REL_USER_DELETE_ERROR).build();
         }
         boolean remove = this.removeById(id);
         if (remove) {
-            QueryWrapper<RoleMenuRelation> queryWrapper = new QueryWrapper<>();
-            queryWrapper.lambda().eq(RoleMenuRelation::getRoleId, id);
+            QueryWrapper<RoleMenuRel> queryWrapper = new QueryWrapper<>();
+            queryWrapper.lambda().eq(RoleMenuRel::getRoleId, id);
             roleMenuService.remove(queryWrapper);
         }
         return remove;
@@ -128,8 +128,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateRole(RoleForm roleForm) {
-        QueryWrapper<RoleMenuRelation> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(RoleMenuRelation::getRoleId, roleForm.getId());
+        QueryWrapper<RoleMenuRel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(RoleMenuRel::getRoleId, roleForm.getId());
         roleMenuService.remove(queryWrapper);
         boolean update = this.updateById(roleForm.toPo(Role.class));
         if (update) {
@@ -147,7 +147,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
      */
     private void saveRoleMenuRelation(RoleForm roleForm) {
         for (Long menuId : roleForm.getMenuIdList()) {
-            RoleMenuRelation roleMenu = new RoleMenuRelation();
+            RoleMenuRel roleMenu = new RoleMenuRel();
             roleMenu.setMenuId(menuId)
                     .setRoleId(roleForm.getId());
             roleMenuService.save(roleMenu);
@@ -161,10 +161,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
      * @return void
      */
     private void clearRolePermissionsCache(Long roleId) {
-        QueryWrapper<UserRoleRelation> userRoleQueryWrapper = new QueryWrapper<>();
-        userRoleQueryWrapper.lambda().eq(UserRoleRelation::getRoleId, roleId);
-        List<UserRoleRelation> userRoleList = userRoleService.list(userRoleQueryWrapper);
-        for (UserRoleRelation userRole : userRoleList) {
+        QueryWrapper<UserRoleRel> userRoleQueryWrapper = new QueryWrapper<>();
+        userRoleQueryWrapper.lambda().eq(UserRoleRel::getRoleId, roleId);
+        List<UserRoleRel> userRoleList = userRoleService.list(userRoleQueryWrapper);
+        for (UserRoleRel userRole : userRoleList) {
             redisUtils.delete(USER_PERMISSIONS_REDIS_KEY + userRole.getUserId());
         }
     }

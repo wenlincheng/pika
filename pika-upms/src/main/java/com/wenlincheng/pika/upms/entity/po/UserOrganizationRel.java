@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 角色和菜单关系表
+ * 用户和组织关系表
  * </p>
  *
  * @author Pikaman
@@ -18,21 +18,21 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("role_menu_relation")
-public class RoleMenuRelation extends IdModel<RoleMenuRelation> {
+@TableName("user_organization_rel")
+public class UserOrganizationRel extends IdModel<UserOrganizationRel> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 菜单id
+     * 用户id
      */
-    @TableField("menu_id")
-    private Long menuId;
+    @TableField("user_id")
+    private Long userId;
 
     /**
-     * 角色id
+     * 组织id
      */
-    @TableField("role_id")
-    private Long roleId;
+    @TableField("organization_id")
+    private Long organizationId;
 
 }

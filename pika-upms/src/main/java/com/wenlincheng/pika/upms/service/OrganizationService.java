@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- * 用户组 服务类
+ * 组织 服务类
  * </p>
  *
  * @author Pikaman
@@ -17,7 +17,7 @@ import java.util.List;
 public interface OrganizationService extends IService<Organization> {
 
     /**
-     * 查询用户组
+     * 查询组织
      *
      * @param pageQuery 分页查询参数
      * @return List<SysGroup>
@@ -35,31 +35,31 @@ public interface OrganizationService extends IService<Organization> {
     /**
      * 添加
      *
-     * @param group 用户组
+     * @param group 组织
      * @return boolean
      */
     boolean add(Organization group);
 
     /**
-     * 修改用户组信息
+     * 修改组织信息
      *
-     * @param group 用户组
+     * @param group 组织
      * @return boolean
      */
     boolean updateGroup(Organization group);
 
     /**
-     * 根据id删除用户组
+     * 根据id删除组织
      *
-     * @param id 用户组id
+     * @param id 组织id
      * @return boolean
      */
     boolean deleteById(Long id);
 
     /**
-     * 根据用户组id
+     * 根据组织id
      *
-     * @param id 用户组id
+     * @param id 组织id
      * @return SysGroup
      */
     Organization queryById(Long id);

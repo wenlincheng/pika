@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wenlincheng.pika.upms.mapper.RoleMenuRelationMapper">
+<mapper namespace="com.wenlincheng.pika.upms.mapper.RoleMenuRelMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.wenlincheng.pika.upms.entity.po.RoleMenuRelation">
+    <resultMap id="BaseResultMap" type="com.wenlincheng.pika.upms.entity.po.RoleMenuRel">
         <id column="id" property="id" />
         <result column="menu_id" property="menuId" />
         <result column="role_id" property="roleId" />

@@ -95,9 +95,6 @@ public class UserController extends BaseController {
     public Result<UserDetailVO> getUserById(@PathVariable Long id) throws PikaException {
         log.debug("get with id:{}", id);
         UserDetailVO userDetail = userService.queryUserDetail(id);
-        if (userDetail == null) {
-            throw new UserNotFoundException();
-        }
         userDetail.setPassword("");
         return Result.success(userDetail);
     }
@@ -108,9 +105,6 @@ public class UserController extends BaseController {
         Long userId = currentUserId();
         log.debug("get with userId:{}", userId);
         UserDetailVO userDetail = userService.queryUserDetail(userId);
-        if (userDetail == null) {
-            throw new UserNotFoundException();
-        }
         userDetail.setPassword("");
         return Result.success(userDetail);
     }
@@ -120,9 +114,6 @@ public class UserController extends BaseController {
     public Result<UserDetailVO> getByUsername(@PathVariable String username) throws PikaException {
         log.debug("get with username:{}", username);
         UserDetailVO userDetail = userService.queryByUsername(username);
-        if (userDetail == null) {
-            throw new UserNotFoundException();
-        }
         return Result.success(userDetail);
     }
 

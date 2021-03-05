@@ -7,17 +7,17 @@ import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.upms.entity.form.menu.MenuForm;
 import com.wenlincheng.pika.upms.entity.query.menu.MenuPageQuery;
-import com.wenlincheng.pika.upms.entity.po.RoleMenuRelation;
+import com.wenlincheng.pika.upms.entity.po.RoleMenuRel;
 import com.wenlincheng.pika.upms.entity.po.Menu;
-import com.wenlincheng.pika.upms.entity.po.UserRoleRelation;
+import com.wenlincheng.pika.upms.entity.po.UserRoleRel;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuListVO;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuRouter;
 import com.wenlincheng.pika.upms.entity.vo.menu.RouterMeta;
 import com.wenlincheng.pika.upms.enums.SysMenuTypeEnum;
 import com.wenlincheng.pika.upms.mapper.MenuMapper;
 import com.wenlincheng.pika.upms.service.MenuService;
-import com.wenlincheng.pika.upms.service.RoleMenuRelationService;
-import com.wenlincheng.pika.upms.service.UserRoleRelationService;
+import com.wenlincheng.pika.upms.service.RoleMenuRelService;
+import com.wenlincheng.pika.upms.service.UserRoleRelService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +45,9 @@ import static com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum.MENU_REL_ROLE_DE
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Autowired
-    private RoleMenuRelationService roleMenuService;
+    private RoleMenuRelService roleMenuService;
     @Autowired
-    private UserRoleRelationService userRoleService;
+    private UserRoleRelService userRoleService;
     @Autowired
     private RedisUtils redisUtils;
 
@@ -100,9 +100,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if (CollectionUtils.isNotEmpty(menuList)) {
             throw PikaException.construct(MENU_HAS_CHILDREN).build();
         }
-        QueryWrapper<RoleMenuRelation> roleMenuQueryWrapper = new QueryWrapper<>();
-        roleMenuQueryWrapper.lambda().eq(RoleMenuRelation::getMenuId, id);
-        List<RoleMenuRelation> roleMenuList = roleMenuService.list(roleMenuQueryWrapper);
+        QueryWrapper<RoleMenuRel> roleMenuQueryWrapper = new QueryWrapper<>();
+        roleMenuQueryWrapper.lambda().eq(RoleMenuRel::getMenuId, id);
+        List<RoleMenuRel> roleMenuList = roleMenuService.list(roleMenuQueryWrapper);
         if (CollectionUtils.isNotEmpty(roleMenuList)) {
             throw PikaException.construct(MENU_REL_ROLE_DELETE_ERROR).build();
         }
@@ -121,14 +121,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * @return void
      */
     private void clearUserPermissionsCache(Long menuId) {
-        QueryWrapper<RoleMenuRelation> roleMenuQueryWrapper = new QueryWrapper<>();
-        roleMenuQueryWrapper.lambda().eq(RoleMenuRelation::getMenuId, menuId);
-        List<RoleMenuRelation> roleMenuList = roleMenuService.list(roleMenuQueryWrapper);
-        for (RoleMenuRelation roleMenu : roleMenuList) {
-            QueryWrapper<UserRoleRelation> userRoleQueryWrapper = new QueryWrapper<>();
-            userRoleQueryWrapper.lambda().eq(UserRoleRelation::getRoleId, roleMenu.getRoleId());
-            List<UserRoleRelation> userRoleList = userRoleService.list(userRoleQueryWrapper);
-            for (UserRoleRelation userRole : userRoleList) {
+        QueryWrapper<RoleMenuRel> roleMenuQueryWrapper = new QueryWrapper<>();
+        roleMenuQueryWrapper.lambda().eq(RoleMenuRel::getMenuId, menuId);
+        List<RoleMenuRel> roleMenuList = roleMenuService.list(roleMenuQueryWrapper);
+        for (RoleMenuRel roleMenu : roleMenuList) {
+            QueryWrapper<UserRoleRel> userRoleQueryWrapper = new QueryWrapper<>();
+            userRoleQueryWrapper.lambda().eq(UserRoleRel::getRoleId, roleMenu.getRoleId());
+            List<UserRoleRel> userRoleList = userRoleService.list(userRoleQueryWrapper);
+            for (UserRoleRel userRole : userRoleList) {
                 redisUtils.delete(USER_PERMISSIONS_REDIS_KEY + userRole.getUserId());
             }
         }
@@ -166,10 +166,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<Menu> queryPermsByRoleId(Long roleId) {
-        QueryWrapper<RoleMenuRelation> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(RoleMenuRelation::getRoleId, roleId);
-        List<RoleMenuRelation> roleMenuRelationList = roleMenuService.list(queryWrapper);
-        Set<Long> menuIds = roleMenuRelationList.stream().map(RoleMenuRelation::getMenuId).collect(Collectors.toSet());
+        QueryWrapper<RoleMenuRel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(RoleMenuRel::getRoleId, roleId);
+        List<RoleMenuRel> roleMenuRelationList = roleMenuService.list(queryWrapper);
+        Set<Long> menuIds = roleMenuRelationList.stream().map(RoleMenuRel::getMenuId).collect(Collectors.toSet());
         List<Menu> menuList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(menuIds)) {
             menuList = this.listByIds(menuIds);
@@ -199,18 +199,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * @return java.util.Set<java.lang.Long>
      */
     private Set<Long> queryUserMenuIds(Long userId) {
-        QueryWrapper<UserRoleRelation> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(UserRoleRelation::getUserId, userId);
-        List<UserRoleRelation> userRoleRelationList = userRoleService.list(queryWrapper);
+        QueryWrapper<UserRoleRel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(UserRoleRel::getUserId, userId);
+        List<UserRoleRel> userRoleRelationList = userRoleService.list(queryWrapper);
         // 用户的所有角色
-        Set<Long> roleIds = userRoleRelationList.stream().map(UserRoleRelation::getRoleId).collect(Collectors.toSet());
+        Set<Long> roleIds = userRoleRelationList.stream().map(UserRoleRel::getRoleId).collect(Collectors.toSet());
         if (CollectionUtils.isNotEmpty(roleIds)) {
-            QueryWrapper<RoleMenuRelation> roleMenuQueryWrapper = new QueryWrapper<>();
-            roleMenuQueryWrapper.lambda().in(RoleMenuRelation::getRoleId, roleIds);
-            List<RoleMenuRelation> roleMenuRelationList = roleMenuService.list(roleMenuQueryWrapper);
+            QueryWrapper<RoleMenuRel> roleMenuQueryWrapper = new QueryWrapper<>();
+            roleMenuQueryWrapper.lambda().in(RoleMenuRel::getRoleId, roleIds);
+            List<RoleMenuRel> roleMenuRelationList = roleMenuService.list(roleMenuQueryWrapper);
             // 用户的所有权限
             if (CollectionUtils.isNotEmpty(roleMenuRelationList)) {
-                return roleMenuRelationList.stream().map(RoleMenuRelation::getMenuId).collect(Collectors.toSet());
+                return roleMenuRelationList.stream().map(RoleMenuRel::getMenuId).collect(Collectors.toSet());
             }
         }
         return null;
@@ -300,11 +300,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * @return java.util.Set<java.lang.Long>
      */
     private Set<Long> findRoleByMenuId(Long menuId) {
-        QueryWrapper<RoleMenuRelation> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(RoleMenuRelation::getMenuId, menuId);
-        List<RoleMenuRelation> roleMenuList = roleMenuService.list(queryWrapper);
+        QueryWrapper<RoleMenuRel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(RoleMenuRel::getMenuId, menuId);
+        List<RoleMenuRel> roleMenuList = roleMenuService.list(queryWrapper);
         return roleMenuList.stream()
-                .map(RoleMenuRelation::getRoleId)
+                .map(RoleMenuRel::getRoleId)
                 .collect(Collectors.toSet());
     }
 

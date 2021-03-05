@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.upms.service;
 
-import com.wenlincheng.pika.upms.entity.po.UserPositionRelation;
+import com.wenlincheng.pika.upms.entity.po.UserPositionRel;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Pikaman
  * @date 2021/1/1 10:10 上午
  */
-public interface UserPositionRelationService extends IService<UserPositionRelation> {
+public interface UserPositionRelService extends IService<UserPositionRel> {
 
 }

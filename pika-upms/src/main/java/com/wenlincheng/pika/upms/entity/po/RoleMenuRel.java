@@ -7,11 +7,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
-
 /**
  * <p>
- * 用户和岗位关系表
+ * 角色和菜单关系表
  * </p>
  *
  * @author Pikaman
@@ -20,21 +18,21 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("user_position_relation")
-public class UserPositionRelation extends IdModel<UserPositionRelation> {
+@TableName("role_menu_rel")
+public class RoleMenuRel extends IdModel<RoleMenuRel> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户id
+     * 菜单id
      */
-    @TableField("user_id")
-    private Long userId;
+    @TableField("menu_id")
+    private Long menuId;
 
     /**
      * 角色id
      */
-    @TableField("position_id")
-    private Long positionId;
+    @TableField("role_id")
+    private Long roleId;
 
 }
