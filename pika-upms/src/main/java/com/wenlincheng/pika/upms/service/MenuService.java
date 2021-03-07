@@ -22,19 +22,18 @@ import java.util.List;
 public interface MenuService extends IService<Menu> {
 
     /**
-     * 分页查询
-     *
-     * @param pageQuery    分页查询参数
-     * @return IPage<MenuListVO>
-     */
-    IPage<MenuListVO> queryPageList(MenuPageQuery pageQuery);
-
-    /**
      * 查询所有菜单列表
      *
      * @return List<MenuListVO>
      */
     List<MenuListVO> queryList();
+
+    /**
+     * 根据父id查询菜单列表
+     *
+     * @return List<MenuListVO>
+     */
+    List<MenuListVO> queryListByParentId(Long parentId);
 
     /**
      * 查询用户菜单列表

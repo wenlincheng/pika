@@ -45,10 +45,8 @@ public class MenuListVO extends BaseVo<Menu> {
     private String description;
     @ApiModelProperty(value = "排序")
     private Integer sequence;
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
+    @ApiModelProperty(value = "是否有子菜单")
+    private Boolean hasChildren;
     @ApiModelProperty(value = "子菜单")
     private List<MenuListVO> children;
 

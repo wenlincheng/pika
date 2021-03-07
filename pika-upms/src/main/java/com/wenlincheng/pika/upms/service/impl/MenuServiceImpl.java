@@ -52,20 +52,29 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private RedisUtils redisUtils;
 
     @Override
-    public IPage<MenuListVO> queryPageList(MenuPageQuery pageQuery) {
-        QueryWrapper<Menu> queryWrapper = pageQuery.buildWrapper();
-        queryWrapper.lambda().like(StringUtils.isNotBlank(pageQuery.getName()), Menu::getName,pageQuery.getName())
-                .eq(Menu::getParentId, 0)
-                .orderByDesc(Menu::getSequence);
-        IPage<Menu> rolePage = this.page(pageQuery.getPage(), queryWrapper);
-        IPage<MenuListVO> menuListPage = rolePage.convert(MenuListVO::new);
-        menuListPage.getRecords().forEach(menuListVO -> menuListVO.setChildren(getChildren(menuListVO.getId())));
-        return menuListPage;
+    public List<MenuListVO> queryList() {
+        return getChildren(0L);
     }
 
     @Override
-    public List<MenuListVO> queryList() {
-        return getChildren(0L);
+    public List<MenuListVO> queryListByParentId(Long parentId) {
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Menu::getParentId, parentId)
+                .orderByDesc(parentId == 0, Menu::getSequence)
+                .orderByAsc(parentId != 0, Menu::getSequence);
+        List<Menu> menuList = this.list(queryWrapper);
+        List<MenuListVO> menuListVOS = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(menuList)) {
+            menuList.forEach(menu -> {
+                MenuListVO menuListVO = new MenuListVO(menu);
+                QueryWrapper<Menu> countWrapper = new QueryWrapper<>();
+                countWrapper.lambda().eq(Menu::getParentId, menu.getId());
+                int count = this.count(countWrapper);
+                menuListVO.setHasChildren(count > 0);
+                menuListVOS.add(menuListVO);
+            });
+        }
+        return menuListVOS;
     }
 
     @Override

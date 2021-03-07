@@ -1,11 +1,9 @@
 package com.wenlincheng.pika.upms.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.menu.MenuForm;
-import com.wenlincheng.pika.upms.entity.query.menu.MenuPageQuery;
 import com.wenlincheng.pika.upms.entity.po.Menu;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuListVO;
 import com.wenlincheng.pika.upms.entity.vo.menu.MenuRouter;
@@ -36,12 +34,12 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @ApiOperation(value = "菜单分页列表", notes = "根据条件分页查询菜单列表", httpMethod = "GET")
-    @GetMapping(value = "/page")
-    public Result<IPage<MenuListVO>> queryPage(MenuPageQuery pageQuery) {
-        log.debug("query with pageQuery:{}", pageQuery);
-        IPage<MenuListVO> page = menuService.queryPageList(pageQuery);
-        return Result.success(page);
+    @ApiOperation(value = "根据父id查询菜单列表", notes = "根据父id查询菜单列表", httpMethod = "GET")
+    @GetMapping(value = "/list/{parentId}")
+    public Result<List<MenuListVO>> queryListByParentId(@PathVariable Long parentId) {
+        log.debug("query list by parentId: {}", parentId);
+        List<MenuListVO> menuList = menuService.queryListByParentId(parentId);
+        return Result.success(menuList);
     }
 
     @ApiOperation(value = "菜单树列表", notes = "菜单列表", httpMethod = "GET")
