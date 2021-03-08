@@ -17,11 +17,13 @@ import com.wenlincheng.pika.upms.entity.po.GatewayRoute;
 import com.wenlincheng.pika.upms.entity.query.gateway.GatewayRoutePageQuery;
 import com.wenlincheng.pika.upms.entity.vo.gateway.GatewayRouteVO;
 import com.wenlincheng.pika.upms.event.GatewayRouteAddEvent;
+import com.wenlincheng.pika.upms.event.GatewayRouteDeleteEvent;
 import com.wenlincheng.pika.upms.event.GatewayRouteRefreshEvent;
 import com.wenlincheng.pika.upms.event.GatewayRouteUpdateEvent;
 import com.wenlincheng.pika.upms.mapper.GatewayRouteMapper;
 import com.wenlincheng.pika.upms.service.GatewayRouteService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,27 +66,23 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteMapper, Gat
     @Autowired
     private ServiceMatcher busServiceMatcher;
 
-    @Value("${spring.cloud.bus.id}")
-    private String originService;
-
     @Override
     public boolean add(GatewayRoute gatewayRoute) {
         boolean isSuccess = this.save(gatewayRoute);
         RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoute);
-        gatewayRouteCache.put(gatewayRoute.getRouteId(), routeDefinition);
-        // TODO 是否弃用jetcache
-        // redisUtils.set(GATEWAY_ROUTES_ADMIN + gatewayRoute.getRouteId(), JSON.toJSONString(routeDefinition));
+        redisUtils.set(GATEWAY_ROUTES_ADMIN + gatewayRoute.getRouteId(), JSON.toJSONString(routeDefinition));
         // 发布添加路由事件
-        eventPublisher.publishEvent(new GatewayRouteAddEvent(this, originService, UpmsConstants.GATEWAY_ROUTE_ADMIN_BUS_ID, routeDefinition));
+        eventPublisher.publishEvent(new GatewayRouteAddEvent(this, busServiceMatcher.getServiceId(), UpmsConstants.GATEWAY_ROUTE_ADMIN_BUS_ID, routeDefinition));
         return isSuccess;
     }
 
     @Override
     public boolean delete(String id) {
         GatewayRoute gatewayRoute = this.getById(id);
-        gatewayRouteCache.remove(gatewayRoute.getRouteId());
-        // 通知网关刷新路由
-        //eventSender.send(BusConfig.ROUTING_KEY, gatewayRouteToRouteDefinition(gatewayRoute));
+        redisUtils.delete(GATEWAY_ROUTES_ADMIN + gatewayRoute.getRouteId());
+        RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoute);
+        // 发布删除路由事件
+        eventPublisher.publishEvent(new GatewayRouteDeleteEvent(this, busServiceMatcher.getServiceId(), UpmsConstants.GATEWAY_ROUTE_ADMIN_BUS_ID, routeDefinition));
         return this.removeById(id);
     }
 
@@ -92,8 +90,8 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteMapper, Gat
     public boolean update(GatewayRoute gatewayRoute) {
         boolean isSuccess = this.updateById(gatewayRoute);
         RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoute);
-        gatewayRouteCache.put(gatewayRoute.getRouteId(), routeDefinition);
-        // 通知网关刷新路由
+        redisUtils.set(GATEWAY_ROUTES_ADMIN + gatewayRoute.getRouteId(), JSON.toJSONString(routeDefinition));
+        // 发布更新路由事件
         eventPublisher.publishEvent(new GatewayRouteUpdateEvent(this, busServiceMatcher.getServiceId(), UpmsConstants.GATEWAY_ROUTE_ADMIN_BUS_ID, routeDefinition));
         return isSuccess;
     }
@@ -121,12 +119,13 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteMapper, Gat
         queryWrapper.lambda().eq(GatewayRoute::getStatus, YnEnum.YES.getValue())
                 .eq(GatewayRoute::getIsDeleted, YnEnum.NO.getValue());
         List<GatewayRoute> gatewayRoutes = this.list(queryWrapper);
-        gatewayRoutes.forEach(gatewayRoute -> {
-                // gatewayRouteCache.remove(gatewayRoute.getRouteId());
-                // gatewayRouteCache.put(gatewayRoute.getRouteId(), gatewayRouteToRouteDefinition(gatewayRoute));
+        if (CollectionUtils.isNotEmpty(gatewayRoutes)) {
+            gatewayRoutes.forEach(gatewayRoute -> {
                 redisUtils.delete(GATEWAY_ROUTES_ADMIN + gatewayRoute.getRouteId());
                 redisUtils.set(GATEWAY_ROUTES_ADMIN + gatewayRoute.getRouteId(), JSON.toJSONString(gatewayRouteToRouteDefinition(gatewayRoute)));
             });
+        }
+        // 通知网关刷新路由
         eventPublisher.publishEvent(new GatewayRouteRefreshEvent(this, busServiceMatcher.getServiceId(), UpmsConstants.GATEWAY_ROUTE_ADMIN_BUS_ID));
         log.info("刷新网关路由成功!");
         return true;
