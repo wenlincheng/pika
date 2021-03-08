@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.upms.controller;
 
 
+import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.upms.entity.po.Organization;
 import com.wenlincheng.pika.upms.entity.form.organization.OrganizationForm;
@@ -26,7 +27,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/group")
-public class OrganizationController {
+public class OrganizationController extends BaseController {
 
     @Autowired
     private OrganizationService organizationService;

@@ -3,6 +3,7 @@ package com.wenlincheng.pika.upms.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
@@ -33,7 +34,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 @Api(value = "RoleController", tags = "角色接口")
-public class RoleController {
+public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;

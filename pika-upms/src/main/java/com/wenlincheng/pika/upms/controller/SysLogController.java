@@ -2,6 +2,7 @@ package com.wenlincheng.pika.upms.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
 import com.wenlincheng.pika.upms.entity.query.log.LogPageQuery;
@@ -30,7 +31,7 @@ import java.util.Date;
 @Api(value = "SysLogController", tags = "操作日志接口")
 @RestController
 @RequestMapping("/log")
-public class SysLogController {
+public class SysLogController extends BaseController {
 
     @Autowired
     private SysLogService sysLogService;

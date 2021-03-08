@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.upms.controller;
 
 
+import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.upms.entity.vo.region.RegionListVO;
 import com.wenlincheng.pika.upms.entity.vo.region.RegionDetailVO;
@@ -28,7 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/region")
 @Api(tags = "区域接口")
-public class RegionController {
+public class RegionController extends BaseController {
 
     @Autowired
     private RegionService regionService;

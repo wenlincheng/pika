@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.upms.controller;
 
 
+import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.menu.MenuForm;
@@ -29,7 +30,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/menu")
-public class MenuController {
+public class MenuController extends BaseController {
 
     @Autowired
     private MenuService menuService;

@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.upms.controller;
 
 
+import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/position")
-public class PositionController {
+public class PositionController extends BaseController {
 
 }

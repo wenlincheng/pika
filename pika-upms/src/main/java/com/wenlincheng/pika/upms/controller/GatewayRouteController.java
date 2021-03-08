@@ -2,6 +2,7 @@ package com.wenlincheng.pika.upms.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.gateway.GatewayRouteForm;
@@ -29,7 +30,7 @@ import javax.validation.Valid;
 @RequestMapping("/gateway")
 @Slf4j
 @Api(value = "GatewayRouteController", tags = "网关路由接口")
-public class GatewayRouteController {
+public class GatewayRouteController extends BaseController {
 
     @Autowired
     private GatewayRouteService gatewayRoutService;
