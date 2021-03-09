@@ -24,15 +24,12 @@ import java.util.List;
 @Service
 public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> implements RegionService {
 
-    @Autowired
-    private RegionMapper areaMapper;
-
     @Override
     public List<RegionListVO> getAreaListByLevel(Integer level) {
         List<RegionListVO> list = new ArrayList<>();
         QueryWrapper<Region> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("level", level);
-        List<Region> areaList = this.baseMapper.selectList(queryWrapper);
+        queryWrapper.lambda().eq(Region::getLevel, level);
+        List<Region> areaList = this.list(queryWrapper);
         return convertArea(list, areaList);
     }
 
@@ -40,15 +37,15 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     public List<RegionListVO> getAreaListByParentId(Long parentId) {
         List<RegionListVO> list = new ArrayList<>();
         QueryWrapper<Region> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("parent_id", parentId);
-        List<Region> areaList = areaMapper.selectList(queryWrapper);
+        queryWrapper.lambda().eq(Region::getParentId, parentId);
+        List<Region> areaList = this.list(queryWrapper);
         return convertArea(list, areaList);
     }
 
     @Override
     public RegionDetailVO getAreaDetailById(Long id) {
         RegionDetailVO areaDetailVO = new RegionDetailVO();
-        Region area = areaMapper.selectById(id);
+        Region area = this.getById(id);
         areaDetailVO.setId(area.getId());
         String s = get(area.getParentId());
         areaDetailVO.setFullName(s + area.getName());
@@ -56,7 +53,7 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     }
 
     private String get(Long parentId) {
-        Region parentArea = areaMapper.selectById(parentId);
+        Region parentArea = this.getById(parentId);
         String name = "";
         if (parentArea != null) {
             name = parentArea.getName();
