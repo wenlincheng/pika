@@ -1,10 +1,10 @@
 package com.wenlincheng.pika.auth.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.wenlincheng.pika.auth.client.api.PermissionService;
-import com.wenlincheng.pika.auth.client.api.UserService;
-import com.wenlincheng.pika.auth.client.dto.Permission;
-import com.wenlincheng.pika.auth.client.dto.User;
+import com.wenlincheng.pika.auth.feign.api.PermissionService;
+import com.wenlincheng.pika.auth.feign.api.UserService;
+import com.wenlincheng.pika.auth.feign.dto.Permission;
+import com.wenlincheng.pika.auth.feign.dto.User;
 import com.wenlincheng.pika.auth.entity.AuthUser;
 import com.wenlincheng.pika.auth.exception.AuthErrorCodeEnum;
 import com.wenlincheng.pika.auth.manager.JwtTokenManager;

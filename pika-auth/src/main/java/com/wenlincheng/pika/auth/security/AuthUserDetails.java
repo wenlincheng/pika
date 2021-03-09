@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.auth.security;
 
-import com.wenlincheng.pika.auth.client.dto.Permission;
+import com.wenlincheng.pika.auth.feign.dto.Permission;
 import com.wenlincheng.pika.auth.entity.AuthUser;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
 import org.springframework.security.core.GrantedAuthority;

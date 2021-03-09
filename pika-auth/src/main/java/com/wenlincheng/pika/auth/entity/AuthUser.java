@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.auth.entity;
 
-import com.wenlincheng.pika.auth.client.dto.Permission;
-import com.wenlincheng.pika.auth.client.dto.Role;
+import com.wenlincheng.pika.auth.feign.dto.Permission;
+import com.wenlincheng.pika.auth.feign.dto.Role;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

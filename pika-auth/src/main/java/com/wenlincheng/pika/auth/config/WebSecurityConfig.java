@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.auth.config;
 
-import com.wenlincheng.pika.auth.client.api.PermissionService;
+import com.wenlincheng.pika.auth.feign.api.PermissionService;
 import com.wenlincheng.pika.auth.filter.JWTAuthenticationFilter;
 import com.wenlincheng.pika.auth.filter.PikaFilterSecurityInterceptor;
 import com.wenlincheng.pika.auth.filter.PikaUsernamePasswordAuthenticationFilter;

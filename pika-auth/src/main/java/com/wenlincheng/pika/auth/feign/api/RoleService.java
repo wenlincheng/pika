@@ -1,7 +1,7 @@
-package com.wenlincheng.pika.auth.client.api;
+package com.wenlincheng.pika.auth.feign.api;
 
-import com.wenlincheng.pika.auth.client.api.fallback.UserServiceFallbackFactory;
-import com.wenlincheng.pika.auth.client.dto.Role;
+import com.wenlincheng.pika.auth.feign.api.fallback.UserServiceFallbackFactory;
+import com.wenlincheng.pika.auth.feign.dto.Role;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

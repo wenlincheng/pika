@@ -1,11 +1,11 @@
 package com.wenlincheng.pika.auth.service.impl;
 
-import com.wenlincheng.pika.auth.client.api.PermissionService;
-import com.wenlincheng.pika.auth.client.api.RoleService;
-import com.wenlincheng.pika.auth.client.api.UserService;
-import com.wenlincheng.pika.auth.client.dto.Permission;
-import com.wenlincheng.pika.auth.client.dto.Role;
-import com.wenlincheng.pika.auth.client.dto.User;
+import com.wenlincheng.pika.auth.feign.api.PermissionService;
+import com.wenlincheng.pika.auth.feign.api.RoleService;
+import com.wenlincheng.pika.auth.feign.api.UserService;
+import com.wenlincheng.pika.auth.feign.dto.Permission;
+import com.wenlincheng.pika.auth.feign.dto.Role;
+import com.wenlincheng.pika.auth.feign.dto.User;
 import com.wenlincheng.pika.common.core.constant.SecurityConstants;
 import com.wenlincheng.pika.auth.entity.AuthUser;
 import com.wenlincheng.pika.auth.security.AuthUserDetails;

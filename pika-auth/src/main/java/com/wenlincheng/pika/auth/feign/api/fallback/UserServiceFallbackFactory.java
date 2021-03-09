@@ -1,6 +1,6 @@
-package com.wenlincheng.pika.auth.client.api.fallback;
+package com.wenlincheng.pika.auth.feign.api.fallback;
 
-import com.wenlincheng.pika.auth.client.api.UserService;
+import com.wenlincheng.pika.auth.feign.api.UserService;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;

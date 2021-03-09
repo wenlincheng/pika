@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.auth.manager;
 
 import com.alibaba.fastjson.JSON;
-import com.wenlincheng.pika.auth.client.dto.Role;
+import com.wenlincheng.pika.auth.feign.dto.Role;
 import com.wenlincheng.pika.auth.config.JwtProperties;
 import com.wenlincheng.pika.common.core.constant.SecurityConstants;
 import com.wenlincheng.pika.auth.security.AuthUserDetails;

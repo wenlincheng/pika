@@ -1,4 +1,4 @@
-package com.wenlincheng.pika.auth.client.dto;
+package com.wenlincheng.pika.auth.feign.dto;
 
 import lombok.Data;
 
