@@ -6,11 +6,6 @@ spring:
   mvc:
     servlet:
       load-on-startup: 0
-  rabbitmq:
-    host: ${RABBIT_MQ_HOST:127.0.0.1}
-    port: ${RABBIT_MQ_PORT:5672}
-    username: ${RABBIT_MQ_USERNAME:root}
-    password: ${RABBIT_MQ_PASSWORD:123456}
   redis:
     host: ${REDIS_HOST:127.0.0.1}
     port: 6379
