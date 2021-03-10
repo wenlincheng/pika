@@ -1,29 +1,7 @@
 server:
   port: 8100
 spring:
-  profiles:
-    active: ${ACTIVE_ENV:dev}
-  mvc:
-    servlet:
-      load-on-startup: 0
-  # 缓存
-  redis:
-    host: ${REDIS_HOST:127.0.0.1}
-    port: 6379
-    password: ${REDIS_PASSWORD:123456}
-    lettuce:
-      pool:
-        max-active: 300
   cloud:
-    # 注册中心
-    nacos:
-      discovery:
-        server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
-        namespace: ${REGISTER_NAMESPACE:5a0187d7-9f8f-445a-a3bf-e17e11457e4d}
-        group: ${REGISTER_GROUP:PIKA}
-        namingLoadCacheAtStart: true
-        username: ${REGISTER_USERNAME:nacos}
-        password: ${REGISTER_PASSWORD:nacos}
     # 熔断降级
     sentinel:
       transport:
@@ -84,9 +62,6 @@ spring:
             redis-rate-limiter.requestedTokens: 1 # 每个请求消耗的令牌数，默认为 1
             rate-limiter: "#{@defaultRedisRateLimiter}"  # 使用SpEL引用bean，自定义实现RateLimiter接口的限流器
             key-resolver: "#{@apiKeyResolver}" # 使用SpEL引用bean，自定义解析器
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
 
 # Ribbon
 ribbon:
@@ -97,46 +72,6 @@ ribbon:
       - pika-auth
       - pika-upms
 
-# Feign
-feign:
-  # sentinel对Feign的支持
-  sentinel:
-    enabled: true
-
-# 暴露端点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: always
-
-jetcache:
-  statIntervalMinutes: 15
-  areaInCacheName: false
-  hidePackages: com.wenlincheng.pika
-  local:
-    # 默认2小时本地缓存
-    default:
-      type: caffeine
-      keyConvertor: fastjson
-  remote:
-    # 默认2小时的远程缓存
-    default:
-      type: redis
-      keyConvertor: fastjson
-      valueEncoder: kryo
-      valueDecoder: kryo
-      poolConfig:
-        minIdle: 5
-        maxIdle: 20
-        maxTotal: 50
-      host: ${REDIS_HOST:127.0.0.1}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:123456}
-
 # 网关鉴权放行的路径
 gateway:
   ignored:
@@ -145,13 +80,3 @@ gateway:
       - /auth/token/**
       - /v2/api-docs
       - /app/**
-
-# log
-logging:
-  file:
-    max-size: 100MB
-    path: ./logs/gateway-admin
-  level:
-    root: INFO
-    com:
-      wenlincheng: INFO

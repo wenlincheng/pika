@@ -1,27 +1,7 @@
 server:
   port: 8110
 spring:
-  profiles:
-    active: ${ACTIVE_ENV:dev}
-  mvc:
-    servlet:
-      load-on-startup: 0
-  redis:
-    host: ${REDIS_HOST:127.0.0.1}
-    port: 6379
-    password: ${REDIS_PASSWORD:123456}
-    lettuce:
-      pool:
-        max-active: 300
   cloud:
-    nacos:
-      discovery:
-        server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
-        namespace: ${REGISTER_NAMESPACE:5a0187d7-9f8f-445a-a3bf-e17e11457e4d}
-        group: ${REGISTER_GROUP:PIKA}
-        namingLoadCacheAtStart: true
-        username: ${REGISTER_USERNAME:nacos}
-        password: ${REGISTER_PASSWORD:nacos}
     sentinel:
       transport:
         dashboard: ${SENTINEL_DASHBOARD_HOST:127.0.0.1}:${SENTINEL_DASHBOARD_PORT:8858}
@@ -66,41 +46,3 @@ spring:
         output3:
           content-type: text/plain
           destination: pull-topic
-  # 序列化
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-
-# ribbon负载均衡
-ribbon:
-  # Ribbon的默认加载策略是懒加载。当第一次访问的时候，不仅会发送访问请求，还有初始化相关的服务。 设置饥饿加载相关服务
-  eager-load:
-    enabled: true
-    clients: pika-upms
-
-# Feign
-feign:
-  # sentinel对Feign的支持
-  sentinel:
-    enabled: true
-
-# JWT 配置
-jwt:
-  # 服务端根据 SigningKey 生成 token
-  signingKey: VCsGI5YF+QH7uQOK5dbI0BGpskwRF8pPJr/MLmjeUPWPVgyIuREAQCvfo3nylgpz8DNuGFZ5w8Jjs5CSTT1+VQ==
-  # token 的有效时间
-  tokenExpiration: 36000
-  refreshTokenExpiration: 36000
-
-# Security 需要放行的路径
-ignored:
-  uris:
-    - /login/v1
-    - /auth/token/**
-    - /auth/logout
-
-security:
-  # 登录失败次数限制
-  loginTimeLimit: 5
-  # 多少分钟后可重试
-  loginAfterTime: 2

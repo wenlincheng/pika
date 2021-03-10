@@ -87,11 +87,11 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     </appender>
 
     <!--输出到logstash的appender-->
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <!--可以访问的logstash日志收集端口-->
-        <destination>${logstash.host}:${logstash.port}</destination>
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
-    </appender>
+<!--    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--        &lt;!&ndash;可以访问的logstash日志收集端口&ndash;&gt;-->
+<!--        <destination>${logstash.host}:${logstash.port}</destination>-->
+<!--        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>-->
+<!--    </appender>-->
 
     <!--
     logger：主要用于存放日志对象，也可以定义日志类型、级别
@@ -113,7 +113,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="SYSTEM_INFO"/>
         <appender-ref ref="SYSTEM_ERROR"/>
-        <appender-ref ref="LOGSTASH"/>
+<!--        <appender-ref ref="LOGSTASH"/>-->
     </root>
 
 </configuration>

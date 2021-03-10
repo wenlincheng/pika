@@ -7,12 +7,29 @@ spring:
         server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
         prefix: ${spring.application.name}
         file-extension: yml
-        namespace: ${REGISTER_NAMESPACE:5a0187d7-9f8f-445a-a3bf-e17e11457e4d}
+        namespace: ${REGISTER_NAMESPACE:dev}
         group: ${REGISTER_GROUP:PIKA}
         username: ${REGISTER_USERNAME:nacos}
         password: ${REGISTER_PASSWORD:nacos}
-
-# logstash
-logstash:
-  host: ${LOGSTASH_HOST:127.0.0.1}
-  port: ${LOGSTASH_PORT:5044}
+        # 公共配置 支持多个共享 Data Id 的配置，优先级小于extension-configs
+        shared-configs[0]:
+          data-id: spring.yml
+          group: PIKA
+          refresh: true
+        shared-configs[1]:
+          data-id: logback.yml
+          group: PIKA
+          refresh: true
+        # 扩展配置
+        extension-configs[0]:
+          data-id: redis.yml
+          group: PIKA
+          refresh: true
+        extension-configs[1]:
+          data-id: leaf.yml
+          group: PIKA
+          refresh: true
+        extension-configs[2]:
+          data-id: swagger.yml
+          group: PIKA
+          refresh: true

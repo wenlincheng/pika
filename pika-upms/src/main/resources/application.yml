@@ -1,27 +1,6 @@
 server:
   port: 8120
 spring:
-  mvc:
-    servlet:
-      load-on-startup: 0
-  # 缓存
-  redis:
-    host: ${REDIS_HOST:127.0.0.1}
-    port: 6379
-    password: ${REDIS_PASSWORD:123456}
-    timeout: 5000ms
-    lettuce:
-      # 关闭超时时间
-      shutdown-timeout: 100
-      pool:
-        # 连接池最大连接数
-        max-active: 300
-        # 连接池最大阻塞等待时间
-        max-wait: 10000
-        # 连接池中的最大空闲连接
-        max-idle: 8
-        # 连接池中的最小空闲连接
-        min-idle: 0
   # 数据库
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -63,14 +42,6 @@ spring:
         url-pattern: /*
         exclusions: .js,*.gif,*.png,*.jpg,*.html,*.js,*.css,*.ico,/druid/*
   cloud:
-    nacos:
-      discovery:
-        server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
-        namespace: ${REGISTER_NAMESPACE:5a0187d7-9f8f-445a-a3bf-e17e11457e4d}
-        group: ${REGISTER_GROUP:PIKA}
-        namingLoadCacheAtStart: true
-        username: ${REGISTER_USERNAME:nacos}
-        password: ${REGISTER_PASSWORD:nacos}
     sentinel:
       transport:
         dashboard: ${SENTINEL_DASHBOARD_HOST:127.0.0.1}:${SENTINEL_DASHBOARD_PORT:8858}
@@ -99,37 +70,6 @@ spring:
         enabled: true
       destination: springCloudBus
 
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-
-# ribbon
-ribbon:
-  # Ribbon的默认加载策略是懒加载。当第一次访问的时候，不仅会发送访问请求，还有初始化相关的服务。 设置饥饿加载相关服务
-  eager-load:
-    enabled: true
-    clients:
-      - pika-trade
-
-# Feign
-feign:
-  # sentinel对Feign的支持
-  sentinel:
-    enabled: true
-
-# 微服务监控
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-      base-path: /monitor
-  endpoint:
-    health:
-      show-details: always
-    shutdown:
-      enabled: true
-
 # mybatis-plus
 mybatis-plus:
   # config-location:
@@ -155,67 +95,6 @@ mybatis-plus:
       # 逻辑删除配置
       logic-delete-value: 1
       logic-not-delete-value: 0
-
-jetcache:
-  statIntervalMinutes: 15
-  areaInCacheName: false
-  hidePackages: com.wenlincheng.pika
-  local:
-    # 默认2小时本地缓存
-    default:
-      type: caffeine
-      keyConvertor: fastjson
-  remote:
-    # 默认2小时的远程缓存
-    default:
-      type: redis
-      keyConvertor: fastjson
-      valueEncoder: kryo
-      valueDecoder: kryo
-      poolConfig:
-        minIdle: 5
-        maxIdle: 20
-        maxTotal: 50
-      host: ${REDIS_HOST:127.0.0.1}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:123456}
-
-logstash:
-  host: ${LOGSTASH_HOST:127.0.0.1}
-  port: ${LOGSTASH_PORT:5044}
-
-# Leaf
-leaf:
-  name: ${spring.application.name}
-  # segment
-  segment:
-    enable: true
-    url: jdbc:mysql://${DATASOURCE_HOST:127.0.0.1}:3306/pika_upms?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT%2b8
-    username: ${DATASOURCE_USERNAME:root}
-    password: ${DATASOURCE_PASSWORD:123456}
-  # snowflake
-  snowflake:
-    enable: true
-    address: ${ZOOKEEPER_HOST:127.0.0.1}
-    port: ${ZOOKEEPER_PORT:2181}
-
-# 文档
-swagger:
-  enabled: true
-  basePackage:
-  basePath:
-  excludePath:
-  title: ${spring.application.name}
-  description:
-  version: 0.0.1
-  license:
-  licenseUrl:
-  termsOfServiceUrl:
-  host:
-  contact:
-    name: Pikaman
-    url: https://www.wenlincheng.com
-    email: wenlcmax@gmail.com
 
 # 代码生成
 gen:
