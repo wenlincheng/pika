@@ -7,6 +7,8 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!--定义属性-->
     <springProperty scope="context" name="log.path" source="logging.file.path"/>
+    <springProperty scope="context" name="log.maxSize" source="logging.file.max-size"/>
+    <springProperty scope="context" name="log.maxHistory" source="logging.file.max-history"/>
     <springProperty scope="context" name="application.name" source="spring.application.name"/>
     <springProperty scope="context" name="logstash.host" source="logstash.host"/>
     <springProperty scope="context" name="logstash.port" source="logstash.port"/>
@@ -28,8 +30,8 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         </encoder>
     </appender>
 
-    <!-- 系统日志输出 -->
-    <appender name="SYSTEM_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- INFO日志文件输出 -->
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/${application.name}-info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--
@@ -37,15 +39,15 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
             %i：当文件大小超过maxFileSize时，按照i进行文件滚动
             -->
             <fileNamePattern>${log.path}/${application.name}-info.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
-            <!-- 日志最大的历史 60天 -->
-            <maxHistory>60</maxHistory>
+            <!-- 日志最大的历史天数 -->
+            <maxHistory>${log.maxHistory}</maxHistory>
             <!--
                 当日志文件超过maxFileSize指定的大小是，根据上面提到的%i进行日志文件滚动
                 注意此处配置SizeBasedTriggeringPolicy是无法实现按文件大小进行滚动的，
                 必须配置timeBasedFileNamingAndTriggeringPolicy
             -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>100MB</maxFileSize>
+                <maxFileSize>${log.maxSize}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <encoder>
@@ -59,20 +61,20 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         </filter>
     </appender>
 
-    <!--系统错误日志输出-->
-    <appender name="SYSTEM_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--ERROR日志文件输出-->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/${application.name}-error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log.path}/${application.name}-error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
             <!-- 日志最大的历史 60天 -->
-            <maxHistory>60</maxHistory>
+            <maxHistory>${log.maxHistory}</maxHistory>
             <!--
                 当日志文件超过maxFileSize指定的大小是，根据上面提到的%i进行日志文件滚动
                 注意此处配置SizeBasedTriggeringPolicy是无法实现按文件大小进行滚动的，
                 必须配置timeBasedFileNamingAndTriggeringPolicy
             -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>100MB</maxFileSize>
+                <maxFileSize>${log.maxSize}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <encoder>
@@ -86,7 +88,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         </filter>
     </appender>
 
-    <!--输出到logstash的appender-->
+    <!--输出到logstash-->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!--可以访问的logstash日志收集端口-->
         <destination>${logstash.host}:${logstash.port}</destination>
@@ -111,9 +113,9 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     -->
     <root level="${logging.level.root}">
         <appender-ref ref="CONSOLE" />
-        <appender-ref ref="SYSTEM_INFO"/>
-        <appender-ref ref="SYSTEM_ERROR"/>
-        <appender-ref ref="LOGSTASH"/>
+        <appender-ref ref="FILE_INFO"/>
+        <appender-ref ref="FILE_ERROR"/>
+<!--        <appender-ref ref="LOGSTASH"/>-->
     </root>
 
 </configuration>
