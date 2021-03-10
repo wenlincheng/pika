@@ -5,7 +5,7 @@ spring:
     nacos:
       config:
         server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
-        prefix: ${spring.application.name}
+        name: ${spring.application.name}
         file-extension: yml
         namespace: ${REGISTER_NAMESPACE:dev}
         group: ${REGISTER_GROUP:PIKA}

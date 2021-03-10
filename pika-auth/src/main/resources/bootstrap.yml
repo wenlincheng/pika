@@ -19,6 +19,9 @@ spring:
           - data-id: logback.yml
             group: PIKA
             refresh: true
+          - data-id: sentinel.yml
+            group: PIKA
+            refresh: true
         # 扩展配置
         extension-configs:
           - data-id: redis.yml

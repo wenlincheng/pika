@@ -5,13 +5,13 @@ spring:
     nacos:
       config:
         server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
-        prefix: ${spring.application.name}
+        name: ${spring.application.name}
         file-extension: yml
         namespace: ${REGISTER_NAMESPACE:dev}
         group: ${REGISTER_GROUP:PIKA}
         username: ${REGISTER_USERNAME:nacos}
         password: ${REGISTER_PASSWORD:nacos}
-        # 公共配置 支持多个共享 Data Id 的配置，优先级小于extension-configs
+        # 公共配置 优先级小于extension-configs
         shared-configs:
           - data-id: spring.yml
             group: PIKA
@@ -19,7 +19,13 @@ spring:
           - data-id: logback.yml
             group: PIKA
             refresh: true
-        # 扩展配置
+          - data-id: database.yml
+            group: PIKA
+            refresh: true
+          - data-id: sentinel.yml
+            group: PIKA
+            refresh: true
+        # 扩展配置 优先级小于config.name
         extension-configs:
           - data-id: redis.yml
             group: PIKA
