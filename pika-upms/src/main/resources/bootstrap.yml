@@ -12,24 +12,21 @@ spring:
         username: ${REGISTER_USERNAME:nacos}
         password: ${REGISTER_PASSWORD:nacos}
         # 公共配置 支持多个共享 Data Id 的配置，优先级小于extension-configs
-        shared-configs[0]:
-          data-id: spring.yml
-          group: PIKA
-          refresh: true
-        shared-configs[1]:
-          data-id: logback.yml
-          group: PIKA
-          refresh: true
+        shared-configs:
+          - data-id: spring.yml
+            group: PIKA
+            refresh: true
+          - data-id: logback.yml
+            group: PIKA
+            refresh: true
         # 扩展配置
-        extension-configs[0]:
-          data-id: redis.yml
-          group: PIKA
-          refresh: true
-        extension-configs[1]:
-          data-id: leaf.yml
-          group: PIKA
-          refresh: true
-        extension-configs[2]:
-          data-id: swagger.yml
-          group: PIKA
-          refresh: true
+        extension-configs:
+          - data-id: redis.yml
+            group: PIKA
+            refresh: true
+          - data-id: leaf.yml
+            group: PIKA
+            refresh: true
+          - data-id: swagger.yml
+            group: PIKA
+            refresh: true

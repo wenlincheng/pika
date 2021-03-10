@@ -5,9 +5,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DATASOURCE_HOST:127.0.0.1}:3306/pika_upms?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT%2b8
-    username: ${DATASOURCE_USERNAME:root}
-    password: ${DATASOURCE_PASSWORD:123456}
+    url: jdbc:mysql://127.0.0.1:3306/pika_upms?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT%2b8
+    username: root
+    password: 123456
     # 数据库连接池
     druid:
       filters: stat
@@ -44,24 +44,24 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: ${SENTINEL_DASHBOARD_HOST:127.0.0.1}:${SENTINEL_DASHBOARD_PORT:8858}
-        port: ${SENTINEL_PORT:8719}
+        dashboard: 127.0.0.1:8858
+        port: 8719
       datasource:
         ds1:
           # 将限流规则持久化进nacos配置中心
           nacos:
-            server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
+            server-addr: 127.0.0.1:8848
             dataId: pika-upms-sentinel
             groupId: PIKA
             data-type: json
             rule-type: flow
-            username: ${REGISTER_USERNAME:nacos}
-            password: ${REGISTER_PASSWORD:nacos}
+            username: nacos
+            password: nacos
     # 分布式消息
     stream:
       rocketmq:
         binder:
-          name-server: ${ROCKET_MQ_HOST:127.0.0.1}:${ROCKET_MQ_PORT:9876}
+          name-server: 127.0.0.1:9876
 
     # 消息总线
     bus:

@@ -12,21 +12,15 @@ spring:
         username: ${REGISTER_USERNAME:nacos}
         password: ${REGISTER_PASSWORD:nacos}
         # 公共配置
-        shared-configs[0]:
-          data-id: spring.yml
-          group: PIKA
-          refresh: true
-        shared-configs[1]:
-          data-id: logback.yml
-          group: PIKA
-          refresh: true
+        shared-configs:
+          - data-id: spring.yml
+            group: PIKA
+            refresh: true
+          - data-id: logback.yml
+            group: PIKA
+            refresh: true
         # 扩展配置
-        extension-configs[0]:
-          data-id: redis.yml
-          group: PIKA
-          refresh: true
-
-# logstash
-logstash:
-  host: ${LOGSTASH_HOST:127.0.0.1}
-  port: ${LOGSTASH_PORT:5044}
+        extension-configs:
+          - data-id: redis.yml
+            group: PIKA
+            refresh: true

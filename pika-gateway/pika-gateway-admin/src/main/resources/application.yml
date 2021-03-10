@@ -6,25 +6,25 @@ spring:
     sentinel:
       transport:
         # Sentinel控制台
-        dashboard: ${SENTINEL_DASHBOARD_HOST:127.0.0.1}:${SENTINEL_DASHBOARD_PORT:8858}
+        dashboard: 127.0.0.1:8858
         # 在应用对应的机器上启动一个 Http Server，该 Server 会与 Sentinel 控制台做交互
-        port: ${SENTINEL_PORT:8719}
+        port: 8719
       datasource:
         ds1:
           # 将限流规则持久化进nacos配置中心
           nacos:
-            server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
+            server-addr: 127.0.0.1:8848
             dataId: pika-gateway-admin-sentinel
             groupId: PIKA
             data-type: json
             rule-type: flow
-            username: ${REGISTER_USERNAME:nacos}
-            password: ${REGISTER_PASSWORD:nacos}
+            username: nacos
+            password: nacos
     # 分布式消息
     stream:
       rocketmq:
         binder:
-          name-server: ${ROCKET_MQ_HOST:127.0.0.1}:${ROCKET_MQ_PORT:9876}
+          name-server: 127.0.0.1:9876
     # 消息总线
     bus:
       id: ${spring.application.name}:${server.port}
