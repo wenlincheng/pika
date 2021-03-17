@@ -171,6 +171,11 @@ docker-compose -f docker-compose-init.yml up -d
  cd ../docker-compose
  docker-compose -f docker-compose-base.yml -f docker-compose-elk.yml -f docker-compose-app.yml up -d pika-gateway-admin
  ```
+
+可在启动的时候添加以下环境变量，获取提供的测试环境配置进行运行，查看项目效果
+```
+REGISTER_HOST=122.51.153.231;REGISTER_NAMESPACE=test
+```
  
 ### 日志收集分析（Elastic Stack）
 
