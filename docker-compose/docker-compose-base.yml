@@ -34,13 +34,29 @@ services:
     restart: always
     links:
       - mysql
+    depends_on:
+      - mysql
     networks:
       - pika-net
     ports:
       - 8848:8848
-    env_file: ./env/nacos-standlone-mysql.env
     volumes:
       - ../logs/nacos:/home/nacos/logs
+    environment:
+      - PREFER_HOST_MODE=hostname
+      # 单机模式
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      # mysql主机名称（可以直接ping通mysql容器的ip）
+      - MYSQL_SERVICE_HOST=mysql
+      # nacos使用的数据库名称
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=123456
+      # 是否使用授权（为true时，需要登录才能操作里面的功能）
+      - NACOS_AUTH_ENABLE=true
+      - NACOS_AUTH_TOKEN_EXPIRE_SECONDS=36000
   # RabbitMQ
   rabbitmq:
     image: rabbitmq:3.8.3-management
@@ -120,7 +136,7 @@ services:
       - ../data/zookeeper:/data
       - ../logs/zookeeper:/datalog
     ports:
-      - "2181:2181"
+      - 2181:2181
     environment:
       ZOO_MY_ID: 1
     networks:
