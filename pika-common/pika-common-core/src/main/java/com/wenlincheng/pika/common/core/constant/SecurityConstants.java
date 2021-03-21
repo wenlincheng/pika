@@ -87,4 +87,9 @@ public class SecurityConstants {
     public static final String DATA = "data";
     public static final String TIME = "time";
 
+    /**
+     * 验证码
+     */
+    public static String VALIDATE_CODE_REDIS_KEY = "pika-auth:validate_code:";
+
 }
