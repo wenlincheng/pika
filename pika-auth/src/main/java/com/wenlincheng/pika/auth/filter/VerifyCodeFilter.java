@@ -38,7 +38,7 @@ public class VerifyCodeFilter extends OncePerRequestFilter {
         return new VerifyCodeFilter();
     }
     @Autowired
-    LoginFailureHandler myAuthenticationFailureHandler;
+    LoginFailureHandler loginFailureHandler;
     @Autowired
     private RedisUtils redisUtils;
 
@@ -67,7 +67,7 @@ public class VerifyCodeFilter extends OncePerRequestFilter {
                 }
                 redisUtils.delete(VALIDATE_CODE_REDIS_KEY + uuid);
             } catch (AuthenticationException e) {
-                myAuthenticationFailureHandler.onAuthenticationFailure(request, response, e);
+                loginFailureHandler.onAuthenticationFailure(request, response, e);
             } finally {
                 filterChain.doFilter(request, response);
             }

@@ -110,6 +110,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             registry.antMatchers(url).permitAll();
         }
 
+        // TODO 过滤器有问题 PikaUsernamePasswordAuthenticationFilter 无法 获取请求参数
         http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class)
             // 添加jtw鉴权过滤器
             .addFilterAt(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
