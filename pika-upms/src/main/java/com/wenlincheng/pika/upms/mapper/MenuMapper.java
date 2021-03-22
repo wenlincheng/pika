@@ -1,7 +1,7 @@
 package com.wenlincheng.pika.upms.mapper;
 
-import com.wenlincheng.pika.upms.entity.po.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wenlincheng.pika.upms.entity.po.Menu;
 
 /**
  * <p>

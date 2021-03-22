@@ -1,8 +1,11 @@
 package com.wenlincheng.pika.upms;
 
+import com.wenlincheng.pika.upms.entity.po.Menu;
 import com.wenlincheng.pika.upms.entity.vo.region.RegionDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.region.RegionListVO;
+import com.wenlincheng.pika.upms.service.MenuService;
 import com.wenlincheng.pika.upms.service.RegionService;
+import junit.framework.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,9 @@ class PikaUpmsApplicationTests {
 	@Autowired
 	private RegionService areaService;
 
+	@Autowired
+	private MenuService menuService;
+
 	@Test
 	public void getAreaByLevel() {
 		List<RegionListVO> list = areaService.getAreaListByLevel(1);
@@ -43,6 +49,14 @@ class PikaUpmsApplicationTests {
 	public void getAreaDetailById() {
 		RegionDetailVO areaDetail = areaService.getAreaDetailById(110000L);
 		System.out.println(areaDetail.getFullName());
+	}
+
+    @Test
+	public void addMenu() {
+		Menu menu = new Menu();
+		menu.setName("ddddd");
+		boolean save = menuService.save(menu);
+		Assert.assertEquals(true, save);
 	}
 
 }
