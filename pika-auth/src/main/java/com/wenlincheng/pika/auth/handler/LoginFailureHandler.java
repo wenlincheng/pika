@@ -57,7 +57,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
         if (e instanceof UsernameNotFoundException) {
-            ResponseUtil.out(response, Result.fail(LOGIN_FAIL, e.getMessage()));
+            ResponseUtil.out(response, Result.fail(LOGIN_FAIL, LOGIN_FAIL.getMsg() + "，" +e.getMessage()));
         } else if (e instanceof ValidateCodeException){
             // 验证码错误
             ResponseUtil.out(response, Result.fail(VALIDATE_CODE_ERROR, e.getMessage()));
@@ -89,7 +89,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
                 int restLoginTime = loginTimeLimit - loginFailTime;
                 ResponseUtil.out(response, Result.fail(BAD_CREDENTIALS, BAD_CREDENTIALS.getMsg() + "，可再尝试"+ restLoginTime +"次"));
             }
-            ResponseUtil.out(response, Result.fail(USER_LIMIT_TIME_UP, USER_LIMIT_TIME_UP.getMsg() + "，"+loginAfterTime + "分钟后尝试"));
+            ResponseUtil.out(response, Result.fail(USER_LIMIT_TIME_UP, USER_LIMIT_TIME_UP.getMsg() + "，"+loginAfterTime + "分钟后再试"));
         } else {
             ResponseUtil.out(response, Result.fail(LOGIN_FAIL));
         }

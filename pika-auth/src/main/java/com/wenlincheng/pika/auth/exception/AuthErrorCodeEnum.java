@@ -33,12 +33,12 @@ public enum AuthErrorCodeEnum implements ErrorCode {
     USER_LOCKED(ErrorTypeEnum.BIZ_ERROR,20101, "账户被锁定"),
     CREDENTIALS_EXPIRED(ErrorTypeEnum.BIZ_ERROR,20101, "密码过期"),
     ACCOUNT_EXPIRED(ErrorTypeEnum.BIZ_ERROR,20101, "账户过期"),
-    USERNAME_PASSWORD_WRONG(ErrorTypeEnum.BIZ_ERROR,20102, "用户名密码错误"),
+    USERNAME_PASSWORD_WRONG(ErrorTypeEnum.BIZ_ERROR,20102, "用户名或密码错误"),
     USER_LIMIT_TIME_UP(ErrorTypeEnum.BIZ_ERROR,20103, "登录次数超过限制"),
     VALIDATE_CODE_ERROR(ErrorTypeEnum.BIZ_ERROR,20104, "验证码输入错误"),
     ROLE_NOT_FOUND(ErrorTypeEnum.BIZ_ERROR,20200, "角色未找到"),
     LOGIN_FAIL(ErrorTypeEnum.BIZ_ERROR,20300, "登录失败"),
-    BAD_CREDENTIALS(ErrorTypeEnum.BIZ_ERROR,203001, "用户名密码错误"),
+    BAD_CREDENTIALS(ErrorTypeEnum.BIZ_ERROR,203001, "用户名或密码错误"),
     ;
 
     private ErrorTypeEnum type;
