@@ -3,6 +3,7 @@ package com.wenlincheng.pika.auth.handler;
 import com.wenlincheng.pika.auth.exception.ValidateCodeException;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.auth.utils.ResponseUtil;
+import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,22 +57,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
         if (e instanceof UsernameNotFoundException) {
-            Object username = request.getAttribute("username");
-            // 判断登录错误次数是否用完
-            boolean loginTimeUp = recordLoginTime((String) username);
-            if (loginTimeUp) {
-                String key = LOGIN_TIME_LIMIT_REDIS_PREFIX + username;
-                String value = redisUtils.get(key);
-                if (StringUtils.isBlank(value)) {
-                    value = "0";
-                }
-                // 获取已登录错误次数
-                int loginFailTime = Integer.parseInt(value);
-                // 剩余登录次数
-                int restLoginTime = loginTimeLimit - loginFailTime;
-                ResponseUtil.out(response, Result.fail(USERNAME_PASSWORD_WRONG, "用户名或密码错误，可再尝试"+ restLoginTime +"次"));
-            }
-            ResponseUtil.out(response, Result.fail(USER_LIMIT_TIME_UP, e.getMessage()));
+            ResponseUtil.out(response, Result.fail(LOGIN_FAIL, e.getMessage()));
         } else if (e instanceof ValidateCodeException){
             // 验证码错误
             ResponseUtil.out(response, Result.fail(VALIDATE_CODE_ERROR, e.getMessage()));
@@ -88,7 +74,22 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
             // 账户过期
             ResponseUtil.out(response, Result.fail(ACCOUNT_EXPIRED));
         } else if (e instanceof BadCredentialsException) {
-            ResponseUtil.out(response, Result.fail(BAD_CREDENTIALS));
+            Object username = request.getAttribute("username");
+            // 判断登录错误次数是否用完
+            boolean loginTimeUp = recordLoginTime((String) username);
+            if (loginTimeUp) {
+                String key = LOGIN_TIME_LIMIT_REDIS_PREFIX + username;
+                String value = redisUtils.get(key);
+                if (StringUtils.isBlank(value)) {
+                    value = "0";
+                }
+                // 获取已登录错误次数
+                int loginFailTime = Integer.parseInt(value);
+                // 剩余登录次数
+                int restLoginTime = loginTimeLimit - loginFailTime;
+                ResponseUtil.out(response, Result.fail(BAD_CREDENTIALS, BAD_CREDENTIALS.getMsg() + "，可再尝试"+ restLoginTime +"次"));
+            }
+            ResponseUtil.out(response, Result.fail(USER_LIMIT_TIME_UP, USER_LIMIT_TIME_UP.getMsg() + "，"+loginAfterTime + "分钟后尝试"));
         } else {
             ResponseUtil.out(response, Result.fail(LOGIN_FAIL));
         }
