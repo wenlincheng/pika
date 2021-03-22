@@ -20,7 +20,7 @@ public class AuthServiceFallbackFactory implements FallbackFactory<AuthService> 
     public AuthService create(Throwable throwable) {
         return (token, uri, method) -> {
             log.error("鉴权失败 {} ", throwable.getMessage());
-            return Result.success(null);
+            return Result.fail();
         };
     }
 }

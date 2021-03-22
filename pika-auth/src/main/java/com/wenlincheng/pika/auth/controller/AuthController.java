@@ -1,21 +1,25 @@
 package com.wenlincheng.pika.auth.controller;
 
 import com.wenlincheng.pika.auth.entity.AuthUser;
+import com.wenlincheng.pika.auth.entity.ValidateCode;
 import com.wenlincheng.pika.auth.service.AuthService;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.constant.SecurityConstants;
 import com.wenlincheng.pika.common.core.exception.PikaException;
+import com.wenlincheng.pika.common.core.redis.RedisUtils;
+import com.wenlincheng.pika.common.core.util.UUIDUtils;
+import com.wf.captcha.ArithmeticCaptcha;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import java.util.concurrent.TimeUnit;
+
+import static com.wenlincheng.pika.common.core.constant.SecurityConstants.VALIDATE_CODE_REDIS_KEY;
 
 
 /**
@@ -32,6 +36,8 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+    @Autowired
+    private RedisUtils redisUtils;
 
     /**
      * 用户退出登录
@@ -80,6 +86,15 @@ public class AuthController {
         return Result.success(authUser);
     }
 
+    /**
+     * 获取验证码
+     *
+     * @return Result<ValidateCode>
+     */
+    @GetMapping(value = "/code")
+    public Result<ValidateCode> getValidateCodeCode() {
+        return Result.success(authService.getValidateCode());
+    }
 
     public static void main(String[] args) {
         String password = "123456";

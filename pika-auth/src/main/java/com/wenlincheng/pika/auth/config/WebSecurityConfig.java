@@ -1,10 +1,7 @@
 package com.wenlincheng.pika.auth.config;
 
 import com.wenlincheng.pika.auth.feign.api.PermissionService;
-import com.wenlincheng.pika.auth.filter.JWTAuthenticationFilter;
-import com.wenlincheng.pika.auth.filter.PikaFilterSecurityInterceptor;
-import com.wenlincheng.pika.auth.filter.PikaUsernamePasswordAuthenticationFilter;
-import com.wenlincheng.pika.auth.filter.WebSecurityCorsFilter;
+import com.wenlincheng.pika.auth.filter.*;
 import com.wenlincheng.pika.auth.handler.EntryPointUnauthorizedHandler;
 import com.wenlincheng.pika.auth.handler.RestAccessDeniedHandler;
 import com.wenlincheng.pika.auth.service.impl.UserDetailsServiceImpl;
@@ -19,6 +16,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -39,36 +37,28 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     protected AuthenticationManager authenticationManager;
-
     @Autowired
     private JwtTokenManager tokenProvider;
-
-    @Autowired
-    private RedisUtils redisUtils;
-
     @Autowired
     private AuthIgnoredUrisProperties authIgnoredUrlsProperties;
-
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
     @Autowired
     private AuthenticationSuccessHandler successHandler;
-
     @Autowired
     private AuthenticationFailureHandler failHandler;
-
     @Autowired
     private RestAccessDeniedHandler accessDeniedHandler;
-
     @Autowired
     private EntryPointUnauthorizedHandler entryPointUnauthorizedHandler;
-
     @Autowired
     private PikaFilterSecurityInterceptor filterSecurityInterceptor;
-
+    @Autowired
+    private VerifyCodeFilter verifyCodeFilter;
     @Autowired
     private PermissionService permissionService;
+    @Autowired
+    private RedisUtils redisUtils;
 
     @Bean
     public AuthenticationProvider daoAuthenticationProvider() {
@@ -97,6 +87,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    // @Override
+    // public void configure(WebSecurity web) throws Exception {
+    //     web.ignoring().antMatchers("/auth/code/**","/login/v1","/auth/token/**", "/auth/logout");
+    // }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         PikaUsernamePasswordAuthenticationFilter authenticationFilter = new PikaUsernamePasswordAuthenticationFilter();
@@ -115,7 +110,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             registry.antMatchers(url).permitAll();
         }
 
-        http
+        // TODO 过滤器有问题 PikaUsernamePasswordAuthenticationFilter 无法 获取请求参数
+        http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class)
             // 添加jtw鉴权过滤器
             .addFilterAt(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             //.addFilterAt(filterSecurityInterceptor, FilterSecurityInterceptor.class)

@@ -30,11 +30,15 @@ public enum AuthErrorCodeEnum implements ErrorCode {
     AUTHORITY_EMPTY(ErrorTypeEnum.BIZ_ERROR,20409, "认证失败，用户未分配权限"),
     USER_NOT_FOUND(ErrorTypeEnum.BIZ_ERROR,20100, "用户不存在"),
     USER_DISABLED(ErrorTypeEnum.BIZ_ERROR,20101, "账户被禁用"),
+    USER_LOCKED(ErrorTypeEnum.BIZ_ERROR,20101, "账户被锁定"),
+    CREDENTIALS_EXPIRED(ErrorTypeEnum.BIZ_ERROR,20101, "密码过期"),
+    ACCOUNT_EXPIRED(ErrorTypeEnum.BIZ_ERROR,20101, "账户过期"),
     USERNAME_PASSWORD_WRONG(ErrorTypeEnum.BIZ_ERROR,20102, "用户名或密码错误"),
     USER_LIMIT_TIME_UP(ErrorTypeEnum.BIZ_ERROR,20103, "登录错误次数超过限制"),
+    VALIDATE_CODE_ERROR(ErrorTypeEnum.BIZ_ERROR,20104, "验证码输入错误，请重新输入"),
     ROLE_NOT_FOUND(ErrorTypeEnum.BIZ_ERROR,20200, "角色未找到"),
     LOGIN_FAIL(ErrorTypeEnum.BIZ_ERROR,20300, "登录失败"),
-    BAD_CREDENTIALS(ErrorTypeEnum.BIZ_ERROR,203001, "授权失败"),
+    BAD_CREDENTIALS(ErrorTypeEnum.BIZ_ERROR,203001, "用户名密码输入错误,请重新输入"),
     ;
 
     private ErrorTypeEnum type;

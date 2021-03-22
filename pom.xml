@@ -71,6 +71,7 @@
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <powermock.version>2.0.2</powermock.version>
         <seata.version>1.4.0</seata.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
     </properties>
 
     <dependencyManagement>
@@ -379,6 +380,12 @@
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${javax.validation.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${easy-captcha.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

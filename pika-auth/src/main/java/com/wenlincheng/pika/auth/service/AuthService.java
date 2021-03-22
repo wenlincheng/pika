@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.auth.service;
 
 import com.wenlincheng.pika.auth.entity.AuthUser;
+import com.wenlincheng.pika.auth.entity.ValidateCode;
 import io.jsonwebtoken.JwtException;
 
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -40,4 +41,11 @@ public interface AuthService {
      * @return AuthUser
      */
     AuthUser authDecide(HttpServletRequestWrapper requestWrapper, String uri, String method) throws JwtException;
+
+    /**
+     * 获取验证码
+     *
+     * @return ValidateCode
+     */
+    ValidateCode getValidateCode();
 }

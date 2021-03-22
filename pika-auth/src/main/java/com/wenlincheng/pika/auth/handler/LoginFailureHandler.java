@@ -1,13 +1,13 @@
 package com.wenlincheng.pika.auth.handler;
 
+import com.wenlincheng.pika.auth.exception.ValidateCodeException;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.auth.utils.ResponseUtil;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -46,7 +46,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     private RedisUtils redisUtils;
 
     /**
-     * 用户登陆失败处理类  记录用户登陆错误次数
+     * 用户登陆失败处理
      *
      * @param request
      * @param response
@@ -71,15 +71,26 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
                 int restLoginTime = loginTimeLimit - loginFailTime;
                 ResponseUtil.out(response, Result.fail(USERNAME_PASSWORD_WRONG, "用户名或密码错误，可再尝试"+ restLoginTime +"次"));
             }
-
             ResponseUtil.out(response, Result.fail(USER_LIMIT_TIME_UP, e.getMessage()));
-        } else if (e instanceof DisabledException) {
+        } else if (e instanceof ValidateCodeException){
+            // 验证码错误
+            ResponseUtil.out(response, Result.fail(VALIDATE_CODE_ERROR, e.getMessage()));
+        }else if (e instanceof DisabledException) {
+            // 账户禁用
             ResponseUtil.out(response, Result.fail(USER_DISABLED));
-        }else if (e instanceof BadCredentialsException) {
+        }else if  (e instanceof LockedException) {
+            // 账户锁定
+            ResponseUtil.out(response, Result.fail(USER_LOCKED));
+        } else if (e instanceof CredentialsExpiredException) {
+            // 密码过期
+            ResponseUtil.out(response, Result.fail(CREDENTIALS_EXPIRED));
+        } else if (e instanceof AccountExpiredException) {
+            // 账户过期
+            ResponseUtil.out(response, Result.fail(ACCOUNT_EXPIRED));
+        } else if (e instanceof BadCredentialsException) {
             ResponseUtil.out(response, Result.fail(BAD_CREDENTIALS));
         } else {
             ResponseUtil.out(response, Result.fail(LOGIN_FAIL));
-
         }
     }
     /**

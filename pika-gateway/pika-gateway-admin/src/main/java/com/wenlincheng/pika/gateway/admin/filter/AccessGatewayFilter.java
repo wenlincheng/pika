@@ -69,15 +69,17 @@ public class AccessGatewayFilter implements GlobalFilter {
         }
         // 3、调用鉴权服务判断用户是否有权限，若有权限则放行
         AuthUser authUser = authDecide(token, uri, method);
-        if (Objects.nonNull(authUser)) {
+        Result<AuthUser> authResult = authService.authDecide(token, uri, method);
+        if (Objects.nonNull(authResult.getData())) {
             Consumer<HttpHeaders> httpHeaders = httpHeader -> {
-                httpHeader.set(X_CLIENT_TOKEN, "添加服务间的认证");
+                // TODO 添加服务间的认证
+                httpHeader.set(X_CLIENT_TOKEN, "");
                 httpHeader.set(X_CLIENT_TOKEN_USER, JSON.toJSONString(authUser));
             };
             ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(httpHeaders).build();
             return chain.filter(exchange.mutate().request(serverHttpRequest).build());
         }
-        return unauthorized(exchange);
+        return unauthorizedResult(exchange, authResult);
     }
 
     /**
@@ -91,7 +93,23 @@ public class AccessGatewayFilter implements GlobalFilter {
                 .wrap(JSON.toJSONString(Result.fail(GatewayErrorCodeEnum.GATEWAY_UNAUTHORIZED))
                 .getBytes(StandardCharsets.UTF_8));
         ServerHttpResponse response = serverWebExchange.getResponse();
-        response.setStatusCode(HttpStatus.UNAUTHORIZED);
+        response.setStatusCode(HttpStatus.OK);
+        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        return response.writeWith(Mono.just(buffer));
+    }
+
+    /**
+     * 网关鉴权失败
+     *
+     * @param serverWebExchange 服务网络交换器
+     * @return reactor.core.publisher.Mono<java.lang.Void>
+     */
+    private Mono<Void> unauthorizedResult(ServerWebExchange serverWebExchange, Result<AuthUser> authResult) {
+        DataBuffer buffer = serverWebExchange.getResponse().bufferFactory()
+                .wrap(JSON.toJSONString(authResult)
+                        .getBytes(StandardCharsets.UTF_8));
+        ServerHttpResponse response = serverWebExchange.getResponse();
+        response.setStatusCode(HttpStatus.OK);
         response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         return response.writeWith(Mono.just(buffer));
     }
@@ -116,6 +134,7 @@ public class AccessGatewayFilter implements GlobalFilter {
      */
     public AuthUser authDecide(String token, String uri, String method) {
         Result<AuthUser> authResult = authService.authDecide(token, uri, method);
+        System.out.println(authResult);
         return authResult.getData();
     }
 

@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.auth.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.wenlincheng.pika.auth.entity.ValidateCode;
 import com.wenlincheng.pika.auth.feign.api.PermissionService;
 import com.wenlincheng.pika.auth.feign.api.UserService;
 import com.wenlincheng.pika.auth.feign.dto.Permission;
@@ -14,6 +15,8 @@ import com.wenlincheng.pika.common.core.constant.SecurityConstants;
 import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.exception.SystemErrorCodeEnum;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
+import com.wenlincheng.pika.common.core.util.UUIDUtils;
+import com.wf.captcha.ArithmeticCaptcha;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -37,6 +40,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.wenlincheng.pika.auth.exception.AuthErrorCodeEnum.USER_NOT_FOUND;
 import static com.wenlincheng.pika.common.core.constant.SecurityConstants.PERMISSIONS_REDIS_KEY;
+import static com.wenlincheng.pika.common.core.constant.SecurityConstants.VALIDATE_CODE_REDIS_KEY;
 
 /**
  * 提供给网关的鉴权接口
@@ -120,6 +124,19 @@ public class AuthServiceImpl implements AuthService {
             throw PikaException.construct(AuthErrorCodeEnum.UNAUTHORIZED).build();
         }
         return getUserInfo(authentication.getName());
+    }
+
+    @Override
+    public ValidateCode getValidateCode() {
+        String uuid = UUIDUtils.getUUID(16);
+        ArithmeticCaptcha captcha = new ArithmeticCaptcha(120, 49);
+        // 几位数运算，默认是两位
+        captcha.setLen(2);
+        redisUtils.setEx(VALIDATE_CODE_REDIS_KEY + uuid, captcha.text(), 5, TimeUnit.MINUTES);
+        ValidateCode validateCode = new ValidateCode();
+        validateCode.setUuid(uuid);
+        validateCode.setCodeImg(captcha.toBase64());
+        return validateCode;
     }
 
     /**
