@@ -42,7 +42,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private RedisUtils redisUtils;
-
     @Autowired
     private UserService userService;
     @Autowired

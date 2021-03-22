@@ -22,9 +22,11 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.InvalidKeyException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -44,21 +46,23 @@ import java.util.concurrent.TimeUnit;
  * @date 2021/1/1 10:10 上午
  */
 @Slf4j
+@Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String FILTER_APPLIED = "__spring_security_JWTAuthenticationFilter_filterApplied";
 
-    private final JwtTokenManager tokenManager;
+    @Autowired
+    private JwtTokenManager tokenManager;
+    @Autowired
+    private RedisUtils redisUtils;
+    @Autowired
+    private PermissionService permissionService;
 
-    private final RedisUtils redisUtils;
-
-    private final PermissionService permissionService;
-
-    public JWTAuthenticationFilter(JwtTokenManager tokenManager, RedisUtils redisUtils, PermissionService permissionService) {
-        this.tokenManager = tokenManager;
-        this.redisUtils = redisUtils;
-        this.permissionService = permissionService;
-    }
+    // public JWTAuthenticationFilter(JwtTokenManager tokenManager, RedisUtils redisUtils, PermissionService permissionService) {
+    //     this.tokenManager = tokenManager;
+    //     this.redisUtils = redisUtils;
+    //     this.permissionService = permissionService;
+    // }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
