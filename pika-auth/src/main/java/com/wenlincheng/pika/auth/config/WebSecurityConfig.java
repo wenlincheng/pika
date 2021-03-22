@@ -51,8 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private EntryPointUnauthorizedHandler entryPointUnauthorizedHandler;
     @Autowired
     private PikaFilterSecurityInterceptor filterSecurityInterceptor;
-    // @Autowired
-    // private PermissionService permissionService;
     @Autowired
     private JWTAuthenticationFilter jwtAuthenticationFilter;
     @Autowired
