@@ -15,7 +15,7 @@ import lombok.Getter;
 public enum AuthErrorCodeEnum implements ErrorCode {
     AUTHORIZED_ERROR(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败"),
     LOGIN_ERROR(ErrorTypeEnum.BIZ_ERROR,20401, "登陆失败，用户名或密码错误"),
-    NO_TOKEN(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败，缺少头部令牌"),
+    NO_TOKEN(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败，缺少令牌"),
     TOKEN_MALFORMED(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败，令牌格式错误"),
     TOKEN_UNSUPPORTED(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败，不支持的令牌"),
     TOKEN_CREATE_FAILED(ErrorTypeEnum.BIZ_ERROR,20401, "登录失败，无法创建令牌"),
