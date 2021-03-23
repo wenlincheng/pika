@@ -1,11 +1,12 @@
 package com.wenlincheng.pika.auth.config;
 
-import com.wenlincheng.pika.auth.feign.api.PermissionService;
-import com.wenlincheng.pika.auth.filter.*;
+import com.wenlincheng.pika.auth.filter.JWTAuthenticationFilter;
+import com.wenlincheng.pika.auth.filter.PikaFilterSecurityInterceptor;
+import com.wenlincheng.pika.auth.filter.PikaUsernamePasswordAuthenticationFilter;
+import com.wenlincheng.pika.auth.filter.WebSecurityCorsFilter;
 import com.wenlincheng.pika.auth.handler.EntryPointUnauthorizedHandler;
 import com.wenlincheng.pika.auth.handler.RestAccessDeniedHandler;
 import com.wenlincheng.pika.auth.service.impl.UserDetailsServiceImpl;
-import com.wenlincheng.pika.auth.manager.JwtTokenManager;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -38,8 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     protected AuthenticationManager authenticationManager;
     @Autowired
-    private JwtTokenManager tokenProvider;
-    @Autowired
     private AuthIgnoredUrisProperties authIgnoredUrlsProperties;
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -54,9 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PikaFilterSecurityInterceptor filterSecurityInterceptor;
     @Autowired
-    private VerifyCodeFilter verifyCodeFilter;
-    @Autowired
-    private PermissionService permissionService;
+    private JWTAuthenticationFilter jwtAuthenticationFilter;
     @Autowired
     private RedisUtils redisUtils;
 
@@ -94,26 +90,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        PikaUsernamePasswordAuthenticationFilter authenticationFilter = new PikaUsernamePasswordAuthenticationFilter();
-        // 设置登入处理方式
-        authenticationFilter.setAuthenticationManager(authenticationManager);
-        // 设置登陆成功处理
-        authenticationFilter.setAuthenticationSuccessHandler(successHandler);
-        // 设置登入失败处理
-        authenticationFilter.setAuthenticationFailureHandler(failHandler);
-        // jwt鉴权过滤器
-        JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter(tokenProvider, redisUtils, permissionService);
-
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
+        // 登录认证过滤器
+        PikaUsernamePasswordAuthenticationFilter authenticationFilter = new PikaUsernamePasswordAuthenticationFilter(authenticationManager, successHandler, failHandler, redisUtils);
         // 除配置文件忽略路径其它所有请求都需经过认证和授权
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
         for(String url: authIgnoredUrlsProperties.getUris()) {
             registry.antMatchers(url).permitAll();
         }
 
-        // TODO 过滤器有问题 PikaUsernamePasswordAuthenticationFilter 无法 获取请求参数
-        http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        http
             // 添加jtw鉴权过滤器
             .addFilterAt(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            // 权限管理过滤器 网关通过调用服务鉴权 所以这里注释掉
             //.addFilterAt(filterSecurityInterceptor, FilterSecurityInterceptor.class)
             // 添加自定义权限过滤器
             .addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class)

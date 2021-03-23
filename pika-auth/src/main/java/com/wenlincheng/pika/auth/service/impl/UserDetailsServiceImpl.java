@@ -15,6 +15,7 @@ import com.wenlincheng.pika.common.core.util.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.wenlincheng.pika.auth.exception.AuthErrorCodeEnum.ROLE_EMPTY;
+import static com.wenlincheng.pika.auth.exception.AuthErrorCodeEnum.USER_LIMIT_TIME_UP;
 
 /**
  * 实现用户信息获取接口
@@ -42,7 +44,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private RedisUtils redisUtils;
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -62,8 +63,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 登录失败次数超过限制
         String loginFail = SecurityConstants.LOGIN_FAIL_FLAG_REDIS_PREFIX + username;
         String value = redisUtils.get(loginFail);
-        if(StringUtils.isNotBlank(value)){
-            throw new UsernameNotFoundException("登录错误次数超过限制，请"+loginAfterTime+"分钟后再试");
+        if (StringUtils.isNotBlank(value)) {
+            throw new UsernameNotFoundException(loginAfterTime+"分钟后再试");
         }
         // 查询用户信息
         User user = userService.getUserByUsername(username).getData();

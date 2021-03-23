@@ -15,7 +15,7 @@ import lombok.Getter;
 public enum AuthErrorCodeEnum implements ErrorCode {
     AUTHORIZED_ERROR(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败"),
     LOGIN_ERROR(ErrorTypeEnum.BIZ_ERROR,20401, "登陆失败，用户名或密码错误"),
-    NO_TOKEN(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败，缺少头部令牌"),
+    NO_TOKEN(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败，缺少令牌"),
     TOKEN_MALFORMED(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败，令牌格式错误"),
     TOKEN_UNSUPPORTED(ErrorTypeEnum.BIZ_ERROR,20401, "认证失败，不支持的令牌"),
     TOKEN_CREATE_FAILED(ErrorTypeEnum.BIZ_ERROR,20401, "登录失败，无法创建令牌"),
@@ -34,11 +34,11 @@ public enum AuthErrorCodeEnum implements ErrorCode {
     CREDENTIALS_EXPIRED(ErrorTypeEnum.BIZ_ERROR,20101, "密码过期"),
     ACCOUNT_EXPIRED(ErrorTypeEnum.BIZ_ERROR,20101, "账户过期"),
     USERNAME_PASSWORD_WRONG(ErrorTypeEnum.BIZ_ERROR,20102, "用户名或密码错误"),
-    USER_LIMIT_TIME_UP(ErrorTypeEnum.BIZ_ERROR,20103, "登录错误次数超过限制"),
-    VALIDATE_CODE_ERROR(ErrorTypeEnum.BIZ_ERROR,20104, "验证码输入错误，请重新输入"),
+    USER_LIMIT_TIME_UP(ErrorTypeEnum.BIZ_ERROR,20103, "登录次数超过限制"),
+    VALIDATE_CODE_ERROR(ErrorTypeEnum.BIZ_ERROR,20104, "验证码输入错误"),
     ROLE_NOT_FOUND(ErrorTypeEnum.BIZ_ERROR,20200, "角色未找到"),
     LOGIN_FAIL(ErrorTypeEnum.BIZ_ERROR,20300, "登录失败"),
-    BAD_CREDENTIALS(ErrorTypeEnum.BIZ_ERROR,203001, "用户名密码输入错误,请重新输入"),
+    BAD_CREDENTIALS(ErrorTypeEnum.BIZ_ERROR,203001, "用户名或密码错误"),
     ;
 
     private ErrorTypeEnum type;
