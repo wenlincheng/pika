@@ -9,6 +9,8 @@ import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.common.core.util.UUIDUtils;
 import com.wf.captcha.ArithmeticCaptcha;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +31,14 @@ import static com.wenlincheng.pika.common.core.constant.SecurityConstants.VALIDA
  * @version 1.0.0
  * @date 2021/1/1 10:10 上午
  */
-@RestController
 @Slf4j
+@Api(value = "AuthController", tags = "认证鉴权接口")
+@RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
-    @Autowired
-    private RedisUtils redisUtils;
 
     /**
      * 用户退出登录
@@ -45,6 +46,7 @@ public class AuthController {
      * @param request   请求
      * @return Result<Boolean>
      */
+    @ApiOperation(value = "退出登录", notes = "退出登录", httpMethod = "GET")
     @GetMapping(value = "/token/logout")
     public Result<Boolean> logout(HttpServletRequest request) throws PikaException {
         String token = request.getHeader(SecurityConstants.JWT_TOKEN_HEADER);
@@ -62,6 +64,7 @@ public class AuthController {
      * @param request   请求
      * @return Result<AuthUser>
      */
+    @ApiOperation(value = "鉴权", notes = "请求鉴权获取授权用户信息", httpMethod = "GET")
     @GetMapping(value = "/token/permit")
     public Result<AuthUser> authDecide(HttpServletRequest request, @RequestParam String uri, @RequestParam String method) {
         AuthUser authUser = authService.authDecide(new HttpServletRequestWrapper(request), uri, method);
@@ -74,6 +77,7 @@ public class AuthController {
      * @param request 请求
      * @return Result<AuthUser>
      */
+    @ApiOperation(value = "查询用户信息", notes = "根据令牌查询用户信息", httpMethod = "GET")
     @GetMapping(value = "/token/user/info")
     public Result<AuthUser> getAuthUser(HttpServletRequest request) {
         // 获取请求头中的令牌
@@ -91,6 +95,7 @@ public class AuthController {
      *
      * @return Result<ValidateCode>
      */
+    @ApiOperation(value = "获取验证码", notes = "获取登录验证码", httpMethod = "GET")
     @GetMapping(value = "/code")
     public Result<ValidateCode> getValidateCodeCode() {
         return Result.success(authService.getValidateCode());
