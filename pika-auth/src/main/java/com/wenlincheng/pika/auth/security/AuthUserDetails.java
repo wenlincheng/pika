@@ -59,7 +59,7 @@ public class AuthUserDetails extends AuthUser implements UserDetails {
      */
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return YnEnum.YES.getValue() == this.getAccountNonExpired();
     }
 
     /**
@@ -67,7 +67,7 @@ public class AuthUserDetails extends AuthUser implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return YnEnum.YES.getValue() == this.getAccountNonLocked();
     }
 
     /**
@@ -75,7 +75,7 @@ public class AuthUserDetails extends AuthUser implements UserDetails {
      */
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return YnEnum.YES.getValue() == this.getCredentialsNonExpired();
     }
 
     /**
@@ -83,6 +83,6 @@ public class AuthUserDetails extends AuthUser implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return YnEnum.NO.getValue() != this.getStatus();
+        return YnEnum.YES.getValue() == this.getStatus();
     }
 }

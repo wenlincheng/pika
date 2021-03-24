@@ -38,4 +38,12 @@ public class AuthUser implements Serializable {
     private List<Long> roleIds;
     @ApiModelProperty(value = "权限")
     private List<Permission> permissionList;
+    @ApiModelProperty(value = "是否有效用户 0 否 1 是")
+    private Integer enabled;
+    @ApiModelProperty(value = "账号是否未过期 0 否 1 是")
+    private Integer accountNonExpired;
+    @ApiModelProperty(value = "密码是否未过期 0 否 1 是")
+    private Integer credentialsNonExpired;
+    @ApiModelProperty(value = "是否未锁定 0 否 1 是")
+    private Integer accountNonLocked;
 }

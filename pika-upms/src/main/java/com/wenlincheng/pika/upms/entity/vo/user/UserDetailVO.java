@@ -47,8 +47,16 @@ public class UserDetailVO extends BaseVo<User> {
     private String description;
     @ApiModelProperty(value = "用户类型 1 普通用户 2 管理员 3 官方号 4 马甲号")
     private Integer type;
-    @ApiModelProperty(value = "是否激活 0 否 1 是", required = true)
-    private Integer status;
     @ApiModelProperty(value = "用户角色")
     private Set<Long> roleIds;
+    @ApiModelProperty(value = "是否激活 0 否 1 是")
+    private Integer status;
+    @ApiModelProperty(value = "是否有效用户 0 否 1 是")
+    private Integer enabled;
+    @ApiModelProperty(value = "账号是否未过期 0 否 1 是")
+    private Integer accountNonExpired;
+    @ApiModelProperty(value = "密码是否未过期 0 否 1 是")
+    private Integer credentialsNonExpired;
+    @ApiModelProperty(value = "是否未锁定 0 否 1 是")
+    private Integer accountNonLocked;
 }

@@ -21,10 +21,16 @@ public class User implements Serializable {
     private String name;
     @ApiModelProperty(value = "头像")
     private String avatar;
-    @ApiModelProperty(value = "状态")
-    private Integer status;
     @ApiModelProperty(value = "角色列表")
     private List<Role> roleList;
-    @ApiModelProperty(value = "权限列表")
-    private List<Permission> permissionList;
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+    @ApiModelProperty(value = "是否有效用户 0 否 1 是")
+    private Integer enabled;
+    @ApiModelProperty(value = "账号是否未过期 0 否 1 是")
+    private Integer accountNonExpired;
+    @ApiModelProperty(value = "密码是否未过期 0 否 1 是")
+    private Integer credentialsNonExpired;
+    @ApiModelProperty(value = "是否未锁定 0 否 1 是")
+    private Integer accountNonLocked;
 }
