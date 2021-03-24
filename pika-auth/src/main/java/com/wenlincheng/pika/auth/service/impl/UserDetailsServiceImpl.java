@@ -13,6 +13,7 @@ import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import com.wenlincheng.pika.common.core.util.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -72,10 +73,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("用户不存在");
         }
         AuthUser authUser = new AuthUser();
-        authUser.setId(user.getId());
-        authUser.setUsername(user.getUsername());
-        authUser.setPassword(user.getPassword());
-        authUser.setStatus(user.getStatus());
+        BeanUtils.copyProperties(user, authUser);
         // 查询用户角色列表
         List<Role> roleList = roleService.getRolesByUserId(user.getId()).getData();
         if(CollectionUtils.isEmpty(roleList)){

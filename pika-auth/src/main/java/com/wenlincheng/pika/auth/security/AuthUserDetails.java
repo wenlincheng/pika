@@ -3,6 +3,7 @@ package com.wenlincheng.pika.auth.security;
 import com.wenlincheng.pika.auth.feign.dto.Permission;
 import com.wenlincheng.pika.auth.entity.AuthUser;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,12 +23,7 @@ public class AuthUserDetails extends AuthUser implements UserDetails {
 
     public AuthUserDetails(AuthUser user) {
         if (user != null) {
-            this.setId(user.getId());
-            this.setUsername(user.getUsername());
-            this.setPassword(user.getPassword());
-            this.setStatus(user.getStatus());
-            this.setRoleList(user.getRoleList());
-            this.setPermissionList(user.getPermissionList());
+            BeanUtils.copyProperties(user, this);
         }
     }
 
