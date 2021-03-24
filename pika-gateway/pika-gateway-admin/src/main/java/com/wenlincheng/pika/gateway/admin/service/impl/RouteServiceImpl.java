@@ -34,9 +34,6 @@ public class RouteServiceImpl implements RouteService {
     @Autowired
     private RedisUtils redisUtils;
 
-    @CreateCache(name = GATEWAY_ROUTES_ADMIN, cacheType = CacheType.REMOTE)
-    private Cache<String, RouteDefinition> gatewayRouteCache;
-
     private Map<String, RouteDefinition> routeDefinitions = new HashMap<>();
 
     @PostConstruct
@@ -53,19 +50,6 @@ public class RouteServiceImpl implements RouteService {
             RouteDefinition routeDefinition = JSON.parseObject(routeStr, RouteDefinition.class);
             routeDefinitions.put(routeKey.replace(GATEWAY_ROUTES_ADMIN, StringUtils.EMPTY),routeDefinition);
         });
-
-//        Set<String> gatewayKeyIds = gatewayKeys.stream().map(key -> key.replace(GATEWAY_ROUTES_ADMIN, StringUtils.EMPTY)).collect(Collectors.toSet());
-//        Map<String, RouteDefinition> allRoutes = gatewayRouteCache.getAll(gatewayKeyIds);
-//        // 以下代码原因是，jetcache将RouteDefinition返序列化后，uri发生变化，未初使化，导致路由异常，以下代码是重新初使化uri
-//        allRoutes.values().forEach(routeDefinition -> {
-//            try {
-//                routeDefinition.setUri(new URI(routeDefinition.getUri().toASCIIString()));
-//            } catch (URISyntaxException e) {
-//                log.error("初始化路由异常：", e);
-//            }
-//        });
-//        routeDefinitions.putAll(allRoutes);
-
         log.info("共初始化路由 {} 条", routeDefinitions.size());
     }
 

@@ -54,9 +54,6 @@ import static com.wenlincheng.pika.common.core.constant.CommonRedisKeyConstants.
 @Service
 public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteMapper, GatewayRoute> implements GatewayRouteService {
 
-    @CreateCache(name = GATEWAY_ROUTES_ADMIN, cacheType = CacheType.REMOTE)
-    private Cache<String, RouteDefinition> gatewayRouteCache;
-
     @Autowired
     private RedisUtils redisUtils;
 
