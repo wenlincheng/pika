@@ -38,10 +38,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
     private RedisUtils redisUtils;
-
     @Autowired
     private JwtTokenManager jwtTokenManager;
-
     @Autowired
     private JwtProperties jwtProperties;
 

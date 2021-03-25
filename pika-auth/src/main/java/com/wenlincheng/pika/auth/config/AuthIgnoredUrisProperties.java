@@ -2,9 +2,9 @@ package com.wenlincheng.pika.auth.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +15,7 @@ import java.util.List;
  * @date 2021/1/1 10:10 上午
  */
 @Data
+@RefreshScope
 @Configuration
 @ConfigurationProperties(prefix = "ignored")
 public class AuthIgnoredUrisProperties {

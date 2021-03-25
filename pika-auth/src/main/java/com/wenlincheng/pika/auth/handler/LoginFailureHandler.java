@@ -8,6 +8,7 @@ import com.wenlincheng.pika.common.core.redis.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,6 +31,7 @@ import static com.wenlincheng.pika.auth.exception.AuthErrorCodeEnum.*;
  * @version 1.0.0
  * @date 2021/1/1 10:10 上午
  */
+@RefreshScope
 @Component
 public class LoginFailureHandler implements AuthenticationFailureHandler {
     /**
