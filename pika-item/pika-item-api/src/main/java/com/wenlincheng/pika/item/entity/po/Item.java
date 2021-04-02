@@ -1,20 +1,15 @@
 package com.wenlincheng.pika.item.entity.po;
 
-import java.math.BigDecimal;
-
-import com.baomidou.mybatisplus.annotation.*;
-
-import java.util.Date;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.wenlincheng.pika.common.core.annotation.PikaModel;
-import com.wenlincheng.pika.common.core.base.model.BaseModel;
 import com.wenlincheng.pika.common.core.base.model.CodeModel;
-import com.wenlincheng.pika.common.core.base.model.IdModel;
-import com.wenlincheng.pika.common.core.base.model.VersionCodeModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * <p>
