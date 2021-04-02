@@ -1,7 +1,6 @@
 package com.wenlincheng.pika.schedule;
 
 import lombok.extern.slf4j.Slf4j;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -20,11 +19,9 @@ import org.springframework.util.StopWatch;
  * @date 2021/1/1 10:10 上午
  */
 @Slf4j
-@EnableAsync
-@SpringBootApplication()
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = {"com.wenlincheng.pika.**.client", "com.wenlincheng.pika.common.core.log.feign"})
-@MapperScan("com.wenlincheng.pika.schedule.mapper")
+@SpringBootApplication()
 public class PikaScheduleApplication {
 
     public static void main(String[] args) {

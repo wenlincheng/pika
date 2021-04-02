@@ -23,6 +23,12 @@
             <groupId>com.wenlincheng.pika</groupId>
             <artifactId>pika-common-core</artifactId>
             <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
