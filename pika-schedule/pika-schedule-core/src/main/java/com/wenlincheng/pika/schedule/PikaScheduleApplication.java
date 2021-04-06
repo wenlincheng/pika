@@ -7,7 +7,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.StopWatch;
 
 
@@ -20,7 +19,7 @@ import org.springframework.util.StopWatch;
  */
 @Slf4j
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = {"com.wenlincheng.pika.**.client", "com.wenlincheng.pika.common.core.log.feign"})
+@EnableFeignClients(basePackages = {"com.wenlincheng.pika.**.feign", "com.wenlincheng.pika.common.core.log.feign"})
 @SpringBootApplication()
 public class PikaScheduleApplication {
 

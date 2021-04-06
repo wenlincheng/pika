@@ -1,8 +1,7 @@
-package com.wenlincheng.pika.schedule.client.fallback;
+package com.wenlincheng.pika.schedule.feign.fallback;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
-import com.wenlincheng.pika.schedule.client.ItemService;
-import com.wenlincheng.pika.schedule.client.dto.ItemDetail;
+import com.wenlincheng.pika.schedule.feign.ItemService;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -22,11 +21,6 @@ public class ItemServiceFallbackFactory implements FallbackFactory<ItemService> 
     public ItemService create(Throwable throwable) {
 
         return new ItemService() {
-            @Override
-            public Result<ItemDetail> queryItemDetailById(Long id) {
-                log.error("获取商品详情失败 id:{}, {}, {}", id, throwable.getMessage(), throwable.getStackTrace());
-                return Result.fail();
-            }
 
             @Override
             public Result<Boolean> autoOnSaleById(Long id) {

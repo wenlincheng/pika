@@ -1,8 +1,7 @@
-package com.wenlincheng.pika.schedule.client;
+package com.wenlincheng.pika.schedule.feign;
 
 import com.wenlincheng.pika.common.core.base.vo.Result;
-import com.wenlincheng.pika.schedule.client.dto.ItemDetail;
-import com.wenlincheng.pika.schedule.client.fallback.ItemServiceFallbackFactory;
+import com.wenlincheng.pika.schedule.feign.fallback.ItemServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,15 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @FeignClient(contextId = "itemService", value = "pika-item", fallbackFactory = ItemServiceFallbackFactory.class)
 public interface ItemService {
-
-    /**
-     * 查询商品详情
-     *
-     * @param id 商品id
-     * @return Result<ItemDetail>
-     */
-    @GetMapping("/item/detail/{itemId}")
-    Result<ItemDetail> queryItemDetailById(@PathVariable("itemId") Long id);
 
     /**
      * 商品自动上架定时任务
