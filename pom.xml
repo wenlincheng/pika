@@ -67,7 +67,7 @@
         <drools.version>7.0.0.Final</drools.version>
         <shardingsphere.version>3.1.0</shardingsphere.version>
         <leaf.version>1.0.1-RELEASE</leaf.version>
-        <elasticjob.version>3.0.0-RC1</elasticjob.version>
+        <xxl-job.version>2.3.0</xxl-job.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <powermock.version>2.0.2</powermock.version>
         <seata.version>1.4.0</seata.version>
@@ -353,26 +353,11 @@
                 <version>${leaf.version}</version>
             </dependency>
 
-            <!-- elasticjob -->
+            <!-- xxl-job-core -->
             <dependency>
-                <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                <artifactId>elasticjob-lite-spring-boot-starter</artifactId>
-                <version>${elasticjob.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                <artifactId>elasticjob-error-handler-dingtalk</artifactId>
-                <version>${elasticjob.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                <artifactId>elasticjob-error-handler-wechat</artifactId>
-                <version>${elasticjob.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                <artifactId>elasticjob-error-handler-email</artifactId>
-                <version>${elasticjob.version}</version>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
             </dependency>
 
             <!-- validator -->
@@ -382,6 +367,7 @@
                 <version>${javax.validation.version}</version>
             </dependency>
 
+            <!-- 图形验证码 -->
             <dependency>
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
