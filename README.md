@@ -248,9 +248,19 @@ CREATE TABLE `leaf_alloc` (
 号段模式可以生成趋势递增的ID，是可计算的，不适用于订单ID生成场景，比如竞争对手在两天中午12点分别下单，通过订单id号相减就能大致计算出公司一天的订单量，这个不允许出现的，因此ID的生成不使用号段模式，而是使用Snowflake。
 
 ### 预览
-
 #### 后台管理
 [线上预览](https://www.ternarytree.cn/#/login?redirect=%2Fdashboard)
+
+登录账号 admin/123456
+![登录页](https://img.ternarytree.cn/upload/20210410213606.png)
+
+![首页](https://img.ternarytree.cn/upload/20210410213713.png)
+
+![用户管理](https://img.ternarytree.cn/upload/20210410214200.png)
+
+![角色管理](https://img.ternarytree.cn/upload/20210410214200.png)
+
+![菜单管理](https://img.ternarytree.cn/upload/20210410214402.png)
 
 ### TODO
 - [x] 分布式ID、Code生成
