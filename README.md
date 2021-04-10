@@ -31,7 +31,7 @@
 |pika-merchant|8300|商家中心||
 |pika-platform|8310|平台运营||
 
-#### 电商业务服务能力拆分
+#### 电商业务微服务拆分
  - 用户中心（pika-upms）
      * 员工
      * 部门组织
@@ -256,7 +256,7 @@ CREATE TABLE `leaf_alloc` (
 - [x] 分布式ID、Code生成
 - [x] 集成Seata分布式事务，以及解决服务降级的分布式事务不生效问题
 - [x] 角色管理更新无法自动填充
-- [ ] xxl-job
+- [x] xxl-job
 - [ ] mybatis-plus通用枚举
 - [ ] 消息管理服务（Email、SMS（低）、微信消息模板（低）等）
 - [ ] 网关管理（动态刷新、页面优化）
