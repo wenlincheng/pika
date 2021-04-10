@@ -257,9 +257,13 @@ CREATE TABLE `leaf_alloc` (
 ) ENGINE=InnoDB;
 ```
 
-###### 应用
+###### 应用实例
 
-通过在实体类中增加 `@PikaModel.Code` 注解，实现根据规则自动生成`code`
+通过在实体类中增加 `@PikaModel.Code` 注解，实现根据规则自动生成`code`，需手动在数据库`leaf_alloc`中添加号段记录
+
+```sql
+INSERT INTO `pika_upms`.`leaf_alloc`(`biz_tag`, `max_id`, `step`, `description`, `update_time`) VALUES ('com.wenlincheng.pika.item.entity.po.Item', 13000, 1000, '商品表', '2021-02-07 23:57:25');
+```
 
 ```java
 @Data
@@ -284,6 +288,25 @@ public class Item extends CodeModel<Item> {
 
 #### Snowflake
 号段模式可以生成趋势递增的ID，是可计算的，不适用于订单ID生成场景，比如竞争对手在两天中午12点分别下单，通过订单id号相减就能大致计算出公司一天的订单量，这个不允许出现的，因此ID的生成不使用号段模式，而是使用Snowflake。
+
+```java
+@Component
+public class CustomIdGenerator implements IdentifierGenerator {
+
+    @Autowired
+    private LeafSnowflakeService leafSnowflakeService;
+
+    @Override
+    public Long nextId(Object entity) {
+        // 可以将当前传入的class全类名来作为bizKey,或者提取参数来生成bizKey进行分布式Id调用生成.
+        Class<?> entityClass = entity.getClass();
+        String bizKey = entityClass.getName();
+        // 根据bizKey调用分布式ID生成
+        return leafSnowflakeService.genId(bizKey);
+    }
+}
+
+```
 
 ### 预览
 #### 后台管理
