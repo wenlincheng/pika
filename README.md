@@ -193,6 +193,12 @@ Filebeat --> Logstash --> Elasticsearch --> Kibana
 https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.2.0-linux-x86_64.tar.gz
 ```
 
+###### 配置中心
+```
+logging:
+  config: classpath:logback-file.xml
+```
+
 #### 方案二
 
 如果想降低运维成本，可以通过 Logback 向 Logstash 日志收集端口发送日志，不过会牺牲网络带宽。
@@ -210,7 +216,7 @@ Logback --> Logstash --> Elasticsearch --> Kibana
 </dependency>
 ```
 
-##### logback-spring.xml 配置
+##### logback-logstash.xml 配置
 ```xml
 <!--输出到logstash的appender-->
 <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
@@ -220,7 +226,14 @@ Logback --> Logstash --> Elasticsearch --> Kibana
 </appender>
 ```
 
+###### 配置中心
+```
+logging:
+  config: classpath:logback-logstash.xml
+```
+
 #### Leaf 分布式ID生成服务
+采用美团开源的分布式ID框架Leaf，为了将配置文件由Nacos统一管理，修改了配置的加载方式，可以使用以下仓库
 ##### 构建依赖
 ```
 git clone https://github.com/wenlincheng/Leaf.git
@@ -242,6 +255,31 @@ CREATE TABLE `leaf_alloc` (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`biz_tag`)
 ) ENGINE=InnoDB;
+```
+
+###### 应用
+
+通过在实体类中增加 `@PikaModel.Code` 注解，实现根据规则自动生成`code`
+
+```java
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("item")
+@PikaModel.Code(type = "DATE_ORDERLY_SEQ", prefix = "I", size = 8, format = "yyyyMMdd")
+public class Item extends CodeModel<Item> {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 卖家ID
+     */
+    @TableField("seller_id")
+    private Long sellerId;
+    
+    ......
+}
+
 ```
 
 #### Snowflake
