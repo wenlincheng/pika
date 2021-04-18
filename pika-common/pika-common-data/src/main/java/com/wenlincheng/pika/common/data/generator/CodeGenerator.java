@@ -124,7 +124,7 @@ public class CodeGenerator {
         String[] tableNames = generatorProperties.getTableNames();
         strategy.setInclude(tableNames);
         // 自定义基础的Entity类，公共字段
-        // strategy.setSuperEntityColumns("id");
+        strategy.setSuperEntityColumns("id");
         // 驼峰转连字符
         strategy.setControllerMappingHyphenStyle(true);
         // 表前缀

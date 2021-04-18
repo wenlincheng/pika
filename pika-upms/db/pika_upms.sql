@@ -848,6 +848,39 @@ CREATE TABLE `user_role_rel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='用户和角色关系';
 
 -- ----------------------------
+-- Table structure for dict_type
+-- ----------------------------
+DROP TABLE IF EXISTS `dict_type`;
+CREATE TABLE `dict_type` (
+  `id` bigint(20) NOT NULL COMMENT 'ID',
+  `name` varchar(32) NOT NULL COMMENT '名称',
+  `code` varchar(32) NOT NULL COMMENT '编码',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_user_id` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `update_user_id` bigint(20) DEFAULT NULL COMMENT '更新人',
+  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='数据字典类型';
+
+-- ----------------------------
+-- Table structure for dict_value
+-- ----------------------------
+DROP TABLE IF EXISTS `dict_value`;
+CREATE TABLE `dict_value` (
+  `id` bigint(20) NOT NULL COMMENT 'ID',
+  `dict_type_id` bigint(20) NOT NULL COMMENT '数据字典类型id',
+  `name` varchar(32) NOT NULL COMMENT '字典值名称',
+  `value` varchar(32) NOT NULL COMMENT '字典值',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_user_id` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `update_user_id` bigint(20) DEFAULT NULL COMMENT '更新人',
+  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='数据字典值';
+
+-- ----------------------------
 -- Records of user_role_rel
 -- ----------------------------
 BEGIN;

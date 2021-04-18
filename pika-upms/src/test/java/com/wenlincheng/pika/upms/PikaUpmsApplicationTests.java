@@ -1,8 +1,12 @@
 package com.wenlincheng.pika.upms;
 
+import com.wenlincheng.pika.upms.entity.po.DictType;
+import com.wenlincheng.pika.upms.entity.po.DictValue;
 import com.wenlincheng.pika.upms.entity.po.Menu;
 import com.wenlincheng.pika.upms.entity.vo.region.RegionDetailVO;
 import com.wenlincheng.pika.upms.entity.vo.region.RegionListVO;
+import com.wenlincheng.pika.upms.service.DictTypeService;
+import com.wenlincheng.pika.upms.service.DictValueService;
 import com.wenlincheng.pika.upms.service.MenuService;
 import com.wenlincheng.pika.upms.service.RegionService;
 import junit.framework.Assert;
@@ -30,6 +34,12 @@ class PikaUpmsApplicationTests {
 	@Autowired
 	private MenuService menuService;
 
+	@Autowired
+	private DictTypeService dictTypeService;
+
+	@Autowired
+	private DictValueService dictValueService;
+
 	@Test
 	public void getAreaByLevel() {
 		List<RegionListVO> list = areaService.getAreaListByLevel(1);
@@ -56,6 +66,22 @@ class PikaUpmsApplicationTests {
 		Menu menu = new Menu();
 		menu.setName("ddddd");
 		boolean save = menuService.save(menu);
+		Assert.assertEquals(true, save);
+	}
+
+	@Test
+	public void dictType() {
+		DictType dictType = new DictType();
+		dictType.setCode("uuu").setName("字典类型");
+		boolean save = dictTypeService.save(dictType);
+		Assert.assertEquals(true, save);
+	}
+
+	@Test
+	public void dictValue() {
+		DictValue dictValue = new DictValue();
+		dictValue.setDictTypeId(1383683504771993630L).setName("字典类型值").setValue("AAA");
+		boolean save = dictValueService.save(dictValue);
 		Assert.assertEquals(true, save);
 	}
 
