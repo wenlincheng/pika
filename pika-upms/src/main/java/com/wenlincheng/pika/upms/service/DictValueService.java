@@ -16,4 +16,11 @@ import java.util.List;
  */
 public interface DictValueService extends IService<DictValue> {
 
+    /**
+     * 根据字典类型id查询字典值列表
+     *
+     * @param dictTypeId 字典类型id
+     * @return List<DictValueVO>
+     */
+    List<DictValueVO> getByDictTypeId(Long dictTypeId);
 }

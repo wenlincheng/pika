@@ -57,4 +57,12 @@ public interface DictTypeService extends IService<DictType> {
      * @return java.lang.Boolean
      */
     Boolean deleteDictType(Long id);
+
+    /**
+     * 根据编码查询字典类型及值列表
+     *
+     * @param code 编码
+     * @return DictTypeVO
+     */
+    DictTypeVO getDictTypeByCode(String code);
 }

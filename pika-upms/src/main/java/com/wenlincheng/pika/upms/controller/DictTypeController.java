@@ -32,7 +32,7 @@ import javax.validation.Valid;
  */
 @Slf4j
 @RestController
-@RequestMapping("/dict-type")
+@RequestMapping("/dict")
 public class DictTypeController extends BaseController {
 
     @Autowired
@@ -64,9 +64,16 @@ public class DictTypeController extends BaseController {
 
     @ApiOperation(value = "查询字典类型", notes = "根据id查询字典类型", httpMethod = "GET")
     @GetMapping(value = "/{id}")
-    public Result<DictTypeVO> getRoleDetail(@PathVariable("id") Long id) {
+    public Result<DictTypeVO> getDictDetail(@PathVariable("id") Long id) {
         log.debug("query with id:{}", id);
         return Result.success(dictTypeService.getDictType(id));
+    }
+
+    @ApiOperation(value = "查询字典类型及值列表", notes = "根据code查询字典类型及值列表", httpMethod = "GET")
+    @GetMapping(value = "/code/{code}")
+    public Result<DictTypeVO> getDictDetailByCode(@PathVariable("code") String code) {
+        log.debug("getRoleDetailByCode with code:{}", code);
+        return Result.success(dictTypeService.getDictTypeByCode(code));
     }
 
     @PikaLog(module = "系统管理-数据字典", value = "根据id删除字典类型", method = "deleteDictType")

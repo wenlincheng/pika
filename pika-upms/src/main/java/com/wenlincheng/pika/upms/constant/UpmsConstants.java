@@ -14,4 +14,8 @@ public interface UpmsConstants {
      */
     String INITIAL_PASSWORD = "123456";
 
+    /**
+     * 字典类型缓存前缀
+     */
+    String DICT_TYPE_CACHE_KEY_PREFIX = "pika-upms:dict_type:";
 }
