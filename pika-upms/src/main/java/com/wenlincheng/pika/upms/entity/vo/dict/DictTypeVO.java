@@ -23,6 +23,10 @@ public class DictTypeVO extends BaseVo<DictType> {
 
     private static final long serialVersionUID = -5855316234597065800L;
 
+    public DictTypeVO() {
+        super();
+    }
+
     public DictTypeVO(DictType dictType) {
         super(dictType);
     }

@@ -84,8 +84,12 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
 
     @Override
     public Boolean updateDictType(DictTypeForm dictTypeForm) {
-        DictType dictType = dictTypeForm.toPo(DictType.class);
-        this.updateById(dictType);
+        DictType dictType = this.getById(dictTypeForm.getId());
+        if (Objects.isNull(dictType)) {
+            throw PikaException.construct(QUERY_FAIL).appendMsg("字典类型不存在").build();
+        }
+        DictType dictTypeUpdate = dictTypeForm.toPo(DictType.class);
+        this.updateById(dictTypeUpdate);
         QueryWrapper<DictValue> valueQueryWrapper = new QueryWrapper<>();
         valueQueryWrapper.lambda().eq(DictValue::getDictTypeId, dictTypeForm.getId());
         dictValueService.remove(valueQueryWrapper);
@@ -93,7 +97,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
         if (CollectionUtils.isNotEmpty(dictTypeForm.getDictValueList())) {
             dictTypeForm.getDictValueList().forEach(dictValueForm -> {
                 DictValue dictValue = dictValueForm.toPo(DictValue.class);
-                dictValue.setDictTypeId(dictTypeForm.getId());
+                dictValue.setDictTypeId(dictType.getId());
                 dictValueService.save(dictValue);
             });
         }
