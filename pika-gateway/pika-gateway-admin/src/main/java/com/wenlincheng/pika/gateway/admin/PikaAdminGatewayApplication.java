@@ -1,13 +1,10 @@
 package com.wenlincheng.pika.gateway.admin;
 
-import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
-import com.alicp.jetcache.anno.config.EnableMethodCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.ApplicationPidFileWriter;
-import org.springframework.cloud.bus.jackson.RemoteApplicationEventScan;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -24,10 +21,7 @@ import org.springframework.util.StopWatch;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = {"com.wenlincheng.pika"})
 @EnableCircuitBreaker
-@EnableMethodCache(basePackages = "com.wenlincheng.pika.gateway.admin")
-@EnableCreateCacheAnnotation
-@RemoteApplicationEventScan
-@SpringBootApplication(scanBasePackages = {"com.alicp.jetcache.autoconfigure","com.wenlincheng.pika.gateway.admin"})
+@SpringBootApplication
 public class PikaAdminGatewayApplication {
 
     public static void main(String[] args) {

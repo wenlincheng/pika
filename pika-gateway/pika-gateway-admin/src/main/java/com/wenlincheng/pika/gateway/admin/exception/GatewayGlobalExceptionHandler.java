@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
- * 自动异常处理
- * @author wenlincheng
+ * 全局异常处理
+ *
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 @Slf4j
-public class GatewayExceptionHandler {
+public class GatewayGlobalExceptionHandler {
 
     @ExceptionHandler(value = {NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)

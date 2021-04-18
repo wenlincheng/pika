@@ -23,6 +23,13 @@ import org.springframework.web.reactive.result.view.ViewResolver;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 自动异常配置
+ *
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
+ */
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 @ConditionalOnClass(WebFluxConfigurer.class)
