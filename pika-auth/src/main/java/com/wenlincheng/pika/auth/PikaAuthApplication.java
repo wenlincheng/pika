@@ -20,10 +20,10 @@ import org.springframework.util.StopWatch;
  * @date 2021/1/1 10:10 上午
  */
 @Slf4j
-@SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = {"com.wenlincheng.pika"})
 @EnableWebSecurity
+@SpringBootApplication
 public class PikaAuthApplication {
 
     public static void main(String[] args) {

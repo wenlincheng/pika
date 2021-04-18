@@ -34,7 +34,7 @@ import org.springframework.util.StopWatch;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = {"com.wenlincheng.pika.common.core.log.feign"})
 @MapperScan("com.wenlincheng.pika.upms.mapper")
-@SpringBootApplication(scanBasePackages = {"com.alicp.jetcache.autoconfigure", "com.wenlincheng.pika"})
+@SpringBootApplication()
 public class PikaUpmsApplication {
 
 	public static void main(String[] args) {
