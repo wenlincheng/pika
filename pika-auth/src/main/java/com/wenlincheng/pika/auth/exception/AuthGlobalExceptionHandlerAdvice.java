@@ -22,14 +22,14 @@ import static com.wenlincheng.pika.auth.exception.AuthErrorCodeEnum.TOKEN_EXPIRE
 public class AuthGlobalExceptionHandlerAdvice extends DefaultGlobalExceptionHandlerAdvice {
 
     @ExceptionHandler(value = {UserNotFoundException.class})
-    public Result<?> userNotFound(UserNotFoundException ex) {
-        log.error(ex.getMessage());
-        return Result.fail(ex);
+    public Result<?> userNotFound(UserNotFoundException e) {
+        log.error("msg:{}, exception:{}", e.getMessage(), e);
+        return Result.fail(e);
     }
 
     @ExceptionHandler(value = {ExpiredJwtException.class})
-    public Result<?> tokenExpired(ExpiredJwtException ex) {
-        log.warn(ex.getMessage());
+    public Result<?> tokenExpired(ExpiredJwtException e) {
+        log.error("msg:{}, exception:{}", e.getMessage(), e);
         return Result.fail(TOKEN_EXPIRED);
     }
 }

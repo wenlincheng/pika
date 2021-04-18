@@ -14,13 +14,4 @@ public interface UpmsConstants {
      */
     String INITIAL_PASSWORD = "123456";
 
-    /**
-     * 管理端网关消息总线id
-     */
-    String GATEWAY_ROUTE_ADMIN_BUS_ID = "pika-gateway-admin:8100";
-
-    /**
-     * APP端网关消息总线id
-     */
-    String GATEWAY_ROUTE_APP_BUS_ID = "pika-gateway-app:8101";
 }
