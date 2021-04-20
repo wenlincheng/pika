@@ -72,8 +72,8 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
         DictType dictType = dictTypeForm.toPo(DictType.class);
         this.save(dictType);
         // 存储字典值
-        if (CollectionUtils.isNotEmpty(dictTypeForm.getDictValueList())) {
-            dictTypeForm.getDictValueList().forEach(dictValueForm -> {
+        if (CollectionUtils.isNotEmpty(dictTypeForm.getDictValues())) {
+            dictTypeForm.getDictValues().forEach(dictValueForm -> {
                 DictValue dictValue = dictValueForm.toPo(DictValue.class);
                 dictValue.setDictTypeId(dictType.getId());
                 dictValueService.save(dictValue);
@@ -94,8 +94,8 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
         valueQueryWrapper.lambda().eq(DictValue::getDictTypeId, dictTypeForm.getId());
         dictValueService.remove(valueQueryWrapper);
         // 存储字典值
-        if (CollectionUtils.isNotEmpty(dictTypeForm.getDictValueList())) {
-            dictTypeForm.getDictValueList().forEach(dictValueForm -> {
+        if (CollectionUtils.isNotEmpty(dictTypeForm.getDictValues())) {
+            dictTypeForm.getDictValues().forEach(dictValueForm -> {
                 DictValue dictValue = dictValueForm.toPo(DictValue.class);
                 dictValue.setDictTypeId(dictType.getId());
                 dictValueService.save(dictValue);
@@ -120,7 +120,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
             DictValueVO valueVO = new DictValueVO(dictValue);
             dictValueVOS.add(valueVO);
         }
-        dictTypeVO.setDictValueList(dictValueVOS);
+        dictTypeVO.setDictValues(dictValueVOS);
         return dictTypeVO;
     }
 
@@ -155,7 +155,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
         DictTypeVO dictTypeVO = new DictTypeVO(dictType);
         // 字典值
         List<DictValueVO> dictValueVOList = dictValueService.getByDictTypeId(dictType.getId());
-        dictTypeVO.setDictValueList(dictValueVOList);
+        dictTypeVO.setDictValues(dictValueVOList);
 
         redisUtils.set(DICT_TYPE_CACHE_KEY_PREFIX + code, JSON.toJSONString(dictTypeVO));
 
@@ -174,7 +174,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
             // 字典值
             DictTypeVO dictTypeVO = new DictTypeVO(dictType);
             List<DictValueVO> dictValueVOList = dictValueService.getByDictTypeId(dictType.getId());
-            dictTypeVO.setDictValueList(dictValueVOList);
+            dictTypeVO.setDictValues(dictValueVOList);
             redisUtils.set(DICT_TYPE_CACHE_KEY_PREFIX + dictType.getCode(), JSON.toJSONString(dictTypeVO));
         }
 

@@ -43,5 +43,23 @@ public class DictValue extends IdModel<DictValue> {
     @TableField("value")
     private String value;
 
+    /**
+     * 状态
+     */
+    @TableField("status")
+    private Integer status;
+
+    /**
+     * 排序
+     */
+    @TableField("sort")
+    private Integer sort;
+
+    /**
+     * 排序
+     */
+    @TableField("description")
+    private String description;
+
 
 }

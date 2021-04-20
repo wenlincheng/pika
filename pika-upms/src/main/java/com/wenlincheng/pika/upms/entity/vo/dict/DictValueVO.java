@@ -36,4 +36,13 @@ public class DictValueVO extends BaseVo<DictValue> {
     @ApiModelProperty(value = "值")
     private String value;
 
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
+
+    @ApiModelProperty(value = "描述")
+    private String description;
+
 }

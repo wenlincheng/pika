@@ -28,6 +28,12 @@ public class DictTypeForm extends BaseForm<DictType> {
     @ApiModelProperty(value = "编码")
     private String code;
 
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+
+    @ApiModelProperty(value = "描述")
+    private String description;
+
     @ApiModelProperty(value = "字典值列表")
-    private List<DictValueForm> dictValueList;
+    private List<DictValueForm> dictValues;
 }

@@ -37,5 +37,15 @@ public class DictType extends IdModel<DictType> {
     @TableField("code")
     private String code;
 
-
+    /**
+     * 描述
+     */
+    @TableField("description")
+    private String description;
+    
+    /**
+     * 状态
+     */
+    @TableField("status")
+    private Integer status;
 }

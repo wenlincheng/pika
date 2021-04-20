@@ -319,6 +319,7 @@ public class CustomIdGenerator implements IdentifierGenerator {
 - [x] 集成Seata分布式事务，以及解决服务降级的分布式事务不生效问题
 - [x] 角色管理更新无法自动填充
 - [x] xxl-job
+- [x] 字典管理
 - [ ] mybatis-plus通用枚举
 - [ ] 消息管理服务（Email、SMS（低）、微信消息模板（低）等）
 - [ ] 网关管理（动态刷新、页面优化）

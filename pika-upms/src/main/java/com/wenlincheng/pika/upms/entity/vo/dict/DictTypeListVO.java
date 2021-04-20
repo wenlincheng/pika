@@ -31,6 +31,12 @@ public class DictTypeListVO extends BaseListVo<DictType> {
     @ApiModelProperty(value = "编码")
     private String code;
 
+    @ApiModelProperty(value = "描述")
+    private String description;
+
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+
     @ApiModelProperty(value = "字典值数量")
     private Integer valueNum;
 }
