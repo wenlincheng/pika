@@ -67,9 +67,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public IPage<RoleListVO> queryPageList(RolePageQuery pageQuery) {
         QueryWrapper<Role> queryWrapper = pageQuery.buildWrapper();
-        queryWrapper.lambda().like(StringUtils.isNotBlank(pageQuery.getName()), Role::getName,pageQuery.getName())
-                .like(StringUtils.isNotBlank(pageQuery.getCode()), Role::getCode,pageQuery.getCode())
-                .eq(pageQuery.getStatus() != null, Role::getStatus,pageQuery.getStatus());
+        queryWrapper.lambda().like(StringUtils.isNotBlank(pageQuery.getName()), Role::getName, pageQuery.getName())
+                .like(StringUtils.isNotBlank(pageQuery.getCode()), Role::getCode, pageQuery.getCode())
+                .eq(StringUtils.isNotBlank(pageQuery.getStatus()), Role::getStatus, pageQuery.getStatus());
 
         IPage<Role> rolePage = this.page(pageQuery.getPage(), queryWrapper);
         IPage<RoleListVO> roleListVOIPage = rolePage.convert(RoleListVO::new);
