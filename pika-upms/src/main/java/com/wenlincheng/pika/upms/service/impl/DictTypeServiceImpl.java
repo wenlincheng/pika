@@ -14,6 +14,7 @@ import com.wenlincheng.pika.upms.entity.query.dict.DictTypePageQuery;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeListVO;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeVO;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictValueVO;
+import com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum;
 import com.wenlincheng.pika.upms.mapper.DictTypeMapper;
 import com.wenlincheng.pika.upms.service.DictTypeService;
 import com.wenlincheng.pika.upms.service.DictValueService;
@@ -69,6 +70,12 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean addDictType(DictTypeForm dictTypeForm) {
+        QueryWrapper<DictType> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(DictType::getCode, dictTypeForm.getCode());
+        if (this.count(queryWrapper) > 0) {
+            throw PikaException.construct(UpmsErrorCodeEnum.CREATE_FAIL).appendMsg("字典编码已存在").build();
+        }
+
         DictType dictType = dictTypeForm.toPo(DictType.class);
         this.save(dictType);
         // 存储字典值
@@ -97,11 +104,13 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
         if (CollectionUtils.isNotEmpty(dictTypeForm.getDictValues())) {
             dictTypeForm.getDictValues().forEach(dictValueForm -> {
                 DictValue dictValue = dictValueForm.toPo(DictValue.class);
+                dictValue.setId(null);
                 dictValue.setDictTypeId(dictType.getId());
                 dictValueService.save(dictValue);
             });
         }
         redisUtils.delete(DICT_TYPE_CACHE_KEY_PREFIX + dictType.getCode());
+        getDictTypeByCode(dictType.getCode());
         return true;
     }
 

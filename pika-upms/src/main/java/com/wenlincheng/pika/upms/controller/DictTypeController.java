@@ -2,23 +2,18 @@ package com.wenlincheng.pika.upms.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.dict.DictTypeForm;
-import com.wenlincheng.pika.upms.entity.form.role.RoleForm;
 import com.wenlincheng.pika.upms.entity.query.dict.DictTypePageQuery;
-import com.wenlincheng.pika.upms.entity.query.log.LogPageQuery;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeListVO;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeVO;
-import com.wenlincheng.pika.upms.entity.vo.log.LogListVO;
-import com.wenlincheng.pika.upms.entity.vo.role.RoleDetailVO;
 import com.wenlincheng.pika.upms.service.DictTypeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import com.wenlincheng.pika.common.core.base.controller.BaseController;
 
 import javax.validation.Valid;
 

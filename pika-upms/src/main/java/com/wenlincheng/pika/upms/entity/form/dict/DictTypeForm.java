@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -25,6 +27,7 @@ public class DictTypeForm extends BaseForm<DictType> {
     @ApiModelProperty(value = "名称")
     private String name;
 
+    @NotBlank(message = "字典类型编码不能为空")
     @ApiModelProperty(value = "编码")
     private String code;
 
@@ -34,6 +37,7 @@ public class DictTypeForm extends BaseForm<DictType> {
     @ApiModelProperty(value = "描述")
     private String description;
 
+    @NotEmpty(message = "字典值列表不能为空")
     @ApiModelProperty(value = "字典值列表")
     private List<DictValueForm> dictValues;
 }
