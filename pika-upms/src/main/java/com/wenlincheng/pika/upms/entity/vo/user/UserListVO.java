@@ -42,7 +42,7 @@ public class UserListVO extends BaseVo<User> {
     @ApiModelProperty(value = "描述")
     private String description;
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
     @ApiModelProperty(value = "角色列表")
     private Set<String> roleNames;
 }

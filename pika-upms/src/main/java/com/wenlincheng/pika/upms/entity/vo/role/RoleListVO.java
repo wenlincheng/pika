@@ -29,7 +29,7 @@ public class RoleListVO extends BaseVo<Role> {
     @ApiModelProperty(value = "角色代码")
     private String code;
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
     @ApiModelProperty(value = "关联用户数")
     private Integer relateUserCount;
     @ApiModelProperty(value = "角色描述")
