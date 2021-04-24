@@ -11,7 +11,7 @@ import com.wenlincheng.pika.upms.entity.form.dict.DictTypeForm;
 import com.wenlincheng.pika.upms.entity.po.DictType;
 import com.wenlincheng.pika.upms.entity.po.DictValue;
 import com.wenlincheng.pika.upms.entity.query.dict.DictTypePageQuery;
-import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeListVO;
+import com.wenlincheng.pika.upms.entity.vo.dict.DictTypePageVO;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeVO;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictValueVO;
 import com.wenlincheng.pika.upms.enums.UpmsErrorCodeEnum;
@@ -28,6 +28,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import static com.wenlincheng.pika.common.core.exception.SystemErrorCodeEnum.DELETE_FAIL;
 import static com.wenlincheng.pika.common.core.exception.SystemErrorCodeEnum.QUERY_FAIL;
@@ -51,11 +52,14 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
     private RedisUtils redisUtils;
 
     @Override
-    public IPage<DictTypeListVO> queryPageList(DictTypePageQuery pageQuery) {
+    public IPage<DictTypePageVO> queryPageList(DictTypePageQuery pageQuery) {
         QueryWrapper<DictType> queryWrapper = pageQuery.buildWrapper();
-        queryWrapper.lambda().eq(StringUtils.isNotBlank(pageQuery.getName()), DictType::getName, pageQuery.getName());
+        queryWrapper.lambda()
+                .like(StringUtils.isNotBlank(pageQuery.getName()), DictType::getName, pageQuery.getName())
+                .eq(StringUtils.isNotBlank(pageQuery.getCode()), DictType::getCode, pageQuery.getCode())
+                .eq(StringUtils.isNotBlank(pageQuery.getStatus()), DictType::getStatus, pageQuery.getStatus());
         PageParam<DictType> page = this.page(pageQuery.getPage(), queryWrapper);
-        IPage<DictTypeListVO> pageList = page.convert(DictTypeListVO::new);
+        IPage<DictTypePageVO> pageList = page.convert(DictTypePageVO::new);
         if (CollectionUtils.isNotEmpty(pageList.getRecords())) {
             pageList.getRecords().forEach(dictTypeListVO -> {
                 QueryWrapper<DictValue> valueQueryWrapper = new QueryWrapper<>();
@@ -169,6 +173,20 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
         redisUtils.set(DICT_TYPE_CACHE_KEY_PREFIX + code, JSON.toJSONString(dictTypeVO));
 
         return dictTypeVO;
+    }
+
+    @Override
+    public List<DictTypeVO> queryList() {
+        List<DictTypeVO> dictTypeList = new ArrayList<>();
+        Set<String> keys = redisUtils.keys(DICT_TYPE_CACHE_KEY_PREFIX + "*");
+        for (String key : keys) {
+            String dictTypeStr = redisUtils.get(key);
+            if (StringUtils.isNotBlank(dictTypeStr)) {
+                DictTypeVO dictTypeVO = JSON.parseObject(dictTypeStr, DictTypeVO.class);
+                dictTypeList.add(dictTypeVO);
+            }
+        }
+        return dictTypeList;
     }
 
     /**

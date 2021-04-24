@@ -19,7 +19,13 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "字典类型分页查询参数", description = "字典类型分页查询参数")
 public class DictTypePageQuery extends BasePageQuery<DictType> {
 
-    @ApiModelProperty(value = "字典名称")
+    @ApiModelProperty(value = "名称")
     private String name;
+
+    @ApiModelProperty(value = "编码")
+    private String code;
+
+    @ApiModelProperty(value = "状态")
+    private String status;
 
 }

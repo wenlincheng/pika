@@ -47,7 +47,7 @@ public class DictValue extends IdModel<DictValue> {
      * 状态
      */
     @TableField("status")
-    private Integer status;
+    private String status;
 
     /**
      * 排序

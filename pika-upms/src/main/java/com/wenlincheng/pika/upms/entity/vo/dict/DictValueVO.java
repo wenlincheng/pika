@@ -37,7 +37,7 @@ public class DictValueVO extends BaseVo<DictValue> {
     private String value;
 
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;

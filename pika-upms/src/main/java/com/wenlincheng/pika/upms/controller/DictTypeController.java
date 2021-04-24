@@ -7,7 +7,7 @@ import com.wenlincheng.pika.common.core.base.vo.Result;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.dict.DictTypeForm;
 import com.wenlincheng.pika.upms.entity.query.dict.DictTypePageQuery;
-import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeListVO;
+import com.wenlincheng.pika.upms.entity.vo.dict.DictTypePageVO;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeVO;
 import com.wenlincheng.pika.upms.service.DictTypeService;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -35,10 +36,18 @@ public class DictTypeController extends BaseController {
 
     @ApiOperation(value = "数据字典分页", notes = "数据字典分页", httpMethod = "GET")
     @GetMapping(value = "/page")
-    public Result<IPage<DictTypeListVO>> queryPage(DictTypePageQuery pageQuery) {
+    public Result<IPage<DictTypePageVO>> queryPage(DictTypePageQuery pageQuery) {
         log.debug("queryPage with pageQuery:{}", pageQuery);
-        IPage<DictTypeListVO> page = dictTypeService.queryPageList(pageQuery);
+        IPage<DictTypePageVO> page = dictTypeService.queryPageList(pageQuery);
         return Result.success(page);
+    }
+
+    @ApiOperation(value = "数据字典列表", notes = "数据字典列表", httpMethod = "GET")
+    @GetMapping(value = "/list")
+    public Result<List<DictTypeVO>> queryList() {
+        log.debug("queryList");
+        List<DictTypeVO> dictTypeList = dictTypeService.queryList();
+        return Result.success(dictTypeList);
     }
 
     @PikaLog(module = "系统管理-数据字典", value = "新增字典类型",  method = "addDictType")

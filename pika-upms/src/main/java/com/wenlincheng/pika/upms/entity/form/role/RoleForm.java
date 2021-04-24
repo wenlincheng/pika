@@ -27,6 +27,8 @@ public class RoleForm extends BaseForm<Role> {
     private String name;
     @ApiModelProperty(value = "描述")
     private String description;
+    @ApiModelProperty(value = "启用状态")
+    private String status;
     @ApiModelProperty(value = "菜单id列表")
     private List<Long> menuIdList;
 }

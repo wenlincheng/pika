@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wenlincheng.pika.common.core.base.controller.BaseController;
 import com.wenlincheng.pika.common.core.base.vo.Result;
+import com.wenlincheng.pika.common.core.enums.DataStatusEnum;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
 import com.wenlincheng.pika.common.core.log.annotation.PikaLog;
 import com.wenlincheng.pika.upms.entity.form.role.RoleForm;
@@ -59,7 +60,7 @@ public class RoleController extends BaseController {
     @GetMapping(value = "/list")
     public Result<List<Role>> getAllRoles() {
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(Role::getStatus, YnEnum.YES.getValue());
+        queryWrapper.lambda().eq(Role::getStatus, DataStatusEnum.ENABLE.getValue());
         List<Role> roleList = roleService.list(queryWrapper);
         return Result.success(roleList);
     }

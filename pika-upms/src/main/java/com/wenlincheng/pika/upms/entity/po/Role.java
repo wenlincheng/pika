@@ -42,9 +42,9 @@ public class Role extends IdModel<Role> {
     private String description;
 
     /**
-     * 是否激活 0 否 1 是
+     * 状态
      */
     @TableField("status")
-    private Integer status;
+    private String status;
 
 }

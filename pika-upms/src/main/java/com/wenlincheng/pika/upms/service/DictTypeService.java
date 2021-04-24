@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.wenlincheng.pika.upms.entity.form.dict.DictTypeForm;
 import com.wenlincheng.pika.upms.entity.po.DictType;
 import com.wenlincheng.pika.upms.entity.query.dict.DictTypePageQuery;
-import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeListVO;
+import com.wenlincheng.pika.upms.entity.vo.dict.DictTypePageVO;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictTypeVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -24,7 +26,7 @@ public interface DictTypeService extends IService<DictType> {
      * @param pageQuery 分页查询参数
      * @return IPage<DictTypeListVO>
      */
-    IPage<DictTypeListVO> queryPageList(DictTypePageQuery pageQuery);
+    IPage<DictTypePageVO> queryPageList(DictTypePageQuery pageQuery);
 
     /**
      * 新增字典类型
@@ -65,4 +67,11 @@ public interface DictTypeService extends IService<DictType> {
      * @return DictTypeVO
      */
     DictTypeVO getDictTypeByCode(String code);
+
+    /**
+     * 查询列表
+     *
+     * @return List<DictTypeVO>
+     */
+    List<DictTypeVO> queryList();
 }

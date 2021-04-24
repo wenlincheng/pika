@@ -24,7 +24,7 @@ public class User implements Serializable {
     @ApiModelProperty(value = "角色列表")
     private List<Role> roleList;
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
     @ApiModelProperty(value = "是否有效用户 0 否 1 是")
     private Integer enabled;
     @ApiModelProperty(value = "账号是否未过期 0 否 1 是")

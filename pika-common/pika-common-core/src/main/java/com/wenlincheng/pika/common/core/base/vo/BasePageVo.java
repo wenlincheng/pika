@@ -17,10 +17,10 @@ import org.springframework.beans.BeanUtils;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public abstract class BaseListVo<T> extends BaseVo<T> {
+public abstract class BasePageVo<T> extends BaseVo<T> {
     private static final long serialVersionUID = -1102164501562674959L;
 
-    public BaseListVo(T t) {
+    public BasePageVo(T t) {
         BeanUtils.copyProperties(t, this);
     }
 

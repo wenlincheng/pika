@@ -44,6 +44,6 @@ public class UserForm  extends BaseForm<User> {
     @ApiModelProperty(value = "角色")
     private Set<Long> roleIds;
 
-    @ApiModelProperty(value = "状态")
-    private Integer status;
+    @ApiModelProperty(value = "启用状态")
+    private String status;
 }

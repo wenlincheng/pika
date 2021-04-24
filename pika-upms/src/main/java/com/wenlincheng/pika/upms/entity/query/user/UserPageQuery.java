@@ -24,5 +24,5 @@ public class UserPageQuery extends BasePageQuery<User> {
     @ApiModelProperty(value = "手机号")
     private String mobile;
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
 }

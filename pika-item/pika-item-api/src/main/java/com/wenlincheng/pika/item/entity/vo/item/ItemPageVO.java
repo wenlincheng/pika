@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.item.entity.vo.item;
 
-import com.wenlincheng.pika.common.core.base.vo.BaseListVo;
+import com.wenlincheng.pika.common.core.base.vo.BasePageVo;
 import com.wenlincheng.pika.item.entity.po.Item;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,10 +17,10 @@ import java.math.BigDecimal;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ItemListVO extends BaseListVo<Item> {
+public class ItemPageVO extends BasePageVo<Item> {
     private static final long serialVersionUID = -2934584182948690165L;
 
-    public ItemListVO(Item item) {
+    public ItemPageVO(Item item) {
         super(item);
     }
     @ApiModelProperty(value = "名称")

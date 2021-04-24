@@ -65,10 +65,10 @@ public interface UserService extends IService<User> {
     /**
      * 根据id删除用户
      *
-     * @param id 用户id
+     * @param ids 用户ids
      * @return boolean
      */
-    boolean deleteById(Long id);
+    boolean deleteById(Long[] ids);
 
     /**
      * 重置用户密码

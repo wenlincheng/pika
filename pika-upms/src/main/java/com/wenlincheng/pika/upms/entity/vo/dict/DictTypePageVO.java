@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.upms.entity.vo.dict;
 
-import com.wenlincheng.pika.common.core.base.vo.BaseListVo;
+import com.wenlincheng.pika.common.core.base.vo.BasePageVo;
 import com.wenlincheng.pika.upms.entity.po.DictType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,11 +17,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "字典类型列表VO", description = "字典类型列表VO")
-public class DictTypeListVO extends BaseListVo<DictType> {
+public class DictTypePageVO extends BasePageVo<DictType> {
 
     private static final long serialVersionUID = -5855316234597065800L;
 
-    public DictTypeListVO(DictType dictType) {
+    public DictTypePageVO(DictType dictType) {
         super(dictType);
     }
 
@@ -35,7 +35,7 @@ public class DictTypeListVO extends BaseListVo<DictType> {
     private String description;
 
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
 
     @ApiModelProperty(value = "字典值数量")
     private Integer valueNum;

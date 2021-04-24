@@ -74,7 +74,7 @@ public class Menu extends IdModel<Menu> {
     /**
      * 排序
      */
-    @TableField("sequence")
-    private Integer sequence;
+    @TableField("sort")
+    private Integer sort;
 
 }

@@ -31,7 +31,7 @@ public class DictValueForm extends BaseForm<DictValue> {
     @ApiModelProperty(value = "值")
     private String value;
 
-    @ApiModelProperty(value = "状态")
+    @ApiModelProperty(value = "启用状态")
     private String status;
 
     @ApiModelProperty(value = "排序")

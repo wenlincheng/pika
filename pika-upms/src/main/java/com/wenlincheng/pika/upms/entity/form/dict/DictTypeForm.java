@@ -31,8 +31,8 @@ public class DictTypeForm extends BaseForm<DictType> {
     @ApiModelProperty(value = "编码")
     private String code;
 
-    @ApiModelProperty(value = "状态")
-    private Integer status;
+    @ApiModelProperty(value = "启用状态")
+    private String status;
 
     @ApiModelProperty(value = "描述")
     private String description;

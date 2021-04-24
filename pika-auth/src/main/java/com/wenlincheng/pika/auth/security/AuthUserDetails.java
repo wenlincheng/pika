@@ -2,6 +2,7 @@ package com.wenlincheng.pika.auth.security;
 
 import com.wenlincheng.pika.auth.feign.dto.Permission;
 import com.wenlincheng.pika.auth.entity.AuthUser;
+import com.wenlincheng.pika.common.core.enums.DataStatusEnum;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -79,6 +80,6 @@ public class AuthUserDetails extends AuthUser implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return YnEnum.YES.getValue() == this.getStatus();
+        return DataStatusEnum.ENABLE.getValue().equals(this.getStatus());
     }
 }

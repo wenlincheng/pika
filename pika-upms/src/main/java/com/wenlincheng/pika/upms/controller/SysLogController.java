@@ -8,7 +8,7 @@ import com.wenlincheng.pika.common.core.enums.YnEnum;
 import com.wenlincheng.pika.upms.entity.query.log.LogPageQuery;
 import com.wenlincheng.pika.upms.entity.po.SysLog;
 import com.wenlincheng.pika.upms.entity.vo.log.LogDetailVO;
-import com.wenlincheng.pika.upms.entity.vo.log.LogListVO;
+import com.wenlincheng.pika.upms.entity.vo.log.LogPageVO;
 import com.wenlincheng.pika.upms.service.SysLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,9 +38,9 @@ public class SysLogController extends BaseController {
 
     @ApiOperation(value = "日志分页列表", notes = "根据条件分页搜索日志信息", httpMethod = "GET")
     @GetMapping(value = "/page")
-    public Result<IPage<LogListVO>> query(LogPageQuery pageQuery) {
+    public Result<IPage<LogPageVO>> query(LogPageQuery pageQuery) {
         log.debug("query with pageQuery:{}", pageQuery);
-        IPage<LogListVO> page = sysLogService.queryPageList(pageQuery);
+        IPage<LogPageVO> page = sysLogService.queryPageList(pageQuery);
         return Result.success(page);
     }
 

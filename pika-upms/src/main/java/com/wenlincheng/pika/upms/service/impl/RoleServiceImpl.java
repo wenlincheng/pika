@@ -3,6 +3,7 @@ package com.wenlincheng.pika.upms.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wenlincheng.pika.common.core.enums.DataStatusEnum;
 import com.wenlincheng.pika.common.core.enums.YnEnum;
 import com.wenlincheng.pika.common.core.exception.PikaException;
 import com.wenlincheng.pika.common.core.redis.RedisUtils;
@@ -56,7 +57,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         if (roleIds.size() > 0) {
             QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
             queryWrapper.lambda().in(Role::getId, roleIds)
-                    .eq(Role::getStatus, YnEnum.YES.getValue());
+                    .eq(Role::getStatus, DataStatusEnum.ENABLE.getValue());
             roleList = this.list(queryWrapper);
         }
 

@@ -1,6 +1,6 @@
 package com.wenlincheng.pika.upms.entity.vo.log;
 
-import com.wenlincheng.pika.common.core.base.vo.BaseListVo;
+import com.wenlincheng.pika.common.core.base.vo.BasePageVo;
 import com.wenlincheng.pika.upms.entity.po.SysLog;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,11 +16,11 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ApiModel(value = "LogListVO", description = "日志列表VO")
-public class LogListVO extends BaseListVo<SysLog> {
+@ApiModel(value = "LogPageVO", description = "日志列表VO")
+public class LogPageVO extends BasePageVo<SysLog> {
     private static final long serialVersionUID = 6464896911081884691L;
 
-    public LogListVO(SysLog log) {
+    public LogPageVO(SysLog log) {
         super(log);
     }
 

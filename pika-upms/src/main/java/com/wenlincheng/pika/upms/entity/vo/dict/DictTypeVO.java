@@ -38,7 +38,7 @@ public class DictTypeVO extends BaseVo<DictType> {
     private String code;
 
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
 
     @ApiModelProperty(value = "描述")
     private String description;

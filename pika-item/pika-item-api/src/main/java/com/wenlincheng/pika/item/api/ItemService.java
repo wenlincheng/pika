@@ -8,7 +8,7 @@ import com.wenlincheng.pika.item.entity.po.Item;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wenlincheng.pika.item.entity.vo.item.ItemDetailStepOneVO;
 import com.wenlincheng.pika.item.entity.vo.item.ItemDetailStepTwoVO;
-import com.wenlincheng.pika.item.entity.vo.item.ItemListVO;
+import com.wenlincheng.pika.item.entity.vo.item.ItemPageVO;
 
 /**
  * <p>
@@ -26,7 +26,7 @@ public interface ItemService extends IService<Item> {
      * @param pageQuery    分页查询条件
      * @return IPage<ItemListVO>
      */
-    IPage<ItemListVO> queryPageList(ItemPageQuery pageQuery);
+    IPage<ItemPageVO> queryPageList(ItemPageQuery pageQuery);
 
     /**
      * 查询商品[第一步]

@@ -1,6 +1,7 @@
 package com.wenlincheng.pika.upms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.wenlincheng.pika.common.core.enums.DataStatusEnum;
 import com.wenlincheng.pika.upms.entity.po.DictValue;
 import com.wenlincheng.pika.upms.entity.vo.dict.DictValueVO;
 import com.wenlincheng.pika.upms.mapper.DictValueMapper;
@@ -25,7 +26,9 @@ public class DictValueServiceImpl extends ServiceImpl<DictValueMapper, DictValue
     @Override
     public List<DictValueVO> getByDictTypeId(Long dictTypeId) {
         QueryWrapper<DictValue> valueQueryWrapper = new QueryWrapper<>();
-        valueQueryWrapper.lambda().eq(DictValue::getDictTypeId, dictTypeId);
+        valueQueryWrapper.lambda().eq(DictValue::getDictTypeId, dictTypeId)
+                .eq(DictValue::getStatus, DataStatusEnum.ENABLE.getValue())
+                .orderByAsc(DictValue::getSort);
         List<DictValue> dictValueList = this.list(valueQueryWrapper);
         List<DictValueVO> dictValueVOList = new ArrayList<>();
         for (DictValue dictValue : dictValueList) {

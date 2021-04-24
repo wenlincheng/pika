@@ -37,5 +37,5 @@ public class MenuForm extends BaseForm<Menu> {
     @ApiModelProperty(value = "授权标识")
     private String code;
     @ApiModelProperty(value = "排序")
-    private Integer sequence;
+    private Integer sort;
 }
