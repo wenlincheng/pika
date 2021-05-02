@@ -58,12 +58,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private PermissionService permissionService;
 
-    // public JWTAuthenticationFilter(JwtTokenManager tokenManager, RedisUtils redisUtils, PermissionService permissionService) {
-    //     this.tokenManager = tokenManager;
-    //     this.redisUtils = redisUtils;
-    //     this.permissionService = permissionService;
-    // }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 解决同一请求，两次经过过滤器  原因：过滤器被加载WebSecurityConfig和spring都加载了

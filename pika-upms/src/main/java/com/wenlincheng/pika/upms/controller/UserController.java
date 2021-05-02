@@ -65,10 +65,10 @@ public class UserController extends BaseController {
 
     @PikaLog(value = "删除用户")
     @ApiOperation(value = "删除用户", notes = "根据id删除用户，逻辑删除")
-    @DeleteMapping(value = "/{id}")
-    public Result<Boolean> delete(@PathVariable Long id) {
-        log.debug("delete with id:{}", id);
-        return Result.success(userService.deleteById(id));
+    @DeleteMapping(value = "/{ids}")
+    public Result<Boolean> delete(@PathVariable Long[] ids) {
+        log.debug("delete with ids:{}", ids);
+        return Result.success(userService.deleteById(ids));
     }
 
     @PikaLog(value = "修改密码")

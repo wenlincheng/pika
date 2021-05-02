@@ -26,10 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.wenlincheng.pika.upms.constant.UpmsConstants.INITIAL_PASSWORD;
@@ -136,8 +133,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        return this.removeById(id);
+    public boolean deleteById(Long[] ids) {
+        return this.removeByIds(Arrays.asList(ids));
     }
 
     @Override

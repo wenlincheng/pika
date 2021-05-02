@@ -15,12 +15,7 @@ public interface UpmsConstants {
     String INITIAL_PASSWORD = "123456";
 
     /**
-     * 管理端网关消息总线id
+     * 字典类型缓存前缀
      */
-    String GATEWAY_ROUTE_ADMIN_BUS_ID = "pika-gateway-admin:8100";
-
-    /**
-     * APP端网关消息总线id
-     */
-    String GATEWAY_ROUTE_APP_BUS_ID = "pika-gateway-app:8101";
+    String DICT_TYPE_CACHE_KEY_PREFIX = "pika-upms:dict_type:";
 }

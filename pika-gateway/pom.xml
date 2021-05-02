@@ -15,8 +15,6 @@
 
     <modules>
         <module>pika-gateway-admin</module>
-        <module>pika-gateway-app</module>
-        <module>pika-gateway-web</module>
     </modules>
 
     <dependencies>
@@ -39,12 +37,6 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <!-- jetcache -->
-        <dependency>
-            <groupId>com.alicp.jetcache</groupId>
-            <artifactId>jetcache-starter-redis</artifactId>
         </dependency>
 
         <!-- JWT -->

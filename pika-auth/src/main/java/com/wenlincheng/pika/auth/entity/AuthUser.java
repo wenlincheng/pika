@@ -31,7 +31,7 @@ public class AuthUser implements Serializable {
     @ApiModelProperty(value = "头像")
     private String avatar;
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
     @ApiModelProperty(value = "角色列表")
     private List<Role> roleList;
     @ApiModelProperty(value = "角色id")

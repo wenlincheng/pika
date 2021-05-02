@@ -32,7 +32,7 @@ public class RoleDetailVO extends BaseVo<Role> {
     @ApiModelProperty(value = "角色代码")
     private String code;
     @ApiModelProperty(value = "状态")
-    private Integer status;
+    private String status;
     @ApiModelProperty(value = "角色描述")
     private String description;
     @ApiModelProperty(value = "菜单id列表")

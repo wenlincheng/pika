@@ -1,9 +1,6 @@
 package com.wenlincheng.pika.gateway.admin.config;
 
-import com.wenlincheng.pika.gateway.admin.service.impl.RouteServiceImpl;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import springfox.documentation.swagger.web.SwaggerResource;
@@ -25,26 +22,19 @@ import java.util.List;
 public class SwaggerProvider implements SwaggerResourcesProvider {
     private static final String API_URI = "/v2/api-docs";
 
-    @Autowired
-    private RouteServiceImpl routeService;
-
     @Override
     public List<SwaggerResource> get() {
         List<SwaggerResource> resources = new ArrayList<>();
-        routeService.getRouteDefinitions()
-                .forEach(routeDefinition -> routeDefinition.getPredicates().stream()
-                        .filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
-                        .peek(predicateDefinition -> log.debug("路由配置参数：{}", predicateDefinition.getArgs()))
-                        .forEach(predicateDefinition -> resources.add(swaggerResource(routeDefinition.getId(),
-                                predicateDefinition.getArgs().get("pattern").replace("/**", API_URI)))));
+        resources.add(swaggerResource("pika-auth"));
+        resources.add(swaggerResource("pika-upms"));
         log.debug("SwaggerResources:{}", resources);
         return resources;
     }
 
-    private SwaggerResource swaggerResource(String name, String location) {
+    private SwaggerResource swaggerResource(String name) {
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
-        swaggerResource.setLocation(location);
+        swaggerResource.setLocation(name + API_URI);
         swaggerResource.setSwaggerVersion("2.0");
         return swaggerResource;
     }

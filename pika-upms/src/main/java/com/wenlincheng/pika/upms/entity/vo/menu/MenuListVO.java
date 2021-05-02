@@ -44,7 +44,7 @@ public class MenuListVO extends BaseVo<Menu> {
     @ApiModelProperty(value = "描述")
     private String description;
     @ApiModelProperty(value = "排序")
-    private Integer sequence;
+    private Integer sort;
     @ApiModelProperty(value = "是否有子菜单")
     private Boolean hasChildren;
     @ApiModelProperty(value = "子菜单")

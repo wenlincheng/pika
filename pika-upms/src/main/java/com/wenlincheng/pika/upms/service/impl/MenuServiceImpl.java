@@ -57,8 +57,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public List<MenuListVO> queryListByParentId(Long parentId) {
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Menu::getParentId, parentId)
-                .orderByDesc(parentId == 0, Menu::getSequence)
-                .orderByAsc(parentId != 0, Menu::getSequence);
+                .orderByDesc(parentId == 0, Menu::getSort)
+                .orderByAsc(parentId != 0, Menu::getSort);
         List<Menu> menuList = this.list(queryWrapper);
         List<MenuListVO> menuListVOS = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(menuList)) {
@@ -237,7 +237,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private List<MenuListVO> getChildren(Long parentId) {
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Menu::getParentId, parentId)
-                .orderByAsc(Menu::getSequence);
+                .orderByAsc(Menu::getSort);
         List<Menu> menuList = this.list(queryWrapper);
 
         if (CollectionUtils.isEmpty(menuList)) {
@@ -264,8 +264,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Menu::getParentId, parentId)
                 .notIn(Menu::getType, SysMenuTypeEnum.BUTTON.getValue())
-                .orderByDesc(parentId == 0, Menu::getSequence)
-                .orderByAsc(parentId > 0, Menu::getSequence);
+                .orderByDesc(parentId == 0, Menu::getSort)
+                .orderByAsc(parentId > 0, Menu::getSort);
         List<Menu> sysMenuList = this.list(queryWrapper);
 
         if (CollectionUtils.isEmpty(sysMenuList)) {

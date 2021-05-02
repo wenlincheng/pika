@@ -16,7 +16,10 @@ import java.util.Map;
 
 /**
  * 自动异常处理
- * @author wenlincheng
+ *
+ * @author Pikaman
+ * @version 1.0.0
+ * @date 2021/1/1 10:10 上午
  */
 @Slf4j
 public class CustomErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler {
@@ -46,6 +49,6 @@ public class CustomErrorWebExceptionHandler extends DefaultErrorWebExceptionHand
         Throwable throwable = getError(request);
         return ServerResponse.status(httpStatus)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(new GatewayExceptionHandler().handle(throwable)));
+                .body(BodyInserters.fromValue(new GatewayGlobalExceptionHandler().handle(throwable)));
     }
 }

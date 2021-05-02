@@ -108,9 +108,9 @@ public class User extends IdModel<User> {
     private Integer accountNonLocked;
 
     /**
-     * 是否激活 0 否 1 是
+     * 状态
      */
     @TableField("status")
-    private Integer status;
+    private String status;
 
 }

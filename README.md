@@ -8,9 +8,8 @@
 |-------|---------|----------|----------|
 |pika-common| |公共模块|基础工具类、日志、数据管理、公共资源、分布式ID、在线文档等|
 |pika-gateway-admin|8100|管理端网关服务||
-|pika-gateway-app|8101|APP端网关服务||
 |pika-auth|8110|认证鉴权服务|提供认证及鉴权功能|
-|pika-upms|8120|通用权限管理服务|用户角色权限管理|
+|pika-upms|8120|通用权限管理服务|用户、角色、菜单权限、部门组织、操作日志、数据字典等|
 |pika-schedule|8130|任务调度|实现分布式定时任务调度|
 |pika-message|8140|消息管理|短信、邮件、PUSH、站内信、第三方推送等|
 |pika-open|8150|开放平台|对接第三方服务及对外开放接口|
@@ -31,33 +30,26 @@
 |pika-merchant|8300|商家中心||
 |pika-platform|8310|平台运营||
 
-#### 电商业务服务能力拆分
- - 用户中心（pika-upms）
-     * 员工
-     * 部门组织
-     * 用户资料
-     * 权限控制
+#### 电商业务微服务拆分
  - 客户中心（pika-member）
      * 收货地址
      * 会员管理
      * 我的消息
-     * 第三方账户绑定
-     * 黑名单管理
+     * 黑名单
      * 店铺收藏
  - 运营中心（pika-platform）
      * 商城装修
  - 商户中心（pika-merchant）
-     * 商家资料(入驻、管理)
+     * 商家入驻
      * 店铺装修
      * 运费模板
  - 商品中心（pika-item）
-     * 产品
-     * 商品
+     * 商品管理
      * 前台类目
      * 后台类目
      * 品牌
      * 商品标签
-     * 收藏的商品
+     * 商品收藏
  - 搜索服务（pika-search）
      * 商品搜索
         - 推荐规则
@@ -66,53 +58,48 @@
      * 热门关键字
  - 库存中心（pika-inventory）
      * 库存查询
-     * 库存变动（增减、占用、冻结）
+     * 库存变动
  - 营销中心（pika-promotion）
-     * 活动管理（报名、审核）
+     * 活动管理
      * 优惠设置         
          - 限时折扣
          - 满减、满赠、满包邮
-         - 优惠券（商品/店铺/平台级）
-         - 打包一口价
-         - 周期购
+         - 优惠券
          - 团购
  - 交易中心（pika-trade）
      * 购物车
      * 订单支付
-     * 订单履约
      * 订单日志
      * 订单管理
-     * 下单业务规则配置（各种限制，防刷单等）
+     * 下单业务规则配置
      * 下单流程
-     * 售后列表
+     * 售后管理
      * 售后纠纷平台介入流程
-     * 售后原因按类目配置
      * 售后退款
      * 售后业务规则配置
  - 评价&问答（pika-evaluation）
      * 评价管理
-     * 按商品取评价（展示显示sku）
+     * 商品评价
      * 买家问答
  - 物流中心（pika-logistics）
      * 运费模板
      * 运费计算
      * 物流轨迹
  - 支付中心（pika-pay）
-     * 账户体系
+     * 支付
+     * 账户
      * 充值
      * 提现
-     * 提现需验证账户
-     * 接入第三方支付(对接微信、支付宝等)
  - 结算中心（pika-settlement）
-     * 应收应付流水
-     * 对账管理
+     * 流水
+     * 对账
      * 分佣
-     * 结算管理
-     * 发票管理
+     * 结算
+     * 发票
 
 ### 基础服务
 
-|  名称    |   服务名  |   版本    |  端口     | 备注                                            |
+|  名称    |   服务名  |   版本    |  端口     | 描述                                            |
 |---------|--------- |-----------|-----------|--------|
 |  数据库 | MySQL | 5.7.24 | 3306 | 单机,可多实例、主从 |
 |  缓存 | Redis | 5.0.4 | 6379 | 单机,可集群 |
@@ -193,6 +180,12 @@ Filebeat --> Logstash --> Elasticsearch --> Kibana
 https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.2.0-linux-x86_64.tar.gz
 ```
 
+###### 配置中心
+```
+logging:
+  config: classpath:logback-file.xml
+```
+
 #### 方案二
 
 如果想降低运维成本，可以通过 Logback 向 Logstash 日志收集端口发送日志，不过会牺牲网络带宽。
@@ -210,7 +203,7 @@ Logback --> Logstash --> Elasticsearch --> Kibana
 </dependency>
 ```
 
-##### logback-spring.xml 配置
+##### logback-logstash.xml 配置
 ```xml
 <!--输出到logstash的appender-->
 <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
@@ -220,7 +213,14 @@ Logback --> Logstash --> Elasticsearch --> Kibana
 </appender>
 ```
 
+###### 配置中心
+```
+logging:
+  config: classpath:logback-logstash.xml
+```
+
 #### Leaf 分布式ID生成服务
+采用美团开源的分布式ID框架Leaf，为了将配置文件由Nacos统一管理，修改了配置的加载方式，可以使用以下仓库
 ##### 构建依赖
 ```
 git clone https://github.com/wenlincheng/Leaf.git
@@ -244,19 +244,82 @@ CREATE TABLE `leaf_alloc` (
 ) ENGINE=InnoDB;
 ```
 
+###### 应用实例
+
+通过在实体类中增加 `@PikaModel.Code` 注解，实现根据规则自动生成`code`，需手动在数据库`leaf_alloc`中添加号段记录
+
+```sql
+INSERT INTO `pika_upms`.`leaf_alloc`(`biz_tag`, `max_id`, `step`, `description`, `update_time`) VALUES ('com.wenlincheng.pika.item.entity.po.Item', 13000, 1000, '商品表', '2021-02-07 23:57:25');
+```
+
+```java
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("item")
+@PikaModel.Code(type = "DATE_ORDERLY_SEQ", prefix = "I", size = 8, format = "yyyyMMdd")
+public class Item extends CodeModel<Item> {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 卖家ID
+     */
+    @TableField("seller_id")
+    private Long sellerId;
+    
+    ......
+}
+
+```
+
 #### Snowflake
 号段模式可以生成趋势递增的ID，是可计算的，不适用于订单ID生成场景，比如竞争对手在两天中午12点分别下单，通过订单id号相减就能大致计算出公司一天的订单量，这个不允许出现的，因此ID的生成不使用号段模式，而是使用Snowflake。
 
-### 预览
+##### 实现`Mybatis-plus`的ID生成接口
+```java
+@Component
+public class CustomIdGenerator implements IdentifierGenerator {
 
+    @Autowired
+    private LeafSnowflakeService leafSnowflakeService;
+
+    @Override
+    public Long nextId(Object entity) {
+        // 可以将当前传入的class全类名来作为bizKey,或者提取参数来生成bizKey进行分布式Id调用生成.
+        Class<?> entityClass = entity.getClass();
+        String bizKey = entityClass.getName();
+        // 根据bizKey调用分布式ID生成
+        return leafSnowflakeService.genId(bizKey);
+    }
+}
+
+```
+
+### 项目预览
 #### 后台管理
 [线上预览](https://www.ternarytree.cn/#/login?redirect=%2Fdashboard)
+
+登录账号 admin/123456
+![登录页](https://img.ternarytree.cn/upload/20210410213606.png)
+
+![首页](https://img.ternarytree.cn/upload/20210410213713.png)
+
+![用户管理](https://img.ternarytree.cn/upload/20210410214200.png)
+
+![角色管理](https://img.ternarytree.cn/upload/20210410214200.png)
+
+![菜单管理](https://img.ternarytree.cn/upload/20210410214402.png)
+
+#### C端
+待开发
 
 ### TODO
 - [x] 分布式ID、Code生成
 - [x] 集成Seata分布式事务，以及解决服务降级的分布式事务不生效问题
 - [x] 角色管理更新无法自动填充
-- [ ] xxl-job
+- [x] xxl-job
+- [x] 字典管理
 - [ ] mybatis-plus通用枚举
 - [ ] 消息管理服务（Email、SMS（低）、微信消息模板（低）等）
 - [ ] 网关管理（动态刷新、页面优化）

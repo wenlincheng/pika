@@ -10,7 +10,7 @@ import com.wenlincheng.pika.item.entity.form.item.ItemStepTwoForm;
 import com.wenlincheng.pika.item.entity.form.item.ItemPageQuery;
 import com.wenlincheng.pika.item.entity.vo.item.ItemDetailStepOneVO;
 import com.wenlincheng.pika.item.entity.vo.item.ItemDetailStepTwoVO;
-import com.wenlincheng.pika.item.entity.vo.item.ItemListVO;
+import com.wenlincheng.pika.item.entity.vo.item.ItemPageVO;
 import com.wenlincheng.pika.item.api.ItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,9 +37,9 @@ public class ItemController extends BaseController {
 
     @ApiOperation(value = "分页查询", notes = "分页查询", httpMethod = "GET")
     @GetMapping("/page")
-    public Result<IPage<ItemListVO>> queryPage(ItemPageQuery pageQuery) {
+    public Result<IPage<ItemPageVO>> queryPage(ItemPageQuery pageQuery) {
         log.debug("query with pageQuery:{}", pageQuery);
-        IPage<ItemListVO> page = itemService.queryPageList(pageQuery);
+        IPage<ItemPageVO> page = itemService.queryPageList(pageQuery);
         return Result.success(page);
     }
 

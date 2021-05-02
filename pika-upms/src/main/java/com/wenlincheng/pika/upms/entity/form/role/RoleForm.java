@@ -5,6 +5,7 @@ import com.wenlincheng.pika.upms.entity.po.Role;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @version 1.0.0
  * @date 2021/1/1 10:10 上午
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel
 public class RoleForm extends BaseForm<Role> {
@@ -27,6 +29,8 @@ public class RoleForm extends BaseForm<Role> {
     private String name;
     @ApiModelProperty(value = "描述")
     private String description;
+    @ApiModelProperty(value = "启用状态")
+    private String status;
     @ApiModelProperty(value = "菜单id列表")
     private List<Long> menuIdList;
 }

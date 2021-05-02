@@ -23,6 +23,12 @@ public enum UpmsErrorCodeEnum implements ErrorCode {
     ROLE_REL_USER_DELETE_ERROR(ErrorTypeEnum.BIZ_ERROR,30105, "有用户与角色关联"),
     PASSWORD_ERROR(ErrorTypeEnum.BIZ_ERROR,30106, "密码错误"),
     USER_ADD_ERROR(ErrorTypeEnum.BIZ_ERROR,30107, "添加用户失败"),
+
+    PAGE_FAIL(ErrorTypeEnum.BIZ_ERROR,41005, "查询列表失败"),
+    CREATE_FAIL(ErrorTypeEnum.BIZ_ERROR,41005, "创建失败"),
+    UPDATE_FAIL(ErrorTypeEnum.BIZ_ERROR,41005, "更新失败"),
+    DELETE_FAIL(ErrorTypeEnum.BIZ_ERROR,41005, "删除失败"),
+    QUERY_FAIL(ErrorTypeEnum.BIZ_ERROR,41005, "查询失败"),
     ;
 
     private ErrorTypeEnum type;

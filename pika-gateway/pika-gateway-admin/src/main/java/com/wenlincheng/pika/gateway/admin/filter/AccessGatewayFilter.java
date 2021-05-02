@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import static com.wenlincheng.pika.common.core.constant.SecurityConstants.*;
 
 /**
- * 权限校验过滤器
+ * 网关鉴权过滤器
  *
  * @author  wenlincheng
  * @date 2021/1/1 10:10 上午

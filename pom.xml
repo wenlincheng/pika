@@ -61,7 +61,7 @@
         <google.zxing.version>3.1.0</google.zxing.version>
         <poi.version>3.17</poi.version>
         <ehcache.version>3.8.1</ehcache.version>
-        <guava.version>29.0-jre</guava.version>
+        <guava.version>30.0-jre</guava.version>
         <javax-mail.version>1.4.7</javax-mail.version>
         <logstash.version>6.4</logstash.version>
         <drools.version>7.0.0.Final</drools.version>
@@ -372,6 +372,12 @@
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
                 <version>${easy-captcha.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

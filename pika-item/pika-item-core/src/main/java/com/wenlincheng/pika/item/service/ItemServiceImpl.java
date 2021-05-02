@@ -9,7 +9,7 @@ import com.wenlincheng.pika.item.entity.form.item.ItemStepTwoForm;
 import com.wenlincheng.pika.item.entity.po.Item;
 import com.wenlincheng.pika.item.entity.vo.item.ItemDetailStepOneVO;
 import com.wenlincheng.pika.item.entity.vo.item.ItemDetailStepTwoVO;
-import com.wenlincheng.pika.item.entity.vo.item.ItemListVO;
+import com.wenlincheng.pika.item.entity.vo.item.ItemPageVO;
 import com.wenlincheng.pika.item.mapper.ItemMapper;
 import com.wenlincheng.pika.item.message.produce.Foo;
 import com.wenlincheng.pika.item.message.produce.SenderService;
@@ -37,7 +37,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
     private SenderService senderService;
 
     @Override
-    public IPage<ItemListVO> queryPageList(ItemPageQuery pageQuery) {
+    public IPage<ItemPageVO> queryPageList(ItemPageQuery pageQuery) {
         QueryWrapper<Item> queryWrapper = pageQuery.buildWrapper();
         queryWrapper.lambda()
                 .like(StringUtils.isNotBlank(pageQuery.getName()), Item::getName, pageQuery.getName())
@@ -46,7 +46,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
                 .orderByDesc(Item::getCreateTime);
         IPage<Item> itemPage = this.page(pageQuery.getPage(), queryWrapper);
 
-        return itemPage.convert(ItemListVO::new);
+        return itemPage.convert(ItemPageVO::new);
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.wenlincheng.pika.common.core.base.query.PageParam;
 import com.wenlincheng.pika.upms.entity.query.log.LogPageQuery;
 import com.wenlincheng.pika.upms.entity.po.SysLog;
 import com.wenlincheng.pika.upms.entity.vo.log.LogDetailVO;
-import com.wenlincheng.pika.upms.entity.vo.log.LogListVO;
+import com.wenlincheng.pika.upms.entity.vo.log.LogPageVO;
 import com.wenlincheng.pika.upms.mapper.SysLogMapper;
 import com.wenlincheng.pika.upms.service.SysLogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,7 +27,7 @@ import java.util.Objects;
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 
     @Override
-    public IPage<LogListVO> queryPageList(LogPageQuery pageQuery) {
+    public IPage<LogPageVO> queryPageList(LogPageQuery pageQuery) {
         QueryWrapper<SysLog> queryWrapper = pageQuery.buildWrapper();
         queryWrapper.lambda()
                 .like(StringUtils.isNotBlank(pageQuery.getTitle()), SysLog::getTitle, pageQuery.getTitle())
@@ -38,7 +38,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
                 .eq(Objects.nonNull(pageQuery.getType()), SysLog::getType, pageQuery.getType())
                 .orderByDesc(SysLog::getCreateTime);
         PageParam<SysLog> logPage = this.page(pageQuery.getPage(), queryWrapper);
-        return logPage.convert(LogListVO::new);
+        return logPage.convert(LogPageVO::new);
     }
 
     @Override
